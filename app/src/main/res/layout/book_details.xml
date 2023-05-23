@@ -35,8 +35,8 @@
         android:layout_below="@+id/back_btn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:textColor="@color/dark_gray"
         android:text="Book details"
+        android:textColor="@color/dark_gray"
         android:textSize="30sp" />
 
     <LinearLayout
