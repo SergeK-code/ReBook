@@ -52,19 +52,6 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/book_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:hint="Book name" />
-
-        <Spinner
-            android:id="@+id/book_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp" />
-
         <Spinner
             android:id="@+id/book_school"
             android:layout_width="match_parent"
@@ -77,19 +64,30 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp" />
 
+        <Spinner
+            android:id="@+id/book_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp" />
 
+        <Spinner
+            android:id="@+id/book_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp" />
     </LinearLayout>
+
     <Button
-        android:id="@+id/btnSubmit"
+        android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/form"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
-        android:layout_below="@id/form"
         android:background="@drawable/round_btn"
-        android:textColor="@color/gray"
-        android:text="Search" />
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Search"
+        android:textColor="@color/gray" />
 
 </RelativeLayout>
