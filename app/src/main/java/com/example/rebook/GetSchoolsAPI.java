@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class GetSchoolsAPI extends AsyncTask<Void, Void, ArrayList<School>> {
     private ProgressDialog progressDialog;
-    private static final String API_GET_PATIENTS = "http:// /API_TrustyMed/getPatients.php";
+    private static final String API_GET_SCHOOLS = "http://192.168.0.105:8090/API_Rebook/GetSchools.php";
     private Context mContext;
 
     public GetSchoolsAPI(Context mContext) {
@@ -27,7 +27,7 @@ public class GetSchoolsAPI extends AsyncTask<Void, Void, ArrayList<School>> {
     protected ArrayList<School> doInBackground(Void... voids) {
         ArrayList<School> schools= new ArrayList<>();
         try{
-            URL url = new URL(API_GET_PATIENTS);
+            URL url = new URL(API_GET_SCHOOLS);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();

@@ -4,33 +4,71 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.example.rebook.Book;
+
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class GetBooksAPI extends AsyncTask<Void, Void, ArrayList<Book>> {
+public class ResultBooksAPI extends AsyncTask <Void,Void, ArrayList<Book>>{
+
+    private String response;
+    private int Sid,Gid,Cid;
     private ProgressDialog progressDialog;
-    private static final String API_GET_BOOKS = "http://192.168.0.105:8090/API_Rebook/GetBooks.php";
-    private Context mContext;
+    Context mcontext;
+    private String API_SET_RESULT_BOOKS="http://192.168.0.105:8090/API_Rebook/ResultBooks.php";
 
-    public GetBooksAPI(Context mContext) {
-        this.mContext = mContext;
+    public ResultBooksAPI(Context context, int Sid,int Gid,int Cid){
+        this.Sid=Sid;
+        this.Gid=Gid;
+        this.Cid=Cid;
+        this.mcontext=context;
     }
-
     @Override
     protected ArrayList<Book> doInBackground(Void... voids) {
         ArrayList<Book> books= new ArrayList<>();
-        try{
-            URL url = new URL(API_GET_BOOKS);
+        try {
+
+            JSONObject jsonObject1 = new JSONObject();
+            jsonObject1.put("School_id", this.Sid);
+            jsonObject1.put("Grade_id",this.Gid);
+            jsonObject1.put("Category_id",this.Cid);
+
+            // Convert the JSON object to a string
+            String jsonInputString = jsonObject1.toString();
+
+            // Define the API endpoint URL
+            URL url = new URL(API_SET_RESULT_BOOKS);
+
+            // Open a connection to the API endpoint
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.connect();
+
+            // Set the request method to POST
+            connection.setRequestMethod("POST");
+
+            // Set the content type to application/json
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+
+            // Enable input and output streams
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
+
+            // Write the JSON data to the request body
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            // Get the response from the API endpoint
             InputStream inputStream = connection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             StringBuilder stringBuilder = new StringBuilder();
@@ -38,7 +76,7 @@ public class GetBooksAPI extends AsyncTask<Void, Void, ArrayList<Book>> {
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line);
             }
-            String response = stringBuilder.toString();
+            response = stringBuilder.toString();
             JSONArray jsonArray = new JSONArray(response);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -54,26 +92,26 @@ public class GetBooksAPI extends AsyncTask<Void, Void, ArrayList<Book>> {
                 Book book = new Book(Book_id,Book_name,Book_isbn,Category_id,School_id,Grade_id,Book_condition,Book_image_path,Book_price);
                 books.add(book);
             }
-        }
-        catch (Exception e) {
+
+            // Close the connection
+            connection.disconnect();
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
         return books;
     }
     @Override
-    protected void onPostExecute(ArrayList<Book> result) {
-        super.onPostExecute(result);
+    protected void onPostExecute(ArrayList<Book> response) {
+        super.onPostExecute(response);
         progressDialog.dismiss();
-
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mContext);
+        progressDialog = new ProgressDialog(this.mcontext);
         progressDialog.setMessage("Loading data...");
         progressDialog.setCancelable(false);
         progressDialog.show();
-
     }
 }
