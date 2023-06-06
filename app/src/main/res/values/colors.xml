@@ -14,4 +14,6 @@
     <color name="light_gray">#AEA9A9</color>
     <color name="dark_green_btn">#3e494a</color>
     <color name="light_green_btn">#647577</color>
+    <color name="achrogray">#808080</color>
+    <color name="blue">#0645AD</color>
 </resources>

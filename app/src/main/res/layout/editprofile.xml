@@ -17,7 +17,7 @@
             android:layout_height="170dp"
             android:layout_marginTop="10dp"
             android:src="@drawable/book_icon"
-            android:background="@color/lilac"
+            android:background="@color/app_pink"
             android:contentDescription="TODO" />
         <TextView
             android:layout_width="match_parent"

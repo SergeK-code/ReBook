@@ -28,7 +28,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Register extends Activity {
-    private static final List<String> Gender =Arrays.asList("male","female","other");
+    private static final List<String> Gender =Arrays.asList("Male","Female","Other");
     private ArrayList<Role> roles = new ArrayList<>();
     private ArrayList<School> schools = new ArrayList<>();
     private ArrayList<User> users = new ArrayList<>();

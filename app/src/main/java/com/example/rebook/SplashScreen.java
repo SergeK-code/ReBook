@@ -34,7 +34,7 @@ public class SplashScreen extends AppCompatActivity {
         titleTextView.setText("ReBook");
 
 
-        Intent i = new Intent(SplashScreen.this, Login.class);
+        Intent i = new Intent(SplashScreen.this, Welcome.class);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

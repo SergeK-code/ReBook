@@ -17,7 +17,7 @@
         android:layout_marginBottom="0dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/wlc_back"
-        android:background="@color/lilac"
+        android:background="@color/app_pink"
         android:contentDescription="TODO" />
 
     <EditText

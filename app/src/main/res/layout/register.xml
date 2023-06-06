@@ -17,7 +17,7 @@
             android:layout_height="200dp"
             android:layout_marginTop="10dp"
             android:src="@drawable/wlc_to_reb"
-            android:background="@color/lilac"
+            android:background="@color/app_pink"
             android:contentDescription="TODO" />
 
 
