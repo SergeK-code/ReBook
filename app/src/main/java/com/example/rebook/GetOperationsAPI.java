@@ -14,20 +14,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class GetSchoolsAPI extends AsyncTask<Void, Void, ArrayList<School>> {
+public class GetOperationsAPI extends AsyncTask<Void, Void, ArrayList<Operation>> {
     private ProgressDialog progressDialog;
-    private static final String API_GET_SCHOOLS = "http://"+IP.ip+"/API_Rebook/GetSchools.php";
+    private static final String API_GET_OPERATIONS = "http://"+IP.ip+"/API_Rebook/GetOperations.php";
     private Context mContext;
 
-    public GetSchoolsAPI(Context mContext) {
+    public GetOperationsAPI(Context mContext) {
         this.mContext = mContext;
     }
 
     @Override
-    protected ArrayList<School> doInBackground(Void... voids) {
-        ArrayList<School> schools= new ArrayList<>();
+    protected ArrayList<Operation> doInBackground(Void... voids) {
+        ArrayList<Operation> operations= new ArrayList<>();
         try{
-            URL url = new URL(API_GET_SCHOOLS);
+            URL url = new URL(API_GET_OPERATIONS);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
@@ -42,19 +42,25 @@ public class GetSchoolsAPI extends AsyncTask<Void, Void, ArrayList<School>> {
             JSONArray jsonArray = new JSONArray(response);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                int School_id = jsonObject.getInt("School_id");
-                String School_name = jsonObject.getString("School_name");
-                School school = new School(School_id,School_name);
-                schools.add(school);
+                int Operation_id = jsonObject.getInt("Operation_id");
+                int Operation_type_id = jsonObject.getInt("Operation_type_id");
+                int Operation_status_id = jsonObject.getInt("Operation_status_id");
+                int User_id = jsonObject.getInt("User_id");
+                int Book_id = jsonObject.getInt("Book_id");
+                int Payment_amount = jsonObject.getInt("Payment_amount");
+                String Operation_date = jsonObject.getString("Operation_date");
+                int Payment_method_id = jsonObject.getInt("Payment_method_id");
+                Operation operation = new Operation(Operation_id,Operation_type_id,Operation_status_id,User_id,Book_id,Payment_amount,Operation_date,Payment_method_id);
+                operations.add(operation);
             }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return schools;
+        return operations;
     }
     @Override
-    protected void onPostExecute(ArrayList<School> result) {
+    protected void onPostExecute(ArrayList<Operation> result) {
         super.onPostExecute(result);
         progressDialog.dismiss();
 
@@ -69,5 +75,4 @@ public class GetSchoolsAPI extends AsyncTask<Void, Void, ArrayList<School>> {
         progressDialog.show();
 
     }
-
 }

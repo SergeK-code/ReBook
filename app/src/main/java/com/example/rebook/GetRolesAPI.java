@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class GetRolesAPI extends AsyncTask<Void, Void, ArrayList<Role>> {
     private ProgressDialog progressDialog;
-    private static final String API_GET_ROLES = "http://192.168.0.105:8090/API_Rebook/GetRoles.php";
+    private static final String API_GET_ROLES = "http://"+IP.ip+"/API_Rebook/GetRoles.php";
     private Context mContext;
 
     public GetRolesAPI(Context mContext) {

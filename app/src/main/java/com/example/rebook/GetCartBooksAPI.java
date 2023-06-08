@@ -14,20 +14,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class GetSchoolsAPI extends AsyncTask<Void, Void, ArrayList<School>> {
+public class GetCartBooksAPI extends AsyncTask<Void, Void, ArrayList<Book>> {
     private ProgressDialog progressDialog;
-    private static final String API_GET_SCHOOLS = "http://"+IP.ip+"/API_Rebook/GetSchools.php";
+    private static final String API_GET_BOOKS = "http://"+IP.ip+"/API_Rebook/GetCartBooks.php";
     private Context mContext;
 
-    public GetSchoolsAPI(Context mContext) {
+    public GetCartBooksAPI(Context mContext) {
         this.mContext = mContext;
     }
 
     @Override
-    protected ArrayList<School> doInBackground(Void... voids) {
-        ArrayList<School> schools= new ArrayList<>();
+    protected ArrayList<Book> doInBackground(Void... voids) {
+        ArrayList<Book> books= new ArrayList<>();
         try{
-            URL url = new URL(API_GET_SCHOOLS);
+            URL url = new URL(API_GET_BOOKS);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
@@ -42,19 +42,26 @@ public class GetSchoolsAPI extends AsyncTask<Void, Void, ArrayList<School>> {
             JSONArray jsonArray = new JSONArray(response);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
+                int Book_id = jsonObject.getInt("Book_id");
+                String Book_name = jsonObject.getString("Book_name");
+                String Book_isbn = jsonObject.getString("Book_isbn");
+                int Category_id = jsonObject.getInt("Category_id");
                 int School_id = jsonObject.getInt("School_id");
-                String School_name = jsonObject.getString("School_name");
-                School school = new School(School_id,School_name);
-                schools.add(school);
+                int Grade_id = jsonObject.getInt("Grade_id");
+                String Book_condition = jsonObject.getString("Book_condition");
+                String Book_image_path = jsonObject.getString("Book_image_path");
+                int Book_price = jsonObject.getInt("Book_price");
+                Book book = new Book(Book_id,Book_name,Book_isbn,Category_id,School_id,Grade_id,Book_condition,Book_image_path,Book_price);
+                books.add(book);
             }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return schools;
+        return books;
     }
     @Override
-    protected void onPostExecute(ArrayList<School> result) {
+    protected void onPostExecute(ArrayList<Book> result) {
         super.onPostExecute(result);
         progressDialog.dismiss();
 
@@ -69,5 +76,4 @@ public class GetSchoolsAPI extends AsyncTask<Void, Void, ArrayList<School>> {
         progressDialog.show();
 
     }
-
 }

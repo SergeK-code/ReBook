@@ -1,50 +1,70 @@
 package com.example.rebook;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
-public class SetBook extends AsyncTask<Void,Void, String>{
+public class AddToCartAPI extends AsyncTask<Void,Void, String> {
+
+    private int Operation_type_id,Operation_status_id,User_id,Book_id,Payment_amount,Payment_method_id;
+    private String Operation_date;
     private ProgressDialog progressDialog;
-    private String school, grade, category, name, condition;
+    private Context context;
     private String response;
-    private String API_SET_BOOK="http://"+IP.ip+"/API_TrustyMed/setBook.php";
-    private Context mcontext;
+    private String API_ADD_TO_CART="http://"+IP.ip+"/API_ReBook/AddToCart.php";
 
-    public SetBook(String school, String grade, String category, String name, String condition) {
-        this.school = school;
-        this.grade = grade;
-        this.category = category;
-        this.name = name;
-        this.condition = condition;
+    public AddToCartAPI(Context context, int user_id, int book_id, int payment_amount) {
+        this.context=context;
+        //Operation_type_id = operation_type_id;
+        //Operation_status_id = operation_status_id;
+        User_id = user_id;
+        Book_id = book_id;
+        Payment_amount = payment_amount;
+        //Operation_date = operation_date;
+        //Payment_method_id = payment_method_id;
     }
+
 
     @Override
     protected String doInBackground(Void... voids) {
+
         try {
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("school", school);
-            jsonObject.put("grade", grade);
-            jsonObject.put("category", category);
-            jsonObject.put("name", name);
-            jsonObject.put("condition", condition);
+
+            jsonObject.put("Operation_type_id", Operation_type_id);
+            jsonObject.put("Operation_status_id",Operation_status_id);
+            jsonObject.put("User_id", User_id);
+            jsonObject.put("Book_id", Book_id);
+            jsonObject.put("Payment_amount", Payment_amount);
+            jsonObject.put("Operation_date", Operation_date);
+            jsonObject.put("Payment_method_id", Payment_method_id);
 
             // Convert the JSON object to a string
             String jsonInputString = jsonObject.toString();
 
             // Define the API endpoint URL
-            URL url = new URL(API_SET_BOOK);
+            URL url = new URL(API_ADD_TO_CART);
 
             // Open a connection to the API endpoint
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -91,10 +111,9 @@ public class SetBook extends AsyncTask<Void,Void, String>{
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mcontext);
+        progressDialog = new ProgressDialog(this.context);
         progressDialog.setMessage("Loading data...");
         progressDialog.setCancelable(false);
         progressDialog.show();
     }
 }
-

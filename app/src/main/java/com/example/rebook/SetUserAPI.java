@@ -31,7 +31,7 @@ public class SetUserAPI extends AsyncTask<Void,Void, String> {
     private String first_name, last_name, gender, phone, address,dob, email, password;
     private Context context;
     private String response;
-    private String API_SET_USER="http:///API_ReBook/setUser.php";
+    private String API_SET_USER="http://"+IP.ip+"/API_ReBook/SetUser.php";
 
     public SetUserAPI(Context context, String first_name, String last_name, Integer role_id, String gender, String phone, String address, String dob, String email, String password, Integer school_id ){
         this.first_name=first_name;

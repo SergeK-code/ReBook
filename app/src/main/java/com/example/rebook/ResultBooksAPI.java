@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.rebook.Book;
+import com.example.rebook.Models.Book;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,7 +26,7 @@ public class ResultBooksAPI extends AsyncTask <Void,Void, ArrayList<Book>>{
     private int Sid,Gid,Cid;
     private ProgressDialog progressDialog;
     Context mcontext;
-    private String API_SET_RESULT_BOOKS="http://192.168.0.105:8090/API_Rebook/ResultBooks.php";
+    private String API_SET_RESULT_BOOKS="http://"+IP.ip+"/API_Rebook/ResultBooks.php";
 
     public ResultBooksAPI(Context context, int Sid,int Gid,int Cid){
         this.Sid=Sid;

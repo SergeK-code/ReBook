@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class GetUsersAPI extends AsyncTask<Void, Void, ArrayList<User>> {
     private ProgressDialog progressDialog;
-    private static final String API_GET_USERS = "http:///API_ReBook/getUsers.php";
+    private static final String API_GET_USERS = "http://"+IP.ip+"/API_ReBook/GetUsers.php";
     private Context mContext;
 
     GetUsersAPI(Context context) {

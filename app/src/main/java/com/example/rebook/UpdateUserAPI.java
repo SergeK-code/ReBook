@@ -33,7 +33,7 @@ public class UpdateUserAPI extends AsyncTask<Void,Void, String> {
     private int User_id;
     private Context mcontext;
     private String response;
-    private String API_UPDATE_USER="http:///API_TrustyMed/updateUser.php";
+    private String API_UPDATE_USER="http://"+IP.ip+"/API_Rebook/UpdateUser.php";
 
     public UpdateUserAPI(Context context, int user_id, String user_first_name, String user_last_name, int role_id, String user_dob, String user_gender, String user_address, String user_phone, String user_email, String user_password, int school_id){
         this.mcontext=context;

@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,7 +44,7 @@ public class SellBook extends AppCompatActivity {
     private ArrayList<Category> categories;
     private Category selectedCategory;
     private int selectedCategoryId = 0;
-    private GetCategoriesAPI dbCategories;
+    private GetOperationsAPI dbCategories;
     private ArrayAdapter<Book> bookAdapter;
     private ArrayList<Book> books;
     private ArrayList<Book> selectedBooks;
@@ -192,7 +191,7 @@ public class SellBook extends AppCompatActivity {
 
     ArrayList<Category> getCategories() {
         ArrayList<Category> results = new ArrayList<>();
-        this.dbCategories = new GetCategoriesAPI(this);
+        this.dbCategories = new GetOperationsAPI(this);
         try {
             results = dbCategories.execute().get();
         } catch (ExecutionException | InterruptedException e) {

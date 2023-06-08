@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class GetCategoriesAPI extends AsyncTask<Void, Void, ArrayList<Category>> {
     private ProgressDialog progressDialog;
-    private static final String API_GET_CATEGORIES = "http://192.168.0.105:8090/API_Rebook/GetCategories.php";
+    private static final String API_GET_CATEGORIES = "http://"+IP.ip+"/API_Rebook/GetCategories.php";
     private Context mContext;
 
     public GetCategoriesAPI(Context mContext) {

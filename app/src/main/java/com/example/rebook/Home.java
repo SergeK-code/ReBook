@@ -72,7 +72,7 @@ public class Home extends Activity {
         viewCart.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                displayViewCart(user);
+                displayMyCart(user);
             }
         });
 
@@ -134,10 +134,10 @@ public class Home extends Activity {
         startActivityForResult(i,3);
     }
 
-    private void displayViewCart(User user){
-      //  Intent i = new Intent(Home.this,ViewCart.class);
-      //  i.putExtra("user",user);
-      //  startActivityForResult(i,3);
+    private void displayMyCart(User user){
+        Intent i = new Intent(Home.this,MyCart.class);
+        i.putExtra("user",user);
+        startActivityForResult(i,3);
     }
 
     private void displayViewHistory(User user){

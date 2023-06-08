@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class GetBooksAPI extends AsyncTask<Void, Void, ArrayList<Book>> {
     private ProgressDialog progressDialog;
-    private static final String API_GET_BOOKS = "http://192.168.0.105:8090/API_Rebook/GetBooks.php";
+    private static final String API_GET_BOOKS = "http://"+IP.ip+"/API_Rebook/GetBooks.php";
     private Context mContext;
 
     public GetBooksAPI(Context mContext) {

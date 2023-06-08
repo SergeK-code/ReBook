@@ -1,50 +1,62 @@
 package com.example.rebook;
+
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
-public class SetBook extends AsyncTask<Void,Void, String>{
+public class CheckoutItemsAPI extends AsyncTask<Void,Void, String> {
+
     private ProgressDialog progressDialog;
-    private String school, grade, category, name, condition;
-    private String response;
-    private String API_SET_BOOK="http://"+IP.ip+"/API_TrustyMed/setBook.php";
+    private ArrayList<Book> Books;
     private Context mcontext;
+    private String response;
+    private String API_CHECKOUT_ITEMS ="http://"+IP.ip+"/API_Rebook/CheckoutItems.php";
 
-    public SetBook(String school, String grade, String category, String name, String condition) {
-        this.school = school;
-        this.grade = grade;
-        this.category = category;
-        this.name = name;
-        this.condition = condition;
+    public CheckoutItemsAPI(Context context, ArrayList<Book> books ){
+        this.mcontext=context;
+       Books = books;
     }
 
     @Override
     protected String doInBackground(Void... voids) {
+
         try {
+            JSONArray jsonArray = new JSONArray();
+
+            for(Book b : Books){
+                int id = b.getBook_id();
+                jsonArray.put(id);
+            }
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("school", school);
-            jsonObject.put("grade", grade);
-            jsonObject.put("category", category);
-            jsonObject.put("name", name);
-            jsonObject.put("condition", condition);
+            jsonObject.put("bookIds", jsonArray);
 
-            // Convert the JSON object to a string
             String jsonInputString = jsonObject.toString();
 
             // Define the API endpoint URL
-            URL url = new URL(API_SET_BOOK);
+            URL url = new URL(API_CHECKOUT_ITEMS);
 
             // Open a connection to the API endpoint
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -97,4 +109,3 @@ public class SetBook extends AsyncTask<Void,Void, String>{
         progressDialog.show();
     }
 }
-
