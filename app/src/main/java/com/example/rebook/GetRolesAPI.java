@@ -14,24 +14,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class GetCategoriesAPI extends AsyncTask<Void, Void, ArrayList<Category>> {
+public class GetRolesAPI extends AsyncTask<Void, Void, ArrayList<Role>> {
     private ProgressDialog progressDialog;
-
-    private static final String API_GET_CATEGORIES = "http://"+IP.ip+"/API_Rebook/GetCategories.php";
-
+    private static final String API_GET_ROLES = "http://"+IP.ip+"/API_Rebook/GetRoles.php";
     private Context mContext;
 
-    public GetCategoriesAPI(Context mContext) {
+    public GetRolesAPI(Context mContext) {
         this.mContext = mContext;
     }
 
     @Override
-    protected ArrayList<Category> doInBackground(Void... voids) {
-        ArrayList<Category> categories= new ArrayList<>();
+    protected ArrayList<Role> doInBackground(Void... voids) {
+        ArrayList<Role> roles = new ArrayList<>();
         try{
-
-            URL url = new URL(API_GET_CATEGORIES);
-
+            URL url = new URL(API_GET_ROLES);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();
@@ -46,19 +42,19 @@ public class GetCategoriesAPI extends AsyncTask<Void, Void, ArrayList<Category>>
             JSONArray jsonArray = new JSONArray(response);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                int Category_id = jsonObject.getInt("Category_id");
-                String Category_name = jsonObject.getString("Category_name");
-                Category category = new Category(Category_id,Category_name);
-                categories.add(category);
+                int Role_id = jsonObject.getInt("Role_id");
+                String Role_name = jsonObject.getString("Role_name");
+                Role role = new Role(Role_id,Role_name);
+                roles.add(role);
             }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return categories;
+        return roles;
     }
     @Override
-    protected void onPostExecute(ArrayList<Category> result) {
+    protected void onPostExecute(ArrayList<Role> result) {
         super.onPostExecute(result);
         progressDialog.dismiss();
 
@@ -73,4 +69,5 @@ public class GetCategoriesAPI extends AsyncTask<Void, Void, ArrayList<Category>>
         progressDialog.show();
 
     }
+
 }

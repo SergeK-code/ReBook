@@ -16,4 +16,11 @@ public class Grade {
     public String getGrade_name() {
         return Grade_name;
     }
+
+
+    @Override
+    public String toString(){
+        return this.getGrade_name();
+    }
+
 }

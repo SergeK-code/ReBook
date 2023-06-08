@@ -61,4 +61,11 @@ public class Book implements Serializable {
     public int getBook_price() {
         return Book_price;
     }
+
+
+    @Override
+    public String toString(){
+        return this.getBook_name();
+    }
+
 }

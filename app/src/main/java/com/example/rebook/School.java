@@ -16,4 +16,11 @@ public class School {
     public String getSchool_name() {
         return School_name;
     }
+
+
+    @Override
+    public String toString(){
+        return this.getSchool_name();
+    }
+
 }

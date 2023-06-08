@@ -42,6 +42,9 @@ public class BookSearch extends Activity {
     private int selectedBookId;
     private GetBooksAPI db_books;
 
+    private User user;
+
+
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
@@ -52,6 +55,9 @@ public class BookSearch extends Activity {
         categories = new ArrayList<>();
         books = new ArrayList<>();
         selectedBooks = new ArrayList<>();
+
+        user = (User) getIntent().getSerializableExtra("user");
+
 
         schools = getSchools();
         listOfSchools();
@@ -236,6 +242,9 @@ public class BookSearch extends Activity {
         i.putExtra("selectedSchool",selectedSchool.getSchool_name());
         i.putExtra("selectedGrade",selectedGrade.getGrade_name());
         i.putExtra("selectedCategory",selectedCategory.getCategory_name());
+
+        i.putExtra("user",user);
+
 
         startActivityForResult(i,1);
 
