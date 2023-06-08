@@ -16,7 +16,9 @@ import java.util.ArrayList;
 
 public class GetBooksAPI extends AsyncTask<Void, Void, ArrayList<Book>> {
     private ProgressDialog progressDialog;
+
     private static final String API_GET_BOOKS = "http://"+IP.ip+"/API_Rebook/GetBooks.php";
+
     private Context mContext;
 
     public GetBooksAPI(Context mContext) {
@@ -27,7 +29,9 @@ public class GetBooksAPI extends AsyncTask<Void, Void, ArrayList<Book>> {
     protected ArrayList<Book> doInBackground(Void... voids) {
         ArrayList<Book> books= new ArrayList<>();
         try{
+
             URL url = new URL(API_GET_BOOKS);
+
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();

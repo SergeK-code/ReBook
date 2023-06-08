@@ -1,6 +1,7 @@
 package com.example.rebook;
 
 import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -31,10 +32,12 @@ public class BookDetails extends Activity {
     private ArrayList<Operation> operations= new ArrayList<>();
     private ArrayList<Operation> myAddToCartOperations= new ArrayList<>();
 
+
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.book_details);
+
         initViews();
         setViews();
         getMyAddToCartOperations();
@@ -111,6 +114,7 @@ public class BookDetails extends Activity {
                 myAddToCartOperations.add(op);
             }
         }
+
 
     }
 }

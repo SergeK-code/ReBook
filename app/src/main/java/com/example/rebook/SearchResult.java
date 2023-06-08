@@ -25,10 +25,12 @@ public class SearchResult extends Activity {
     private int school_id,grade_id,category_id;
     private ArrayList<Book> resultBooks;
     private User user;
+
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.search_result);
+
         initViews();
         Bundle bundle = getIntent().getExtras();
         book = (Book) getIntent().getSerializableExtra("selectedBook");
@@ -75,5 +77,6 @@ public class SearchResult extends Activity {
         i.putExtra("selectedCategory",category);
         i.putExtra("user",user);
         startActivityForResult(i,1);
+
     }
 }

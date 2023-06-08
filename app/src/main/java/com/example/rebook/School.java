@@ -17,8 +17,10 @@ public class School {
         return School_name;
     }
 
+
     @Override
     public String toString(){
         return this.getSchool_name();
     }
+
 }
