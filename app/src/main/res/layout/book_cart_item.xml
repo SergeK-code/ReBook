@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/CoverImageView"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        />
+
+    <TextView
+        android:id="@+id/NameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title: "
+        android:textSize="14sp"
+        />
+    <TextView
+        android:id="@+id/ConditionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Condition: "
+        android:textSize="14sp"
+        />
+
+    <TextView
+        android:id="@+id/PriceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price: "
+        android:textSize="14sp"
+        />
+    <Button
+        android:id="@+id/remove_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove"
+        android:background="@drawable/remove_btn"
+        android:layout_marginTop="10dp"
+        />
+
+
+</LinearLayout>

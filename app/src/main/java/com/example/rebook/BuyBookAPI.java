@@ -26,35 +26,32 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class CheckoutItemsAPI extends AsyncTask<Void,Void, String> {
+public class BuyBookAPI extends AsyncTask<Void,Void, String> {
 
     private ProgressDialog progressDialog;
-    private ArrayList<Book> Books;
-    private int User_id;
+    private int User_id,Book_id,Payment_amount,Payment_method_id;
     private Context mcontext;
     private String response;
-    private String API_CHECKOUT_ITEMS ="http://"+IP.ip+"/API_Rebook/CheckoutItems.php";
+    private String API_CHECKOUT_ITEMS ="http://"+IP.ip+"/API_Rebook/BuyBook.php";
 
-    public CheckoutItemsAPI(Context context, ArrayList<Book> books,int user_id ){
+    public BuyBookAPI(Context context, int user_id,int book_id,int payment_amount,int payment_method_id ){
         this.mcontext=context;
-       Books = books;
-       User_id = user_id;
+        User_id = user_id;
+        Book_id = book_id;
+        Payment_amount = payment_amount;
+        Payment_method_id = payment_method_id;
     }
 
     @Override
     protected String doInBackground(Void... voids) {
 
         try {
-            JSONArray jsonArray = new JSONArray();
-
-            for(Book b : Books){
-                int id = b.getBook_id();
-                jsonArray.put(id);
-            }
-
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("bookIds", jsonArray);
-            jsonObject.put("User_id",User_id);
+
+            jsonObject.put("User_id", User_id);
+            jsonObject.put("Book_id", Book_id);
+            jsonObject.put("Payment_amount", Payment_amount);
+            jsonObject.put("Payment_method_id", Payment_method_id);
 
             String jsonInputString = jsonObject.toString();
 

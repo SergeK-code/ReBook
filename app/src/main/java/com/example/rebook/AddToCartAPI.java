@@ -26,22 +26,19 @@ import java.util.ArrayList;
 
 public class AddToCartAPI extends AsyncTask<Void,Void, String> {
 
-    private int Operation_type_id,Operation_status_id,User_id,Book_id,Payment_amount,Payment_method_id;
-    private String Operation_date;
+    private int User_id,Book_id,Payment_amount,Payment_method_id;
     private ProgressDialog progressDialog;
     private Context context;
     private String response;
     private String API_ADD_TO_CART="http://"+IP.ip+"/API_ReBook/AddToCart.php";
 
-    public AddToCartAPI(Context context, int user_id, int book_id, int payment_amount) {
+    public AddToCartAPI(Context context, int user_id, int book_id, int payment_amount,int payment_method_id) {
         this.context=context;
-        //Operation_type_id = operation_type_id;
-        //Operation_status_id = operation_status_id;
+
         User_id = user_id;
         Book_id = book_id;
         Payment_amount = payment_amount;
-        //Operation_date = operation_date;
-        //Payment_method_id = payment_method_id;
+        Payment_method_id = payment_method_id;
     }
 
 
@@ -52,12 +49,9 @@ public class AddToCartAPI extends AsyncTask<Void,Void, String> {
 
             JSONObject jsonObject = new JSONObject();
 
-            jsonObject.put("Operation_type_id", Operation_type_id);
-            jsonObject.put("Operation_status_id",Operation_status_id);
             jsonObject.put("User_id", User_id);
             jsonObject.put("Book_id", Book_id);
             jsonObject.put("Payment_amount", Payment_amount);
-            jsonObject.put("Operation_date", Operation_date);
             jsonObject.put("Payment_method_id", Payment_method_id);
 
             // Convert the JSON object to a string

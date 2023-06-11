@@ -1,6 +1,5 @@
 package com.example.rebook;
 
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -26,40 +25,44 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class CheckoutItemsAPI extends AsyncTask<Void,Void, String> {
+public class RemoveFromCartAPI extends AsyncTask<Void,Void, String> {
 
-    private ProgressDialog progressDialog;
-    private ArrayList<Book> Books;
     private int User_id;
-    private Context mcontext;
+    private ArrayList<Book> Books;
+    private ProgressDialog progressDialog;
+    private Context context;
     private String response;
-    private String API_CHECKOUT_ITEMS ="http://"+IP.ip+"/API_Rebook/CheckoutItems.php";
+    private String API_ADD_TO_CART="http://"+IP.ip+"/API_ReBook/RemoveFromCart.php";
 
-    public CheckoutItemsAPI(Context context, ArrayList<Book> books,int user_id ){
-        this.mcontext=context;
-       Books = books;
-       User_id = user_id;
+    public RemoveFromCartAPI(Context context, int user_id, ArrayList<Book> books) {
+        this.context=context;
+
+        User_id = user_id;
+        Books = books;
+
     }
+
 
     @Override
     protected String doInBackground(Void... voids) {
 
         try {
+
             JSONArray jsonArray = new JSONArray();
 
             for(Book b : Books){
                 int id = b.getBook_id();
                 jsonArray.put(id);
             }
-
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("bookIds", jsonArray);
             jsonObject.put("User_id",User_id);
 
+            // Convert the JSON object to a string
             String jsonInputString = jsonObject.toString();
 
             // Define the API endpoint URL
-            URL url = new URL(API_CHECKOUT_ITEMS);
+            URL url = new URL(API_ADD_TO_CART);
 
             // Open a connection to the API endpoint
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -106,7 +109,7 @@ public class CheckoutItemsAPI extends AsyncTask<Void,Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mcontext);
+        progressDialog = new ProgressDialog(this.context);
         progressDialog.setMessage("Loading data...");
         progressDialog.setCancelable(false);
         progressDialog.show();

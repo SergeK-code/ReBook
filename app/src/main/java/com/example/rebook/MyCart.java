@@ -19,12 +19,13 @@ public class MyCart extends Activity {
     private Button checkout,clearCart;
     private GetCartBooksAPI getCartBooks;
     private ArrayList<Book> books = new ArrayList<>();
-    private BooksAdapter booksAdapter;
+    private BookCartAdapter bookCartAdapter;
     private Book selectedBook;
     private int selectedBookId,school_id,grade_id,category_id;
     private GetSchoolsAPI getSchool;
     private GetGradesAPI getGrade;
     private GetCategoriesAPI getCategory;
+    private RemoveFromCartAPI removeFromCart;
     private ArrayList<School> schools = new ArrayList<>();
     private ArrayList<Grade> grades = new ArrayList<>();
     private ArrayList<Category> categories = new ArrayList<>();
@@ -58,6 +59,13 @@ public class MyCart extends Activity {
             }
         });
 
+        clearCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearCartItems();
+            }
+        });
+
     }
     public void initViews(){
         item_count = findViewById(R.id.cart_items_count);
@@ -73,8 +81,8 @@ public class MyCart extends Activity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        booksAdapter = new BooksAdapter(MyCart.this,books);
-        booksGrid.setAdapter(booksAdapter);
+        bookCartAdapter = new BookCartAdapter(MyCart.this,user.getUser_id(),books);
+        booksGrid.setAdapter(bookCartAdapter);
     }
 
     public void displayBookDetails(){
@@ -117,7 +125,7 @@ public class MyCart extends Activity {
     }
 
     public void checkoutItems(){
-        checkoutItems = new CheckoutItemsAPI(MyCart.this,books);
+        checkoutItems = new CheckoutItemsAPI(MyCart.this,books,user.getUser_id());
         try {
             result = checkoutItems.execute().get();
         } catch (ExecutionException | InterruptedException e) {
@@ -132,6 +140,21 @@ public class MyCart extends Activity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        booksAdapter.notifyDataSetChanged();
+        bookCartAdapter.notifyDataSetChanged();
+    }
+
+    public void clearCartItems(){
+       removeFromCart = new RemoveFromCartAPI(MyCart.this,user.getUser_id(),books);
+        try {
+            result = checkoutItems.execute().get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(MyCart.this,result, Toast.LENGTH_SHORT).show();
+
+        if(result.toLowerCase().contains("successfully")){
+            books.clear();
+            bookCartAdapter.notifyDataSetChanged();
+        }
     }
 }
