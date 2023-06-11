@@ -15,12 +15,15 @@ import java.util.ArrayList;
 
 public class BooksAdapter extends ArrayAdapter<Book> {
     private Context context;
+
     private ArrayList<Book> Books;
+
 
     public BooksAdapter(Context context, ArrayList<Book> books) {
         super(context, 0, books);
         this.context = context;
         this.Books = books;
+
     }
 
     @Override
@@ -40,11 +43,11 @@ public class BooksAdapter extends ArrayAdapter<Book> {
                 .into(bookImage);
 
         TextView bookCondition = (TextView) listItem.findViewById(R.id.ConditionTextView);
+
         bookCondition.setText("Condition: "+currentBook.getBook_condition());
 
         TextView bookPrice = (TextView) listItem.findViewById(R.id.PriceTextView);
         bookPrice.setText("Price: "+currentBook.getBook_price()+" $");
-
 
         return listItem;
     }

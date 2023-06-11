@@ -3,6 +3,7 @@ package com.example.rebook;
 import android.app.Activity;
 
 import android.content.Intent;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +25,12 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class BookDetails extends Activity {
+
     private TextView category,title,school,grade,price,phone;
     private Spinner paymentMethod;
     private ImageView book_image;
     private Button AddToCartBtn,BuyBtn;
+
     private String school_name,category_name,grade_name;
     private Book selectedBook;
     private Bundle bundle;
@@ -36,6 +40,7 @@ public class BookDetails extends Activity {
     private AddToCartAPI addToCart;
     private ArrayList<Operation> operations= new ArrayList<>();
     private ArrayList<Operation> myAddToCartOperations= new ArrayList<>();
+
     private ArrayList<Operation> myBuyOperations = new ArrayList<>();
     private GetUsersAPI getUsers;
     private ArrayList<Operation> allOperations = new ArrayList<>();
@@ -46,6 +51,7 @@ public class BookDetails extends Activity {
     private int selected_payment_method_id;
     private Payment_method selected_payment_method;
     private BuyBookAPI buyBookAPI;
+
 
 
     @Override
@@ -63,6 +69,7 @@ public class BookDetails extends Activity {
         grade_name = bundle.getString("selectedGrade");
         selectedBook = (Book) getIntent().getSerializableExtra("selectedBook");
         user = (User) getIntent().getSerializableExtra("user");
+
         initViews();
         setViews();
 
@@ -95,10 +102,13 @@ public class BookDetails extends Activity {
             }
         });
 
+
         AddToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 getMyAddToCartOperations();
+
                 boolean found =false;
                 for(Operation op : myAddToCartOperations){
                     if(op.getBook_id() == selectedBook.getBook_id()){
@@ -108,7 +118,9 @@ public class BookDetails extends Activity {
                     }
                 }
                if(!found){
+
                    addToCart = new AddToCartAPI(BookDetails.this,user.getUser_id(),selectedBook.getBook_id(),selectedBook.getBook_price(),selected_payment_method_id);
+
                    try {
                       result = addToCart.execute().get();
                    } catch (ExecutionException | InterruptedException e) {
@@ -120,6 +132,7 @@ public class BookDetails extends Activity {
                }
             }
         });
+
 
         BuyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +161,7 @@ public class BookDetails extends Activity {
         });
     }
 
+
     public void initViews(){
         category = findViewById(R.id.book_category);
         title = findViewById(R.id.book_name);
@@ -159,6 +173,7 @@ public class BookDetails extends Activity {
         BuyBtn = findViewById(R.id.buy_btn);
         phone = findViewById(R.id.phone);
         paymentMethod = findViewById(R.id.paymentMethod);
+
     }
 
     public void setViews(){
@@ -173,6 +188,7 @@ public class BookDetails extends Activity {
                 .load(imagePath)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(book_image);
+
       getUsers = new GetUsersAPI(BookDetails.this);
       getOperations = new GetOperationsAPI(BookDetails.this);
         try {
@@ -212,6 +228,7 @@ public class BookDetails extends Activity {
         paymentMethod.setAdapter(payment_methods_Adapter);
     }
 
+
     public void getMyAddToCartOperations(){
         operations.clear();
         myAddToCartOperations.clear();
@@ -228,6 +245,7 @@ public class BookDetails extends Activity {
                 myAddToCartOperations.add(op);
             }
         }
+
     }
     public void getMyBuyOperations(){
         operations.clear();
@@ -245,6 +263,7 @@ public class BookDetails extends Activity {
                 myBuyOperations.add(op);
             }
         }
+
 
     }
 }

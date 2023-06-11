@@ -35,6 +35,7 @@ public class CheckoutItemsAPI extends AsyncTask<Void,Void, String> {
     private String response;
     private String API_CHECKOUT_ITEMS ="http://"+IP.ip+"/API_Rebook/CheckoutItems.php";
 
+
     public CheckoutItemsAPI(Context context, ArrayList<Book> books,int user_id ){
         this.mcontext=context;
        Books = books;
@@ -54,6 +55,7 @@ public class CheckoutItemsAPI extends AsyncTask<Void,Void, String> {
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("bookIds", jsonArray);
+
             jsonObject.put("User_id",User_id);
 
             String jsonInputString = jsonObject.toString();

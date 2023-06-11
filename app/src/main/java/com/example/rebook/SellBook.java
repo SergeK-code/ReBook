@@ -44,7 +44,9 @@ public class SellBook extends AppCompatActivity {
     private ArrayList<Category> categories;
     private Category selectedCategory;
     private int selectedCategoryId = 0;
+
     private GetCategoriesAPI dbCategories;
+
     private ArrayAdapter<Book> bookAdapter;
     private ArrayList<Book> books;
     private ArrayList<Book> selectedBooks;
@@ -191,7 +193,9 @@ public class SellBook extends AppCompatActivity {
 
     ArrayList<Category> getCategories() {
         ArrayList<Category> results = new ArrayList<>();
+
         this.dbCategories = new GetCategoriesAPI(this);
+
         try {
             results = dbCategories.execute().get();
         } catch (ExecutionException | InterruptedException e) {

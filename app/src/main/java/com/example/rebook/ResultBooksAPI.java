@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 
 import com.example.rebook.Book;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

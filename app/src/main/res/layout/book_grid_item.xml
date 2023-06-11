@@ -10,7 +10,6 @@
         android:layout_height="68dp"
         />
 
-
         <TextView
             android:id="@+id/ConditionTextView"
             android:layout_width="wrap_content"
@@ -26,7 +25,6 @@
         android:text="Price: "
         android:textSize="14sp"
         />
-
 
 
 </LinearLayout>
