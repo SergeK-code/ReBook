@@ -8,11 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class BookCartAdapter extends ArrayAdapter<Book> {
     private Context context;
@@ -58,6 +61,13 @@ public class BookCartAdapter extends ArrayAdapter<Book> {
                 ArrayList<Book> bookToRemove = new ArrayList<>();
                 bookToRemove.add(currentBook);
                 RemoveFromCartAPI removeFromCart = new RemoveFromCartAPI(context,User_id,bookToRemove);
+                String result = "Could not connect to database";
+                try {
+                    result=removeFromCart.execute().get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
                 Books.remove(currentBook);
                 notifyDataSetChanged();
             }
