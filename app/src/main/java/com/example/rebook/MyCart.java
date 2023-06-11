@@ -1,6 +1,7 @@
 package com.example.rebook;
 
 import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -32,10 +33,12 @@ public class MyCart extends Activity {
     private String school_name,category_name,grade_name,result;
     private User user;
     private CheckoutItemsAPI checkoutItems;
+
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.my_cart);
+
         initViews();
         user = (User) getIntent().getSerializableExtra("user");
 

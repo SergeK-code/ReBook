@@ -5,15 +5,18 @@
       <map>
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/drawable/app_bg.xml" value="0.1175" />
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/drawable/badge_bg.xml" value="0.1175" />
+
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/drawable/l_button.xml" value="0.1" />
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/drawable/login_button.xml" value="0.127" />
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/drawable/r_button.xml" value="0.1" />
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/drawable/rectangle.xml" value="0.1" />
+n
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/drawable/rectangle_btn.xml" value="0.1175" />
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/drawable/remove_btn.xml" value="0.134" />
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/drawable/round_btn.xml" value="0.1175" />
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/drawable/round_img.xml" value="0.1175" />
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/drawable/round_text.xml" value="0.1175" />
+
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/drawable/rounded_btn.xml" value="0.1" />
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/drawable/upload_img.xml" value="0.1" />
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/layout/action_bar_title.xml" value="0.13385416666666666" />
@@ -30,6 +33,7 @@
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/layout/sell_book.xml" value="0.25" />
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/layout/splash_screen.xml" value="0.1" />
         <entry key="..\:/Users/Pro-tech/AndroidStudioProjects/ReBook/app/src/main/res/layout/welcome.xml" value="0.15" />
+
       </map>
     </option>
   </component>

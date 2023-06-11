@@ -1,6 +1,7 @@
 package com.example.rebook;
 
 import android.app.Activity;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,10 +47,16 @@ public class BookDetails extends Activity {
     private Payment_method selected_payment_method;
     private BuyBookAPI buyBookAPI;
 
+
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.book_details);
+
+        initViews();
+        setViews();
+        getMyAddToCartOperations();
+
         bundle = getIntent().getExtras();
         school_name = bundle.getString("selectedSchool");
         category_name = bundle.getString("selectedCategory");
@@ -222,7 +229,6 @@ public class BookDetails extends Activity {
             }
         }
     }
-
     public void getMyBuyOperations(){
         operations.clear();
         myBuyOperations.clear();
@@ -239,5 +245,6 @@ public class BookDetails extends Activity {
                 myBuyOperations.add(op);
             }
         }
+
     }
 }

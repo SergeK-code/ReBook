@@ -10,6 +10,7 @@ public class Operation {
     private String Operation_date;
     private int Payment_method_id;
 
+
     public Operation(int operation_id, int operation_type_id,int operation_status_id, int user_id, int book_id, int payment_amount, String operation_date, int payment_method_id) {
         Operation_id = operation_id;
         Operation_type_id = operation_type_id;
@@ -49,7 +50,9 @@ public class Operation {
         return Payment_method_id;
     }
 
+
     public int getOperation_status_id() {
         return Operation_status_id;
     }
+
 }
