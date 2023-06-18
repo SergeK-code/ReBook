@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 
 import com.example.rebook.IP;
 import com.example.rebook.Models.Book;
+import com.example.rebook.Models.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,25 +18,24 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class SetBook extends AsyncTask<Void,Void, String>{
+public class AddBookAPI extends AsyncTask<Void,Void, String>{
     private ProgressDialog progressDialog;
     private int school, grade, category;
     private String name, condition,imgPath,Book_isbn;
-    private int Book_price,user_id;
+    private int Book_price,User_id;
     private String response;
-    private String API_SET_BOOK="http://"+ IP.ip+"/API_Rebook/setBook.php";
+    private String API_SET_BOOK="http://"+ IP.ip+"/API_Rebook/AddBook.php";
     private Context mcontext;
 
-    public SetBook(int school,int grade, int category, String name, String condition,String imgPath,int book_price,String book_isbn,int user_id) {
+    public AddBookAPI(Context context,int school, int grade, int category, String name ,int book_price, String book_isbn,int user_id) {
+        this.mcontext = context;
         this.school = school;
         this.grade = grade;
         this.category = category;
         this.name = name;
-        this.condition = condition;
-        this.imgPath = imgPath;
-        this.Book_price=book_price;
+        this.Book_price = book_price;
         this.Book_isbn=book_isbn;
-        this.user_id = user_id;
+        this.User_id = user_id;
     }
 
     @Override
@@ -47,11 +47,9 @@ public class SetBook extends AsyncTask<Void,Void, String>{
             jsonObject.put("Grade_id", grade);
             jsonObject.put("Category_id", category);
             jsonObject.put("Book_name", name);
-            jsonObject.put("Book_condition", condition);
-            jsonObject.put("Book_image_path",imgPath);
             jsonObject.put("Book_price", Book_price);
             jsonObject.put("Book_isbn",Book_isbn);
-            jsonObject.put("User_id",user_id);
+            jsonObject.put("User_id", User_id);
 
             // Convert the JSON object to a string
             String jsonInputString = jsonObject.toString();

@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/TitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title: "
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/GradeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grade: "
+        android:textSize="12sp"
+        android:layout_below="@id/TitleTextView"
+        android:layout_alignStart="@id/TitleTextView" />
+    <TextView
+        android:id="@+id/TimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time: "
+        android:textSize="12sp"
+        android:layout_below="@id/GradeTextView"
+        android:layout_alignStart="@id/GradeTextView" />
+
+    <Button
+        android:id="@+id/delete_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/TitleTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/cancellation_button"
+        android:padding="8dp"
+        android:text="Delete" />
+
+</RelativeLayout>

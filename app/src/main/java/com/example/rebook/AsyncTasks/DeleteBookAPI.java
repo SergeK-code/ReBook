@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.rebook.IP;
-import com.example.rebook.Models.Book;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,47 +16,31 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class SetBook extends AsyncTask<Void,Void, String>{
-    private ProgressDialog progressDialog;
-    private int school, grade, category;
-    private String name, condition,imgPath,Book_isbn;
-    private int Book_price,user_id;
+
+public class DeleteBookAPI extends AsyncTask <Void,Void, String> {
     private String response;
-    private String API_SET_BOOK="http://"+ IP.ip+"/API_Rebook/setBook.php";
-    private Context mcontext;
+    private int id;
+    private ProgressDialog progressDialog;
+    Context mcontext;
+    private String API_DELETE_BOOK="http://"+ IP.ip+"/API_Rebook/DeleteBook.php";
 
-    public SetBook(int school,int grade, int category, String name, String condition,String imgPath,int book_price,String book_isbn,int user_id) {
-        this.school = school;
-        this.grade = grade;
-        this.category = category;
-        this.name = name;
-        this.condition = condition;
-        this.imgPath = imgPath;
-        this.Book_price=book_price;
-        this.Book_isbn=book_isbn;
-        this.user_id = user_id;
+    public DeleteBookAPI(Context context,int id){
+        this.id=id;
+        this.mcontext=context;
     }
-
     @Override
     protected String doInBackground(Void... voids) {
+
         try {
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("School_id", school);
-            jsonObject.put("Grade_id", grade);
-            jsonObject.put("Category_id", category);
-            jsonObject.put("Book_name", name);
-            jsonObject.put("Book_condition", condition);
-            jsonObject.put("Book_image_path",imgPath);
-            jsonObject.put("Book_price", Book_price);
-            jsonObject.put("Book_isbn",Book_isbn);
-            jsonObject.put("User_id",user_id);
+            jsonObject.put("Book_id", this.id);
 
             // Convert the JSON object to a string
             String jsonInputString = jsonObject.toString();
 
             // Define the API endpoint URL
-            URL url = new URL(API_SET_BOOK);
+            URL url = new URL(API_DELETE_BOOK);
 
             // Open a connection to the API endpoint
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -95,13 +78,11 @@ public class SetBook extends AsyncTask<Void,Void, String>{
         }
         return response;
     }
-    @Override
     protected void onPostExecute(String response) {
         super.onPostExecute(response);
         progressDialog.dismiss();
 
     }
-    @Override
     protected void onPreExecute() {
         super.onPreExecute();
         progressDialog = new ProgressDialog(this.mcontext);
@@ -110,4 +91,3 @@ public class SetBook extends AsyncTask<Void,Void, String>{
         progressDialog.show();
     }
 }
-

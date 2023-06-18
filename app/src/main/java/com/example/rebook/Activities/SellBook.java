@@ -22,25 +22,27 @@ import com.example.rebook.AsyncTasks.GetBooksAPI;
 import com.example.rebook.AsyncTasks.GetCategoriesAPI;
 import com.example.rebook.AsyncTasks.GetGradesAPI;
 import com.example.rebook.AsyncTasks.GetSchoolsAPI;
+import com.example.rebook.AsyncTasks.ImageUploader;
+import com.example.rebook.AsyncTasks.SetBook;
 import com.example.rebook.Models.Book;
 import com.example.rebook.Models.Category;
 import com.example.rebook.Models.Grade;
 import com.example.rebook.Models.School;
+import com.example.rebook.Models.User;
 import com.example.rebook.R;
-import com.example.rebook.AsyncTasks.SetBook;
+import com.example.rebook.AsyncTasks.AddBookAPI;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class SellBook extends AppCompatActivity {
-
+    private static int id = 0;
     private static final int PICK_IMAGE_REQUEST = 1;
-
     private ImageView imageView;
     private Spinner bookSchool, bookGrade, bookCategory, bookName;
     private EditText conditionEditText;
-    private Button uploadButton,back,cancel;
+    private Button uploadButton, back, cancel;
     private ArrayAdapter<School> schoolAdapter;
     private ArrayList<School> schools;
     private School selectedSchool;
@@ -62,12 +64,19 @@ public class SellBook extends AppCompatActivity {
     private Book selectedBook;
     private int selectedBookId;
     private GetBooksAPI dbBooks;
+    private String imgPath;
+    private Bitmap selectedImage;
+    private Bitmap bitmap;
+    private int selectedBookPrice;
+    private String selectedBookName,selectedBookIsbn;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sell_book);
         initViews();
+        user = (User) getIntent().getSerializableExtra("user");
 
         schools = new ArrayList<>();
         grades = new ArrayList<>();
@@ -80,7 +89,7 @@ public class SellBook extends AppCompatActivity {
         bookSchool.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedSchool = (School) parent.getSelectedItem();
+                selectedSchool = (School) parent.getAdapter().getItem(position);
                 selectedSchoolId = selectedSchool.getSchool_id();
 
                 listOfBooks(selectedSchoolId, selectedGradeId, selectedCategoryId);
@@ -97,7 +106,7 @@ public class SellBook extends AppCompatActivity {
         bookGrade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedGrade = (Grade) parent.getSelectedItem();
+                selectedGrade = (Grade) parent.getAdapter().getItem(position);
                 selectedGradeId = selectedGrade.getGrade_id();
 
                 listOfBooks(selectedSchoolId, selectedGradeId, selectedCategoryId);
@@ -114,7 +123,7 @@ public class SellBook extends AppCompatActivity {
         bookCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedCategory = (Category) parent.getSelectedItem();
+                selectedCategory = (Category) parent.getAdapter().getItem(position);
                 selectedCategoryId = selectedCategory.getCategory_id();
 
                 listOfBooks(selectedSchoolId, selectedGradeId, selectedCategoryId);
@@ -127,14 +136,17 @@ public class SellBook extends AppCompatActivity {
         });
 
 
-        bookAdapter = new ArrayAdapter<Book>(this, android.R.layout.simple_spinner_item, selectedBooks);
+        bookAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, selectedBooks);
         bookAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bookName.setAdapter(bookAdapter);
         bookName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedBook = (Book) parent.getSelectedItem();
+                selectedBook = (Book) parent.getAdapter().getItem(position);
                 selectedBookId = selectedBook.getBook_id();
+                selectedBookPrice = selectedBook.getBook_price();
+                selectedBookName = selectedBook.getBook_name();
+                selectedBookIsbn = selectedBook.getBook_isbn();
             }
 
             @Override
@@ -173,7 +185,7 @@ public class SellBook extends AppCompatActivity {
         });
     }
 
-    public void initViews(){
+    public void initViews() {
         imageView = findViewById(R.id.imageView);
         bookSchool = findViewById(R.id.book_school);
         bookGrade = findViewById(R.id.book_grade);
@@ -197,7 +209,7 @@ public class SellBook extends AppCompatActivity {
     }
 
     private void listOfSchools() {
-        schoolAdapter = new ArrayAdapter<School>(this, android.R.layout.simple_spinner_item, schools);
+        schoolAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, schools);
         schoolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bookSchool.setAdapter(schoolAdapter);
     }
@@ -214,7 +226,7 @@ public class SellBook extends AppCompatActivity {
     }
 
     private void listOfGrades() {
-        gradeAdapter = new ArrayAdapter<Grade>(this, android.R.layout.simple_spinner_item, grades);
+        gradeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, grades);
         gradeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bookGrade.setAdapter(gradeAdapter);
     }
@@ -231,7 +243,7 @@ public class SellBook extends AppCompatActivity {
     }
 
     private void listOfCategories() {
-        categoryAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_item, categories);
+        categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bookCategory.setAdapter(categoryAdapter);
     }
@@ -274,8 +286,10 @@ public class SellBook extends AppCompatActivity {
             Uri uri = data.getData();
 
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 imageView.setImageBitmap(bitmap);
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -284,32 +298,39 @@ public class SellBook extends AppCompatActivity {
 
     private void uploadBook() {
         boolean fields = true;
-        String school = bookSchool.getSelectedItem().toString();
-        String grade = bookGrade.getSelectedItem().toString();
-        String category = bookCategory.getSelectedItem().toString();
-        String Name = bookName.getSelectedItem().toString();
+
+
         String condition = conditionEditText.getText().toString();
 
-        if (school.isEmpty() || grade.isEmpty() || category.isEmpty() || Name.isEmpty() || condition.isEmpty()) {
+        ImageUploader imageUploader = new ImageUploader(this,selectedBookName+id++);
+        try {
+            imgPath = imageUploader.execute(bitmap).get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (condition.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-            fields= false;
+            fields = false;
 
         }
 
-       if(fields) {addBookToDatabase(school, grade, category, Name, condition);}
+        if (fields) {
+            addBookToDatabase(selectedSchoolId,selectedGradeId, selectedCategoryId, selectedBookName, condition,imgPath,selectedBookPrice,selectedBookIsbn,user.getUser_id());
+        }
 
 
     }
 
-    private void addBookToDatabase(String school, String grade, String category, String Name, String condition) {
-        SetBook setB = new SetBook(school,grade, category, Name, condition);
+    private void addBookToDatabase(int school, int grade, int category, String Name, String condition,String imgPath,int selectedBookPrice,String selectedBookIsbn,int user_id) {
+        SetBook setB = new SetBook(school, grade, category, Name, condition,imgPath,selectedBookPrice,selectedBookIsbn,user_id);
         String response = null;
         try {
-            response= setB.execute().get();
+            response = setB.execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        Toast.makeText(this,response,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
 
     }
 
