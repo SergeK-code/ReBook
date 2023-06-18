@@ -1,6 +1,8 @@
 package com.example.rebook.Activities;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 
@@ -30,6 +32,7 @@ public class ViewHistory extends Activity {
     private GetBooksAPI getBooks;
     private GetOperationTypesAPI getOperationTypes;
     private User user;
+    private Button back,cancel;
 
 
     @Override
@@ -42,9 +45,25 @@ public class ViewHistory extends Activity {
 
         listOfOperations();
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
     public void initViews(){
         Operations_list = findViewById(R.id.orders);
+        back = findViewById(R.id.back_btn);
+        cancel = findViewById(R.id.cancel_btn);
     }
 
     public void listOfOperations(){

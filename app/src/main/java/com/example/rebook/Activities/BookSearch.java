@@ -121,7 +121,7 @@ public class BookSearch extends Activity {
             }
         });
 
-        books = getBooks();
+
         book_adapter = new ArrayAdapter<Book>(this, android.R.layout.simple_spinner_item,selectedBooks);
         book_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bookName.setAdapter(book_adapter);
@@ -239,6 +239,7 @@ public class BookSearch extends Activity {
 
     private void listOfBooks(int selectedSchoolId,int selectedGradeId,int selectedCategoryId){
         selectedBooks.clear();
+        books = getBooks();
         for(Book b : books){
             if(b.getSchool_id()==selectedSchoolId && b.getGrade_id()==selectedGradeId && b.getCategory_id()==selectedCategoryId){
                 selectedBooks.add(b);
@@ -259,6 +260,21 @@ public class BookSearch extends Activity {
 
         startActivityForResult(i,1);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode){
+            case 1:
+                switch(resultCode){
+                    case 1:
+                        break;
+                    case 2 :
+                        finish();
+                        break;
+                }
+        }
     }
 
 

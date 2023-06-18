@@ -34,7 +34,7 @@ public class BookDetails extends Activity {
     private TextView category,title,school,grade,price,phone;
     private Spinner paymentMethod;
     private ImageView book_image;
-    private Button AddToCartBtn,BuyBtn;
+    private Button AddToCartBtn,BuyBtn,back,cancel;
     private String school_name,category_name,grade_name;
     private Book selectedBook;
     private Bundle bundle;
@@ -129,6 +129,22 @@ public class BookDetails extends Activity {
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(1);
+                finish();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(2);
+                finish();
+            }
+        });
+
         BuyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,6 +183,8 @@ public class BookDetails extends Activity {
         BuyBtn = findViewById(R.id.buy_btn);
         phone = findViewById(R.id.phone);
         paymentMethod = findViewById(R.id.paymentMethod);
+        back = findViewById(R.id.back_btn);
+        cancel = findViewById(R.id.cancel_btn);
     }
 
     public void setViews(){

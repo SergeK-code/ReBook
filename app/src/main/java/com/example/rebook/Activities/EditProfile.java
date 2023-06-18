@@ -52,7 +52,7 @@ public class EditProfile extends Activity {
     private ArrayAdapter<School> schoolAdapter;
     private Spinner genderSpinner;
     private Spinner schoolSpinner;
-    private Button updateButton;
+    private Button updateButton,back;
     private String selectedGender,selectedDate;
 
     private UpdateUserAPI updateUser;
@@ -144,6 +144,14 @@ public class EditProfile extends Activity {
 
             }
         });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
 
     }

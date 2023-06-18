@@ -31,7 +31,7 @@ import java.util.concurrent.ExecutionException;
 public class MyCart extends Activity {
     private TextView item_count;
     private GridView booksGrid;
-    private Button checkout,clearCart;
+    private Button checkout,clearCart,back,cancel;
     private GetCartBooksAPI getCartBooks;
     private ArrayList<Book> books = new ArrayList<>();
     private BookCartAdapter bookCartAdapter;
@@ -83,12 +83,28 @@ public class MyCart extends Activity {
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
     public void initViews(){
         item_count = findViewById(R.id.cart_items_count);
         booksGrid = findViewById(R.id.book_grid);
         checkout = findViewById(R.id.check_out_all);
         clearCart = findViewById(R.id.clear_cart);
+        back = findViewById(R.id.back_btn);
+        cancel = findViewById(R.id.cancel_btn);
     }
 
     public void listOfBooks(){

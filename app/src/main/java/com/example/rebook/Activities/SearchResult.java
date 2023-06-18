@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 
 import com.example.rebook.Adapters.BooksAdapter;
@@ -28,6 +29,7 @@ public class SearchResult extends Activity {
     private int school_id,grade_id,category_id;
     private ArrayList<Book> resultBooks;
     private User user;
+    private Button Back,Cancel;
 
     @Override
     public void onCreate(Bundle saveInstanceState){
@@ -55,11 +57,29 @@ public class SearchResult extends Activity {
             }
         });
 
+        Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(1);
+                finish();
+            }
+        });
+
+        Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(2);
+                finish();
+            }
+        });
+
     }
 
     public void initViews(){
         book_grid = findViewById(R.id.book_grid);
         cart = findViewById(R.id.cart_icon);
+        Back = findViewById(R.id.back_btn);
+        Cancel = findViewById(R.id.cancel_btn);
     }
 
     public void showResults(){
@@ -81,5 +101,21 @@ public class SearchResult extends Activity {
         i.putExtra("user",user);
         startActivityForResult(i,1);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode){
+            case 1:
+                switch(resultCode){
+                    case 1:
+                        break;
+                    case 2 :
+                        setResult(2);
+                        finish();
+                        break;
+                }
+        }
     }
 }

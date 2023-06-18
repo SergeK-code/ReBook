@@ -40,7 +40,7 @@ public class SellBook extends AppCompatActivity {
     private ImageView imageView;
     private Spinner bookSchool, bookGrade, bookCategory, bookName;
     private EditText conditionEditText;
-    private Button uploadButton;
+    private Button uploadButton,back,cancel;
     private ArrayAdapter<School> schoolAdapter;
     private ArrayList<School> schools;
     private School selectedSchool;
@@ -58,7 +58,7 @@ public class SellBook extends AppCompatActivity {
     private GetCategoriesAPI dbCategories;
     private ArrayAdapter<Book> bookAdapter;
     private ArrayList<Book> books;
-    private ArrayList<Book> selectedBooks;
+    private ArrayList<Book> selectedBooks = new ArrayList<>();
     private Book selectedBook;
     private int selectedBookId;
     private GetBooksAPI dbBooks;
@@ -67,14 +67,8 @@ public class SellBook extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sell_book);
+        initViews();
 
-        imageView = findViewById(R.id.imageView);
-        bookSchool = findViewById(R.id.book_school);
-        bookGrade = findViewById(R.id.book_grade);
-        bookCategory = findViewById(R.id.book_category);
-        bookName = findViewById(R.id.book_name);
-        conditionEditText = findViewById(R.id.condition);
-        uploadButton = findViewById(R.id.search);
         schools = new ArrayList<>();
         grades = new ArrayList<>();
         categories = new ArrayList<>();
@@ -132,8 +126,7 @@ public class SellBook extends AppCompatActivity {
             }
         });
 
-        books = getBooks();
-        selectedBooks = new ArrayList<>();
+
         bookAdapter = new ArrayAdapter<Book>(this, android.R.layout.simple_spinner_item, selectedBooks);
         bookAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bookName.setAdapter(bookAdapter);
@@ -164,6 +157,32 @@ public class SellBook extends AppCompatActivity {
                 uploadBook();
             }
         });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    public void initViews(){
+        imageView = findViewById(R.id.imageView);
+        bookSchool = findViewById(R.id.book_school);
+        bookGrade = findViewById(R.id.book_grade);
+        bookCategory = findViewById(R.id.book_category);
+        bookName = findViewById(R.id.book_name);
+        conditionEditText = findViewById(R.id.condition);
+        uploadButton = findViewById(R.id.search);
+        back = findViewById(R.id.back_btn);
+        cancel = findViewById(R.id.cancel_btn);
     }
 
     ArrayList<School> getSchools() {
@@ -230,6 +249,7 @@ public class SellBook extends AppCompatActivity {
 
     private void listOfBooks(int selectedSchoolId, int selectedGradeId, int selectedCategoryId) {
         selectedBooks.clear();
+        books = getBooks();
         for (Book b : books) {
             if (b.getSchool_id() == selectedSchoolId && b.getGrade_id() == selectedGradeId && b.getCategory_id() == selectedCategoryId) {
                 selectedBooks.add(b);
@@ -263,6 +283,7 @@ public class SellBook extends AppCompatActivity {
     }
 
     private void uploadBook() {
+        boolean fields = true;
         String school = bookSchool.getSelectedItem().toString();
         String grade = bookGrade.getSelectedItem().toString();
         String category = bookCategory.getSelectedItem().toString();
@@ -271,20 +292,16 @@ public class SellBook extends AppCompatActivity {
 
         if (school.isEmpty() || grade.isEmpty() || category.isEmpty() || Name.isEmpty() || condition.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-            return;
+            fields= false;
+
         }
 
-        boolean success = addBookToDatabase(school, grade, category, Name, condition);
+       if(fields) {addBookToDatabase(school, grade, category, Name, condition);}
 
-        if (success) {
-            Toast.makeText(this, "Book uploaded successfully", Toast.LENGTH_SHORT).show();
-            finish();
-        } else {
-            Toast.makeText(this, "Failed to upload book", Toast.LENGTH_SHORT).show();
-        }
+
     }
 
-    private boolean addBookToDatabase(String school, String grade, String category, String Name, String condition) {
+    private void addBookToDatabase(String school, String grade, String category, String Name, String condition) {
         SetBook setB = new SetBook(school,grade, category, Name, condition);
         String response = null;
         try {
@@ -293,6 +310,8 @@ public class SellBook extends AppCompatActivity {
             e.printStackTrace();
         }
         Toast.makeText(this,response,Toast.LENGTH_SHORT).show();
-        return true;
+
     }
+
+
 }
