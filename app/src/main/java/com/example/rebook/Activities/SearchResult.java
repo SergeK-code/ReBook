@@ -3,12 +3,18 @@ package com.example.rebook.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.example.rebook.Adapters.BooksAdapter;
+import com.example.rebook.AsyncTasks.GetBooksAPI;
+import com.example.rebook.AsyncTasks.GetOperationsAPI;
 import com.example.rebook.Models.Book;
+import com.example.rebook.Models.Operation;
 import com.example.rebook.Models.User;
 import com.example.rebook.R;
 import com.example.rebook.AsyncTasks.ResultBooksAPI;
@@ -20,14 +26,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SearchResult extends Activity {
     private GridView book_grid;
-    private CircleImageView cart;
+    private CircleImageView cart_icon;
+    private TextView badge_counter;
     private BooksAdapter booksAdapter;
     private ResultBooksAPI booksResultAPI;
     private Book book,selectedBook;
     private String school,grade,category;
     private int school_id,grade_id,category_id;
-    private ArrayList<Book> resultBooks;
     private User user;
+    private Button Back,Cancel;
+    private GetBooksAPI getBooks;
+    private GetOperationsAPI getOperations;
+    private ArrayList<Operation> operations = new ArrayList<>();
+    private ArrayList<Book> books = new ArrayList<>();
+    private ArrayList<Book> selectedBooks = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle saveInstanceState){
@@ -55,21 +67,80 @@ public class SearchResult extends Activity {
             }
         });
 
+        Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(1);
+                finish();
+            }
+        });
+
+        Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(2);
+                finish();
+            }
+        });
+
+        cart_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SearchResult.this,MyCart.class);
+                i.putExtra("user",user);
+                startActivityForResult(i,2);
+            }
+        });
+
     }
+
+
+
 
     public void initViews(){
         book_grid = findViewById(R.id.book_grid);
-        cart = findViewById(R.id.cart_icon);
+        cart_icon = findViewById(R.id.cart_icon);
+        Back = findViewById(R.id.back_btn);
+        Cancel = findViewById(R.id.cancel_btn);
+
     }
 
     public void showResults(){
-        booksResultAPI = new ResultBooksAPI(this,school_id,grade_id,category_id);
+
+        ArrayList<Operation> filteredOperations = new ArrayList<>();
+        ArrayList<Integer> bookIds = new ArrayList<>();
+        ArrayList<Book> filteredBooks = new ArrayList<>();
+        getOperations = new GetOperationsAPI(SearchResult.this);
+        getBooks = new GetBooksAPI(SearchResult.this);
         try {
-            resultBooks=booksResultAPI.execute().get();
+            operations.clear();
+            books.clear();
+            operations = getOperations.execute().get();
+            books = getBooks.execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        booksAdapter = new BooksAdapter(this,resultBooks);
+        for(Operation op : operations){
+            if(op.getOperation_type_id()==1 && op.getOperation_status_id()==1 && op.getUser_id()!=user.getUser_id()){
+                filteredOperations.add(op);
+                bookIds.add(op.getBook_id());
+            }
+        }
+        selectedBooks.clear();
+        for(Book b : books){
+            for(int bookId : bookIds){
+                if(b.getBook_id()==bookId){
+                    filteredBooks.add(b);
+                    break;
+                }
+            }
+        }
+        for(Book b : filteredBooks){
+            if(b.getSchool_id()==school_id && b.getGrade_id()==grade_id && b.getCategory_id()==category_id){
+                selectedBooks.add(b);
+            }
+        }
+        booksAdapter = new BooksAdapter(this,selectedBooks);
         book_grid.setAdapter(booksAdapter);
     }
     public void displayBookDetails(Book b){
@@ -81,5 +152,30 @@ public class SearchResult extends Activity {
         i.putExtra("user",user);
         startActivityForResult(i,1);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode){
+            case 1:
+                switch(resultCode){
+                    case 1:
+                        break;
+                    case 2 :
+                        setResult(2);
+                        finish();
+                        break;
+                }
+            case 2:
+                switch(resultCode){
+                    case 1:
+                        break;
+                    case 2 :
+                        setResult(2);
+                        finish();
+                        break;
+                }
+        }
     }
 }

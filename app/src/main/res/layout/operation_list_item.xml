@@ -31,7 +31,7 @@
             android:id="@+id/order_idTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Order ID: "
+            android:text=" "
             android:layout_marginLeft="10dp"
             android:textSize="18sp"
             android:textStyle="bold"/>
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="Book Name: "
+            android:text=" "
             android:textSize="14sp"/>
     </LinearLayout>
     <LinearLayout
@@ -73,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="Operation Type: "
+            android:text=" "
             android:textSize="14sp"/>
     </LinearLayout>
 

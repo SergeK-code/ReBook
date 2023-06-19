@@ -1,5 +1,6 @@
 package com.example.rebook.Activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,10 +27,10 @@ import java.util.concurrent.ExecutionException;
 
 
 
-public class Login extends AppCompatActivity {
+public class Login extends Activity {
     private EditText email, password;
     private TextView error;
-    private Button login;
+    private Button login,back;
     private GetUsersAPI u;
     private boolean found = false;
     private Bundle bundle;
@@ -44,6 +45,7 @@ public class Login extends AppCompatActivity {
         password = findViewById(R.id.password);
         error = findViewById(R.id.error);
         login = findViewById(R.id.login);
+        back = findViewById(R.id.back_btn);
 
         ViewCompat.setBackgroundTintList(login, null);
 
@@ -130,13 +132,30 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     private void displayHome(User u) {
-        Intent i = new Intent(Login.this, Home.class);
-        i.putExtra("user", u);
-        i.putExtra("password", password.getText().toString().trim());
-        startActivity(i);
+
+        if(u.getRole_id()==1){
+          Intent i  = new Intent(Login.this, Home.class);
+            i.putExtra("user", u);
+            i.putExtra("password", password.getText().toString().trim());
+            startActivity(i);
+        }
+       else if (u.getRole_id()==2){
+           Intent i = new Intent(Login.this,HomeAdmin.class);
+            i.putExtra("user", u);
+            i.putExtra("password", password.getText().toString().trim());
+            startActivity(i);
+        }
+
     }
 }
 

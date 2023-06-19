@@ -18,7 +18,7 @@ import com.example.rebook.R;
 public class Home extends Activity {
 
     private ImageView image;
-    private Button logout,editProfile,sellBook,buyBook, viewHistory,viewCart;
+    private Button logout,editProfile,sellBook,buyBook, viewHistory,viewCart,pendingOrders,myUploads;
     private User user;
     private TextView greeting;
     private String password;
@@ -85,6 +85,19 @@ public class Home extends Activity {
                 displayEditProfile(user);
             }
         });
+        pendingOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayPendingOrders(user);
+            }
+        });
+
+        myUploads.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayMyUploads(user);
+            }
+        });
 
         logout.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -96,16 +109,7 @@ public class Home extends Activity {
     }
     @Override
     public void onActivityResult(int request,int result,Intent intent){
-        switch(request){
-            case 3:
-                switch(result){
-                    case 2:
-                        Intent i = new Intent(Home.this,Login.class);
-                        startActivity(i);
-                    default:
-                        Toast.makeText(Home.this,"No changes were made",Toast.LENGTH_SHORT).show();
-                }
-        }
+
     }
 
     private void initViews(){
@@ -116,37 +120,52 @@ public class Home extends Activity {
         editProfile= findViewById(R.id.edit_profile);
         logout=findViewById(R.id.logout);
         greeting= findViewById(R.id.greeting);
+        pendingOrders = findViewById(R.id.pending_orders);
+        myUploads = findViewById(R.id.my_uploads);
 
-    }
-
-    private void displaySellBook(User user){
-        Intent i = new Intent(Home.this,SellBook.class);
-        i.putExtra("user",user);
-        startActivity(i);
     }
 
     private void displayBuyBook(User user){
         Intent i = new Intent(Home.this, BookSearch.class);
         i.putExtra("user",user);
-        startActivity(i);
+        startActivityForResult(i,1);
+    }
+
+    private void displaySellBook(User user){
+        Intent i = new Intent(Home.this,SellBook.class);
+        i.putExtra("user",user);
+        startActivityForResult(i,2);
+    }
+
+    private void displayViewHistory(User user){
+        Intent i = new Intent(Home.this,ViewHistory.class);
+        i.putExtra("user",user);
+        startActivityForResult(i,3);
     }
 
     private void displayEditProfile(User user){
         Intent i = new Intent(Home.this,EditProfile.class);
         i.putExtra("user",user);
-        startActivityForResult(i,3);
+        startActivityForResult(i,4);
     }
 
     private void displayMyCart(User user){
         Intent i = new Intent(Home.this,MyCart.class);
         i.putExtra("user",user);
-        startActivityForResult(i,3);
+        startActivityForResult(i,5);
     }
 
-    private void displayViewHistory(User user){
-      //  Intent i = new Intent(Home.this,ViewHistory.class);
-      //  i.putExtra("user",user);
-      //  startActivityForResult(i,3);
+
+    public void displayPendingOrders(User user){
+        Intent i = new Intent(Home.this,PendingOrders.class);
+        i.putExtra("user",user);
+        startActivityForResult(i,6);
+    }
+
+    public void displayMyUploads(User user){
+        Intent i = new Intent(Home.this,MyUploads.class);
+        i.putExtra("user",user);
+        startActivityForResult(i,7);
     }
 
     private void Logout(){

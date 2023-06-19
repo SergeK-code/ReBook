@@ -5,19 +5,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center|top"
-    android:background="@color/white"
+    android:background="@drawable/app_bg"
     >
 
 
     <ImageView
         android:id="@+id/login_image"
-        android:layout_width="410dp"
+        android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_marginBottom="0dp"
-        android:layout_marginTop="10dp"
+        android:padding="20dp"
         android:src="@drawable/wlc_back"
-        android:background="@color/app_pink"
+
         android:contentDescription="TODO" />
 
     <EditText
@@ -58,17 +58,10 @@
             android:layout_margin="20dp"
             android:text="Login"
             android:background="@drawable/rounded_btn"
+            android:textColor="@color/white"
             />
     </LinearLayout>
-        <TextView
-            android:id="@+id/subtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Forgot password ?"
-            android:layout_marginTop="-10dp"
-            android:textColor="@color/blue"
-            android:textSize="16sp" />
+
 
     <TextView
         android:id="@+id/line1"
@@ -85,7 +78,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:layout_marginStart="10dp">
 
         <ImageView
             android:layout_width="30dp"
@@ -102,7 +96,6 @@
             android:textStyle="bold"
             android:clickable="true"
             android:textSize="18dp"
-            android:background="@color/achrogray"
             android:onClick="onFacebookSignInClick" />
     </LinearLayout>
 
@@ -112,6 +105,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
         >
 
         <ImageView
@@ -126,7 +120,6 @@
             android:layout_height="wrap_content"
             android:text="Sign in with Google"
             android:textColor="@color/gray"
-            android:background="@color/achrogray"
             android:textStyle="bold"
             android:clickable="true"
             android:textSize="18dp"
@@ -145,6 +138,18 @@
         android:textSize="16sp"
 
         />
+    <Button
+        android:id="@+id/back_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="25dp"
+        android:background="@android:color/transparent"
+        android:text="Go Back"
+        android:textColor="@color/gray" />
+
 
 
 </LinearLayout>

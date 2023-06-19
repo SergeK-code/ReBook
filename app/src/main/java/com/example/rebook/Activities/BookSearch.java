@@ -8,14 +8,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.rebook.AsyncTasks.GetBooksAPI;
 import com.example.rebook.AsyncTasks.GetCategoriesAPI;
 import com.example.rebook.AsyncTasks.GetGradesAPI;
+import com.example.rebook.AsyncTasks.GetOperationsAPI;
 import com.example.rebook.AsyncTasks.GetSchoolsAPI;
 import com.example.rebook.Models.Book;
 import com.example.rebook.Models.Category;
 import com.example.rebook.Models.Grade;
+import com.example.rebook.Models.Operation;
 import com.example.rebook.Models.School;
 import com.example.rebook.Models.User;
 import com.example.rebook.R;
@@ -50,10 +53,11 @@ public class BookSearch extends Activity {
     private ArrayList<Book> books;
     private ArrayList<Book> selectedBooks;
     private Book selectedBook;
-    private int selectedBookId;
+    private int selectedBookId = -1;
     private GetBooksAPI db_books;
-
     private User user;
+    private GetOperationsAPI getOperations;
+    private ArrayList<Operation> operations = new ArrayList<>();
 
 
     @Override
@@ -121,7 +125,7 @@ public class BookSearch extends Activity {
             }
         });
 
-        books = getBooks();
+
         book_adapter = new ArrayAdapter<Book>(this, android.R.layout.simple_spinner_item,selectedBooks);
         book_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bookName.setAdapter(book_adapter);
@@ -238,8 +242,33 @@ public class BookSearch extends Activity {
     }
 
     private void listOfBooks(int selectedSchoolId,int selectedGradeId,int selectedCategoryId){
+        ArrayList<Operation> filteredOperations = new ArrayList<>();
+        ArrayList<Integer> bookIds = new ArrayList<>();
+        ArrayList<Book> filteredBooks = new ArrayList<>();
+        getOperations = new GetOperationsAPI(BookSearch.this);
+        try {
+            operations.clear();
+            operations = getOperations.execute().get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        for(Operation op : operations){
+            if(op.getOperation_type_id()==5 && op.getOperation_status_id()==1){
+                filteredOperations.add(op);
+                bookIds.add(op.getBook_id());
+            }
+        }
         selectedBooks.clear();
+        books = getBooks();
         for(Book b : books){
+            for(int bookId : bookIds){
+                if(b.getBook_id()==bookId){
+                    filteredBooks.add(b);
+                    break;
+                }
+            }
+        }
+        for(Book b : filteredBooks){
             if(b.getSchool_id()==selectedSchoolId && b.getGrade_id()==selectedGradeId && b.getCategory_id()==selectedCategoryId){
                 selectedBooks.add(b);
             }
@@ -248,17 +277,35 @@ public class BookSearch extends Activity {
     }
 
     void display_SearchResult(Book selectedBook){
-        Intent i = new Intent(BookSearch.this,SearchResult.class);
-        i.putExtra("selectedBook",selectedBook);
-        i.putExtra("selectedSchool",selectedSchool.getSchool_name());
-        i.putExtra("selectedGrade",selectedGrade.getGrade_name());
-        i.putExtra("selectedCategory",selectedCategory.getCategory_name());
+        if(selectedBookId != -1){
+            Intent i = new Intent(BookSearch.this,SearchResult.class);
+            i.putExtra("selectedBook",selectedBook);
+            i.putExtra("selectedSchool",selectedSchool.getSchool_name());
+            i.putExtra("selectedGrade",selectedGrade.getGrade_name());
+            i.putExtra("selectedCategory",selectedCategory.getCategory_name());
+            i.putExtra("user",user);
 
-        i.putExtra("user",user);
+            startActivityForResult(i,1);
+        }
+        else{
+            Toast.makeText(BookSearch.this,"No book selected",Toast.LENGTH_SHORT).show();
+        }
 
+    }
 
-        startActivityForResult(i,1);
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode){
+            case 1:
+                switch(resultCode){
+                    case 1:
+                        break;
+                    case 2 :
+                        finish();
+                        break;
+                }
+        }
     }
 
 

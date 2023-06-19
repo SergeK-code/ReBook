@@ -63,17 +63,14 @@ public class GetCategoriesAPI extends AsyncTask<Void, Void, ArrayList<Category>>
     @Override
     protected void onPostExecute(ArrayList<Category> result) {
         super.onPostExecute(result);
-        progressDialog.dismiss();
+
 
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mContext);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
 
     }
 }

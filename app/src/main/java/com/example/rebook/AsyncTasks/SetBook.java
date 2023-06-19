@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.rebook.IP;
+import com.example.rebook.Models.Book;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,17 +19,24 @@ import java.net.URL;
 
 public class SetBook extends AsyncTask<Void,Void, String>{
     private ProgressDialog progressDialog;
-    private String school, grade, category, name, condition;
+    private int school, grade, category;
+    private String name, condition,imgPath,Book_isbn;
+    private int Book_price,user_id;
     private String response;
-    private String API_SET_BOOK="http://"+ IP.ip+"/API_TrustyMed/setBook.php";
+    private String API_SET_BOOK="http://"+IP.ip+"/API_Rebook/setBook.php";
     private Context mcontext;
 
-    public SetBook(String school, String grade, String category, String name, String condition) {
+    public SetBook(Context context,int school,int grade, int category, String name, String condition,String imgPath,int book_price,String book_isbn,int user_id) {
+       this.mcontext=context;
         this.school = school;
         this.grade = grade;
         this.category = category;
         this.name = name;
         this.condition = condition;
+        this.imgPath = imgPath;
+        this.Book_price=book_price;
+        this.Book_isbn=book_isbn;
+        this.user_id = user_id;
     }
 
     @Override
@@ -36,11 +44,15 @@ public class SetBook extends AsyncTask<Void,Void, String>{
         try {
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("school", school);
-            jsonObject.put("grade", grade);
-            jsonObject.put("category", category);
-            jsonObject.put("name", name);
-            jsonObject.put("condition", condition);
+            jsonObject.put("School_id", school);
+            jsonObject.put("Grade_id", grade);
+            jsonObject.put("Category_id", category);
+            jsonObject.put("Book_name", name);
+            jsonObject.put("Book_condition", condition);
+            jsonObject.put("Book_image_path",imgPath);
+            jsonObject.put("Book_price", Book_price);
+            jsonObject.put("Book_isbn",Book_isbn);
+            jsonObject.put("User_id",user_id);
 
             // Convert the JSON object to a string
             String jsonInputString = jsonObject.toString();
@@ -87,16 +99,13 @@ public class SetBook extends AsyncTask<Void,Void, String>{
     @Override
     protected void onPostExecute(String response) {
         super.onPostExecute(response);
-        progressDialog.dismiss();
+
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mcontext);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
     }
 }
 

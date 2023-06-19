@@ -52,7 +52,7 @@
             android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-25dp"
+            android:layout_marginTop="-26.5dp"
             android:layout_marginLeft="100dp"
             android:background="@drawable/login_button"
             android:text="Login"
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="-50dp"
             android:layout_marginLeft="189dp"
-            android:layout_marginTop="-49dp"
+            android:layout_marginTop="-48dp"
             android:background="@drawable/register_button"
             android:text="Register"
 

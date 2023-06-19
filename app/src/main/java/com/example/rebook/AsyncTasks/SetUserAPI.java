@@ -51,16 +51,16 @@ public class SetUserAPI extends AsyncTask<Void,Void, String> {
         try {
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("first_name", first_name);
-            jsonObject.put("last_name", last_name);
-            jsonObject.put("role_id",role_id);
-            jsonObject.put("gender", gender);
-            jsonObject.put("phone", phone);
-            jsonObject.put("address", address);
-            jsonObject.put("dob", dob);
-            jsonObject.put("email", email);
-            jsonObject.put("password", password);
-            jsonObject.put("school_id", school_id);
+            jsonObject.put("User_first_name", first_name);
+            jsonObject.put("User_last_name", last_name);
+            jsonObject.put("Role_id",role_id);
+            jsonObject.put("User_gender", gender);
+            jsonObject.put("User_phone", phone);
+            jsonObject.put("User_address", address);
+            jsonObject.put("User_dob", dob);
+            jsonObject.put("User_email", email);
+            jsonObject.put("User_password", password);
+            jsonObject.put("School_id", school_id);
 
             // Convert the JSON object to a string
             String jsonInputString = jsonObject.toString();
@@ -107,15 +107,12 @@ public class SetUserAPI extends AsyncTask<Void,Void, String> {
     @Override
     protected void onPostExecute(String response) {
         super.onPostExecute(response);
-        progressDialog.dismiss();
+
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.context);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
     }
 }

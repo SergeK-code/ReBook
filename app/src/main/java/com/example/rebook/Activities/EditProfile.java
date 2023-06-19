@@ -52,7 +52,7 @@ public class EditProfile extends Activity {
     private ArrayAdapter<School> schoolAdapter;
     private Spinner genderSpinner;
     private Spinner schoolSpinner;
-    private Button updateButton;
+    private Button updateButton,back;
     private String selectedGender,selectedDate;
 
     private UpdateUserAPI updateUser;
@@ -71,7 +71,7 @@ public class EditProfile extends Activity {
         setContentView(R.layout.editprofile);
         initViews();
 
-        currUser= (User) getIntent().getSerializableExtra("patient");
+        currUser= (User) getIntent().getSerializableExtra("user");
 
         setViews(currUser);
 
@@ -87,22 +87,6 @@ public class EditProfile extends Activity {
 
             }
         });
-
-
-        schoolSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
-                selectedSchool = (School) parent.getAdapter().getItem(position);
-                selectedSchoolId = selectedSchool.getSchool_id();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
 
         if(calendar!=null) {
             int year = calendar.get(Calendar.YEAR);
@@ -145,6 +129,14 @@ public class EditProfile extends Activity {
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
 
     }
 
@@ -153,7 +145,6 @@ public class EditProfile extends Activity {
         lastName=findViewById(R.id.lname);
         dob=findViewById(R.id.dob);
         genderSpinner= findViewById(R.id.gender);
-        schoolSpinner=findViewById(R.id.School);
         address=findViewById(R.id.address);
         phone=findViewById(R.id.phone);
         email= findViewById(R.id.email);
@@ -161,6 +152,8 @@ public class EditProfile extends Activity {
         newPass= findViewById(R.id.newpass);
         newPassConf=findViewById(R.id.newpasconf);
         error= findViewById(R.id.error);
+        updateButton = findViewById(R.id.update);
+        back = findViewById(R.id.back_btn);
 
     }
 
@@ -197,7 +190,7 @@ public class EditProfile extends Activity {
         selectedDate = sdf.format(calendar.getTime()).trim();
 
         listOfGender();
-        listOfSchool();
+
     }
 
     private void listOfGender(){
@@ -214,17 +207,7 @@ public class EditProfile extends Activity {
     }
 
 
-    private void listOfSchool() {
-        getSchools = new GetSchoolsAPI(EditProfile.this);
-        try {
-            schools = getSchools.execute().get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        schoolAdapter = new ArrayAdapter<School>(this, android.R.layout.simple_spinner_item, schools);
-        schoolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        schoolSpinner.setAdapter(schoolAdapter);
-    }
+
 
 
     private void updateUser(){
@@ -312,7 +295,7 @@ public class EditProfile extends Activity {
             }
             editor.putString("email", email.getText().toString().trim());
             editor.apply();
-            updateUser= new UpdateUserAPI(EditProfile.this,currUser.getUser_id(), firstName.getText().toString().trim(), lastName.getText().toString().trim(),currUser.getRole_id(),selectedDate,selectedGender,address.getText().toString().trim(),phone.getText().toString().trim(),email.getText().toString().trim(),pass,selectedSchoolId);
+            updateUser= new UpdateUserAPI(EditProfile.this,currUser.getUser_id(), firstName.getText().toString().trim(), lastName.getText().toString().trim(),currUser.getRole_id(),selectedDate,selectedGender,address.getText().toString().trim(),phone.getText().toString().trim(),email.getText().toString().trim(),pass,currUser.getSchool_id());
             try {
                 response= updateUser.execute().get();
             } catch (ExecutionException | InterruptedException e) {

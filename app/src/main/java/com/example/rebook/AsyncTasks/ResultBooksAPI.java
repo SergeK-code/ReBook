@@ -24,15 +24,16 @@ import java.util.ArrayList;
 public class ResultBooksAPI extends AsyncTask <Void,Void, ArrayList<Book>>{
 
     private String response;
-    private int Sid,Gid,Cid;
+    private int Sid,Gid,Cid,User_id;
     private ProgressDialog progressDialog;
     Context mcontext;
     private String API_SET_RESULT_BOOKS="http://"+ IP.ip+"/API_Rebook/ResultBooks.php";
 
-    public ResultBooksAPI(Context context, int Sid,int Gid,int Cid){
+    public ResultBooksAPI(Context context, int Sid,int Gid,int Cid,int user_id){
         this.Sid=Sid;
         this.Gid=Gid;
         this.Cid=Cid;
+        this.User_id=user_id;
         this.mcontext=context;
     }
     @Override
@@ -44,6 +45,7 @@ public class ResultBooksAPI extends AsyncTask <Void,Void, ArrayList<Book>>{
             jsonObject1.put("School_id", this.Sid);
             jsonObject1.put("Grade_id",this.Gid);
             jsonObject1.put("Category_id",this.Cid);
+            jsonObject1.put("User_id",this.User_id);
 
             // Convert the JSON object to a string
             String jsonInputString = jsonObject1.toString();
@@ -105,15 +107,12 @@ public class ResultBooksAPI extends AsyncTask <Void,Void, ArrayList<Book>>{
     @Override
     protected void onPostExecute(ArrayList<Book> response) {
         super.onPostExecute(response);
-        progressDialog.dismiss();
+
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mcontext);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
     }
 }

@@ -66,17 +66,14 @@ public class GetCartBooksAPI extends AsyncTask<Void, Void, ArrayList<Book>> {
     @Override
     protected void onPostExecute(ArrayList<Book> result) {
         super.onPostExecute(result);
-        progressDialog.dismiss();
+
 
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mContext);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
 
     }
 }

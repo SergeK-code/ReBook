@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/CatClassTextView"
+        android:id="@+id/BookNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Book Name:"
@@ -15,7 +15,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/cat_classTextView"
+        android:id="@+id/book_nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="120dp"
@@ -27,7 +27,8 @@
         android:id="@+id/BuyerNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_below="@+id/BookNameTextView"
+        android:layout_marginTop="20dp"
         android:text="Buyer Name: "
         android:textSize="14sp" />
 
@@ -36,15 +37,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="120dp"
-        android:layout_marginTop="30dp"
-        android:text="Buyer Name: "
+        android:layout_alignBaseline="@+id/BuyerNameTextView"
+        android:layout_below="@+id/book_nameTextView"
+        android:text=""
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/BuyerPhoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buyer_nameTextView"
+        android:layout_marginTop="10dp"
+        android:text="Buyer Phone: "
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/buyer_phoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buyer_nameTextView"
+        android:layout_alignBaseline="@+id/BuyerPhoneTextView"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="5dp"
+        android:text=""
         android:textSize="14sp" />
 
     <Button
         android:id="@+id/accept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="286dp"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
         android:text="Accept"
@@ -57,11 +79,12 @@
         android:id="@+id/reject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="216dp"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/accept"
+        android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
         android:text="Reject"
         android:textColor="@color/achrogray"
-        android:textSize="12dp"></Button>
+        android:textSize="12dp" />
 
 </RelativeLayout>

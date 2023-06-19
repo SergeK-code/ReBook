@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import androidx.appcompat.view.menu.MenuWrapperICS;
+
 import com.example.rebook.Adapters.BuyOperationAdapter;
 import com.example.rebook.AsyncTasks.GetBooksAPI;
 import com.example.rebook.AsyncTasks.GetOperationsAPI;
@@ -25,7 +27,7 @@ import java.util.concurrent.ExecutionException;
 
 public class PendingOrders extends Activity {
 
-    private static final ArrayList<String> options = new ArrayList<>(Arrays.asList("Buy,Sell"));
+    private static final ArrayList<String> options = new ArrayList<>(Arrays.asList("Buy","Sell"));
     private ArrayList<Operation> Operations = new ArrayList<>();
 
     private ArrayList<Operation> ResultOperations = new ArrayList<>();
@@ -42,6 +44,7 @@ public class PendingOrders extends Activity {
     private Spinner orderType;
     private ArrayAdapter<String> optionsAdapter;
     private User user;
+
 
     @Override
     public void onCreate(Bundle saveInstanceState){
@@ -72,6 +75,12 @@ public class PendingOrders extends Activity {
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
     }
@@ -93,7 +102,7 @@ public class PendingOrders extends Activity {
             throw new RuntimeException(e);
         }
         for(Operation op : Operations){
-            if(op.getOperation_type_id()==4 && op.getOperation_status_id()==2){
+            if(op.getOperation_type_id()==4 && op.getOperation_status_id()==2 && op.getUser_id()==user.getUser_id()){
                 ResultOperations.add(op);
             }
         }
@@ -102,6 +111,8 @@ public class PendingOrders extends Activity {
     }
 
     public void getSellOperations(){
+        ArrayList<Operation> SellOperations = new ArrayList<>();
+        ArrayList<Operation> BuyOperations=new ArrayList<>();
         ResultOperations.clear();
         getOperations = new GetOperationsAPI(PendingOrders.this);
         getBooks = new GetBooksAPI(PendingOrders.this);
@@ -114,11 +125,16 @@ public class PendingOrders extends Activity {
             throw new RuntimeException(e);
         }
         for(Operation op : Operations){
-            if(op.getOperation_type_id()==1 && op.getOperation_status_id()==2){
+            if(op.getOperation_type_id()==1 && op.getOperation_status_id()==2 && op.getUser_id()==user.getUser_id()){
                 ResultOperations.add(op);
             }
         }
-        sellOperationAdapter = new SellOperationAdapter(PendingOrders.this,ResultOperations,Books,users);
+        for(Operation op : Operations){
+            if(op.getOperation_type_id()==4 && op.getOperation_status_id()==2){
+                BuyOperations.add(op);
+            }
+        }
+        sellOperationAdapter = new SellOperationAdapter(PendingOrders.this,ResultOperations,BuyOperations,Books,users);
         myOperations.setAdapter(sellOperationAdapter);
     }
 

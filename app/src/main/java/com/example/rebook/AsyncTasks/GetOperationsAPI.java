@@ -65,17 +65,14 @@ public class GetOperationsAPI extends AsyncTask<Void, Void, ArrayList<Operation>
     @Override
     protected void onPostExecute(ArrayList<Operation> result) {
         super.onPostExecute(result);
-        progressDialog.dismiss();
+
 
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mContext);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
 
     }
 }

@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#EC0A0A</color>
     <color name="app_pink">#D3709E</color>
+    <color name="light_app_pink">#DA93B4</color>
     <color name="gray">#878282</color>
     <color name="dark_gray">#656363</color>
     <color name="light_gray">#AEA9A9</color>

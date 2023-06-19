@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -31,7 +32,7 @@ import java.util.concurrent.ExecutionException;
 public class MyCart extends Activity {
     private TextView item_count;
     private GridView booksGrid;
-    private Button checkout,clearCart;
+    private Button checkout,clearCart,back,cancel;
     private GetCartBooksAPI getCartBooks;
     private ArrayList<Book> books = new ArrayList<>();
     private BookCartAdapter bookCartAdapter;
@@ -72,6 +73,7 @@ public class MyCart extends Activity {
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 checkoutItems();
             }
         });
@@ -83,12 +85,32 @@ public class MyCart extends Activity {
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                setResult(1);
+                finish();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                setResult(2);
+                finish();
+            }
+        });
+
     }
     public void initViews(){
         item_count = findViewById(R.id.cart_items_count);
         booksGrid = findViewById(R.id.book_grid);
         checkout = findViewById(R.id.check_out_all);
         clearCart = findViewById(R.id.clear_cart);
+        back = findViewById(R.id.back_btn);
+        cancel = findViewById(R.id.cancel_btn);
     }
 
     public void listOfBooks(){
@@ -98,9 +120,13 @@ public class MyCart extends Activity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        bookCartAdapter = new BookCartAdapter(MyCart.this,user.getUser_id(),books);
-        booksGrid.setAdapter(bookCartAdapter);
+        item_count.setText(String.valueOf(books.size()));
+        if (user != null) {
+            bookCartAdapter = new BookCartAdapter(MyCart.this, user.getUser_id(), books);
+            booksGrid.setAdapter(bookCartAdapter);
+        }
     }
+
 
     public void displayBookDetails(){
         getSchool= new GetSchoolsAPI(MyCart.this);
@@ -142,14 +168,6 @@ public class MyCart extends Activity {
     }
 
     public void checkoutItems(){
-        checkoutItems = new CheckoutItemsAPI(MyCart.this,books,user.getUser_id());
-        try {
-            result = checkoutItems.execute().get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        Toast.makeText(MyCart.this,result, Toast.LENGTH_SHORT).show();
-
         books.clear();
         getCartBooks = new GetCartBooksAPI(MyCart.this);
         try {
@@ -157,21 +175,59 @@ public class MyCart extends Activity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        bookCartAdapter.notifyDataSetChanged();
+        if(books.isEmpty()){
+            Toast.makeText(MyCart.this,"Cart is empty",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else{
+            checkoutItems = new CheckoutItemsAPI(MyCart.this,books,user.getUser_id());
+            try {
+                result = checkoutItems.execute().get();
+                Log.e("#r",result);
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(MyCart.this,result, Toast.LENGTH_SHORT).show();
+
+            books.clear();
+            getCartBooks = new GetCartBooksAPI(MyCart.this);
+            try {
+                books = getCartBooks.execute().get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            item_count.setText(String.valueOf(books.size()));
+            bookCartAdapter.notifyDataSetChanged();
+        }
+
     }
 
     public void clearCartItems(){
-       removeFromCart = new RemoveFromCartAPI(MyCart.this,user.getUser_id(),books);
+        books.clear();
+        getCartBooks = new GetCartBooksAPI(MyCart.this);
         try {
-            result = checkoutItems.execute().get();
+            books = getCartBooks.execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        Toast.makeText(MyCart.this,result, Toast.LENGTH_SHORT).show();
+        if(books.isEmpty()){
+            Toast.makeText(MyCart.this,"Cart is empty",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            removeFromCart = new RemoveFromCartAPI(MyCart.this, user.getUser_id(), books);
+            try {
+                result = removeFromCart.execute().get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(MyCart.this, result, Toast.LENGTH_SHORT).show();
 
-        if(result.toLowerCase().contains("successfully")){
-            books.clear();
-            bookCartAdapter.notifyDataSetChanged();
+            if (result.toLowerCase().contains("successfully")) {
+                books.clear();
+                item_count.setText(String.valueOf(books.size()));
+                bookCartAdapter.notifyDataSetChanged();
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class GetRolesAPI extends AsyncTask<Void, Void, ArrayList<Role>> {
     private ProgressDialog progressDialog;
-    private static final String API_GET_ROLES = "http://"+ IP.ip+"/API_Rebook/GetRoles.php";
+    private static final String API_GET_ROLES = "http://"+IP.ip+"/API_Rebook/GetRoles.php";
     private Context mContext;
 
     public GetRolesAPI(Context mContext) {
@@ -59,17 +59,14 @@ public class GetRolesAPI extends AsyncTask<Void, Void, ArrayList<Role>> {
     @Override
     protected void onPostExecute(ArrayList<Role> result) {
         super.onPostExecute(result);
-        progressDialog.dismiss();
+
 
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mContext);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
 
     }
 
