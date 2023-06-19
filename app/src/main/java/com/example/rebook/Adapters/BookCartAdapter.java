@@ -1,6 +1,7 @@
 package com.example.rebook.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.rebook.IP;
 import com.example.rebook.Models.Book;
 import com.example.rebook.R;
 import com.example.rebook.AsyncTasks.RemoveFromCartAPI;
@@ -24,7 +26,7 @@ public class BookCartAdapter extends ArrayAdapter<Book> {
     private Context context;
     private ArrayList<Book> Books;
     private int User_id;
-
+    private static final String Repo = "http://"+ IP.ip+"/API_Rebook/";
     public BookCartAdapter(Context context,int user_id, ArrayList<Book> books) {
         super(context, 0, books);
         this.context = context;
@@ -42,7 +44,7 @@ public class BookCartAdapter extends ArrayAdapter<Book> {
         Book currentBook = Books.get(position);
 
         ImageView bookImage = (ImageView) listItem.findViewById(R.id.CoverImageView);
-        String imagePath = currentBook.getBook_image_path();
+        String imagePath = Repo+currentBook.getBook_image_path();
         Glide.with(context)
                 .load(imagePath)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -67,6 +69,7 @@ public class BookCartAdapter extends ArrayAdapter<Book> {
                 String result = "Could not connect to database";
                 try {
                     result=removeFromCart.execute().get();
+
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }

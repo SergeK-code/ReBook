@@ -2,6 +2,7 @@ package com.example.rebook.Adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +22,15 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class SellOperationAdapter extends ArrayAdapter<Operation> {
-    private ArrayList<Operation> operations;
+    private ArrayList<Operation> Operations,BuyOperations;
     private ArrayList<Book> books;
     private ArrayList<User> users;
     private Context context;
 
-    public SellOperationAdapter(Context context, ArrayList<Operation> operations, ArrayList<Book> books, ArrayList<User> users) {
-        super(context, 0, operations);
-        this.operations = operations;
+    public SellOperationAdapter(Context context, ArrayList<Operation> operations,ArrayList<Operation> buyOperations, ArrayList<Book> books, ArrayList<User> users) {
+        super(context, 0,operations);
+        this.Operations=operations;
+        this.BuyOperations = buyOperations;
         this.books = books;
         this.users = users;
         this.context=context;
@@ -36,14 +38,15 @@ public class SellOperationAdapter extends ArrayAdapter<Operation> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Operation operation = operations.get(position);
+        Operation operation = Operations.get(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.request_list_item_seller, parent, false);
         }
 
-        TextView bookNameTextView = convertView.findViewById(R.id.cat_classTextView);
+        TextView bookNameTextView = convertView.findViewById(R.id.book_nameTextView);
         TextView buyerNameTextView = convertView.findViewById(R.id.buyer_nameTextView);
+        TextView buyerPhoneTextView = convertView.findViewById(R.id.buyer_phoneTextView);
         Button acceptButton = convertView.findViewById(R.id.accept);
         Button rejectButton = convertView.findViewById(R.id.reject);
 
@@ -56,10 +59,11 @@ public class SellOperationAdapter extends ArrayAdapter<Operation> {
         else{bookNameTextView.setText("");}
 
         // Retrieve buyer details for the operation
-        User buyer = findBuyerById(operation.getUser_id());
+        User buyer = findBuyer(operation);
 
         if (buyer != null) {
             buyerNameTextView.setText(buyer.getUser_first_name());
+            buyerPhoneTextView.setText(buyer.getUser_phone());
         }
         else{buyerNameTextView.setText("");}
 
@@ -82,7 +86,7 @@ public class SellOperationAdapter extends ArrayAdapter<Operation> {
                         Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                         if(result.toLowerCase().contains("accepted")){
-                            operations.remove(operation);
+                            Operations.remove(operation);
                             notifyDataSetChanged();
                         }
                     }
@@ -119,7 +123,7 @@ public class SellOperationAdapter extends ArrayAdapter<Operation> {
                         Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                         if(result.toLowerCase().contains("canceled")){
-                            operations.remove(operation);
+                            Operations.remove(operation);
                             notifyDataSetChanged();
                         }
                     }
@@ -148,7 +152,13 @@ public class SellOperationAdapter extends ArrayAdapter<Operation> {
         return null;
     }
 
-    private User findBuyerById(int buyerId) {
+    private User findBuyer(Operation operation) {
+        int buyerId = 0 ;
+        for(Operation op : BuyOperations){
+            if(op.getBook_id()==operation.getBook_id()){
+                buyerId = op.getUser_id();
+            }
+        }
         for (User user : users) {
             if (user.getUser_id() == buyerId) {
                 return user;

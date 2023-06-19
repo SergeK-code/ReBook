@@ -1,6 +1,7 @@
 package com.example.rebook.Activities;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -77,12 +78,13 @@ public class ViewHistory extends Activity {
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+        Log.e("#opt",operationTypes.toString());
         for(Operation op : operations){
             if(op.getUser_id()==user.getUser_id() && (op.getOperation_type_id()==1 ||op.getOperation_type_id()==4 ) && op.getOperation_status_id()==3){
                 filteredOperations.add(op);
             }
         }
         Operation_adapter = new OrderAdapter(ViewHistory.this,filteredOperations,books,operationTypes);
-
+        Operations_list.setAdapter(Operation_adapter);
     }
 }

@@ -58,7 +58,7 @@
 
             <TextView
                 android:id="@+id/greeting"
-                android:layout_width="161dp"
+                android:layout_width="wrap_content"
                 android:layout_height="68dp"
                 android:layout_marginStart="250dp"
                 android:layout_marginTop="200dp"
@@ -104,7 +104,8 @@
                 android:layout_marginTop="0dp"
                 android:padding="16dp"
                 android:text="Buy Book"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:background="@drawable/menu_button"/>
 
             <Button
                 android:id="@+id/sell_book"
@@ -114,7 +115,8 @@
                 android:layout_marginTop="15dp"
                 android:padding="16dp"
                 android:text="Sell Book"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:background="@drawable/menu_button"/>
 
             <Button
                 android:id="@+id/view_history"
@@ -124,17 +126,19 @@
                 android:layout_marginTop="15dp"
                 android:padding="16dp"
                 android:text="View History"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:background="@drawable/menu_button"/>
 
             <Button
-                android:id="@+id/edit_profile"
+                android:id="@+id/pending_orders"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:padding="16dp"
-                android:text="Edit Profile"
-                android:textSize="20dp" />
+                android:text="Pending Orders"
+                android:textSize="20dp"
+                android:background="@drawable/menu_button"/>
 
             <Button
                 android:id="@+id/view_cart"
@@ -144,18 +148,31 @@
                 android:layout_marginTop="15dp"
                 android:padding="16dp"
                 android:text="View Cart"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:background="@drawable/menu_button"/>
 
             <Button
-                android:id="@+id/pending_orders"
+                android:id="@+id/my_uploads"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
                 android:padding="16dp"
-                android:text="Pending Orders"
-                android:textSize="20dp" />
+                android:text="My Uploads"
+                android:textSize="20dp"
+                android:background="@drawable/menu_button"/>
+
+            <Button
+                android:id="@+id/edit_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:padding="16dp"
+                android:text="Edit Profile"
+                android:textSize="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/menu_button"/>
 
         </LinearLayout>
 

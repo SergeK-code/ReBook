@@ -30,57 +30,66 @@
         android:textColor="@color/red"/>
 
     <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="wrap_content"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/back_btn"
         android:layout_alignStart="@id/back_btn"
         android:layout_marginTop="50dp"
-        android:layout_marginStart="20dp"
+        android:gravity="center_horizontal"
+        android:text="My Uploads"
         android:textColor="@color/dark_gray"
-        android:text="Search result"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+
+    <LinearLayout
+        android:id="@+id/cart_items_count_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/title"
+        android:layout_alignStart="@id/title"
+        android:orientation="horizontal">
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/form"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/txtTitle"
+        android:layout_below="@id/cart_items_count_container"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@color/white"
         android:orientation="vertical">
 
-        <GridView
-            android:id="@+id/book_grid"
+        <TextView
+            android:id="@+id/noBooks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No appointments to show"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"
+            />
+
+        <ListView
+            android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:numColumns="2"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:verticalSpacing="20dp"
-            android:nestedScrollingEnabled="true"
             android:scrollbarFadeDuration="1"
-            android:isScrollContainer="true"
+            android:verticalSpacing="20dp"
             android:smoothScrollbar="true"
             />
-    </LinearLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/cart_icon"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_below="@id/form"
-        android:layout_alignEnd="@+id/form"
-        android:layout_marginTop="-80dp"
-        android:layout_marginEnd="-35dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/cart"
-        app:civ_border_color="@color/light_gray"
-        app:civ_border_width="1dp" />
+    </LinearLayout>
 
 
 

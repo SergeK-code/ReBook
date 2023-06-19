@@ -59,17 +59,14 @@ public class GetPaymentMethodsAPI extends AsyncTask<Void, Void, ArrayList<Paymen
     @Override
     protected void onPostExecute(ArrayList<Payment_method> result) {
         super.onPostExecute(result);
-        progressDialog.dismiss();
+
 
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mContext);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
 
     }
 }

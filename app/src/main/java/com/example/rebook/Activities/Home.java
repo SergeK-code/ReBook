@@ -18,7 +18,7 @@ import com.example.rebook.R;
 public class Home extends Activity {
 
     private ImageView image;
-    private Button logout,editProfile,sellBook,buyBook, viewHistory,viewCart,pendingOrders;
+    private Button logout,editProfile,sellBook,buyBook, viewHistory,viewCart,pendingOrders,myUploads;
     private User user;
     private TextView greeting;
     private String password;
@@ -92,6 +92,13 @@ public class Home extends Activity {
             }
         });
 
+        myUploads.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayMyUploads(user);
+            }
+        });
+
         logout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -114,6 +121,7 @@ public class Home extends Activity {
         logout=findViewById(R.id.logout);
         greeting= findViewById(R.id.greeting);
         pendingOrders = findViewById(R.id.pending_orders);
+        myUploads = findViewById(R.id.my_uploads);
 
     }
 
@@ -152,6 +160,12 @@ public class Home extends Activity {
         Intent i = new Intent(Home.this,PendingOrders.class);
         i.putExtra("user",user);
         startActivityForResult(i,6);
+    }
+
+    public void displayMyUploads(User user){
+        Intent i = new Intent(Home.this,MyUploads.class);
+        i.putExtra("user",user);
+        startActivityForResult(i,7);
     }
 
     private void Logout(){

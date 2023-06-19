@@ -1,6 +1,8 @@
 package com.example.rebook.Activities;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
 
 import com.example.rebook.AsyncTasks.AddBookAPI;
 import com.example.rebook.AsyncTasks.GetBooksAPI;
@@ -29,19 +32,19 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class AddBooksAdmin extends AppCompatActivity {
+public class AddBooksAdmin extends Activity {
 
     private Spinner bookGrade, bookCategory;
     private Button addButton, back, cancel;
     private ArrayAdapter<Grade> gradeAdapter;
     private ArrayList<Grade> grades = new ArrayList<>();
     private Grade selectedGrade;
-    private int selectedGradeId = 0;
+    private int selectedGradeId;
     private GetGradesAPI dbGrades;
     private ArrayAdapter<Category> categoryAdapter;
     private ArrayList<Category> categories;
     private Category selectedCategory;
-    private int selectedCategoryId = 0;
+    private int selectedCategoryId;
     private EditText bookNameEditText,priceEditText,isbnEditText;
     private GetCategoriesAPI dbCategories;
     private ArrayAdapter<Book> bookAdapter;
@@ -62,6 +65,7 @@ public class AddBooksAdmin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_book);
+
         user = (User) getIntent().getSerializableExtra("user");
 
         bookGrade = findViewById(R.id.book_grade);
@@ -75,6 +79,8 @@ public class AddBooksAdmin extends AppCompatActivity {
         grades = new ArrayList<>();
         categories = new ArrayList<>();
 
+        ViewCompat.setBackgroundTintList(addButton, null);
+
         grades = getGrades();
         listOfGrades();
         categories = getCategories();
@@ -84,25 +90,36 @@ public class AddBooksAdmin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                  bookName = bookNameEditText.getText().toString();
-                 price = Integer.parseInt(priceEditText.getText().toString());
+                 if(!(priceEditText.getText().toString().trim().isEmpty())){
+                     price = Integer.parseInt(priceEditText.getText().toString());
+                 }
                  isbn = isbnEditText.getText().toString();
-                ArrayList<Book> currentBooks = listOfBooks(selectedGradeId,selectedCategoryId);
+                 listOfBooks();
+
                 added = false;
 
-                if(!currentBooks.isEmpty()){
+                if(!selectedBooks.isEmpty()){
                     added = true;
                 }
 
                 if (added) {
                     Toast.makeText(AddBooksAdmin.this, "This book already exists!", Toast.LENGTH_SHORT).show();
                 } else {
-                    AddBookAPI addBook = new AddBookAPI(AddBooksAdmin.this,user.getSchool_id(),selectedGradeId,selectedCategoryId,bookName,price,isbn,user.getUser_id());
-                    try {
-                        result = addBook.execute().get();
-                    } catch (ExecutionException | InterruptedException e) {
-                        e.printStackTrace();
+                    if(!(bookName.trim().isEmpty()) && !(isbn.trim().isEmpty())){
+                        AddBookAPI addBook = new AddBookAPI(AddBooksAdmin.this,user.getSchool_id(),selectedGradeId,selectedCategoryId,bookName,price,isbn,user.getUser_id());
+                        try {
+                            result = addBook.execute().get();
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Toast.makeText(AddBooksAdmin.this,result,Toast.LENGTH_SHORT).show();
+
                     }
-                    Toast.makeText(AddBooksAdmin.this,result,Toast.LENGTH_SHORT).show();
+                    else{
+                        Toast.makeText(AddBooksAdmin.this,"Fill all fields",Toast.LENGTH_SHORT).show();
+                    }
+
+
                 }
             }
         });
@@ -113,7 +130,6 @@ public class AddBooksAdmin extends AppCompatActivity {
                 selectedCategory = (Category) parent.getAdapter().getItem(position);
                 selectedCategoryId = selectedCategory.getCategory_id();
 
-                listOfBooks(selectedGradeId, selectedCategoryId);
             }
 
             @Override
@@ -198,15 +214,16 @@ public class AddBooksAdmin extends AppCompatActivity {
         return results;
     }
 
-    private ArrayList<Book> listOfBooks(int selectedGradeId, int selectedCategoryId) {
+    private void listOfBooks() {
         selectedBooks.clear();
         ArrayList<Book> filteredBooks = new ArrayList<>();
         ArrayList<Book> books = getBooks();
         for (Book b : books) {
-            if (b.getGrade_id() == selectedGradeId && b.getCategory_id() == selectedCategoryId && b.getBook_name()==bookName) {
+            if (b.getBook_isbn().toString().trim().equals(isbn.trim())){
                 filteredBooks.add(b);
             }
         }
+
 
 
         getOperations = new GetOperationsAPI(AddBooksAdmin.this);
@@ -222,6 +239,7 @@ public class AddBooksAdmin extends AppCompatActivity {
             }
         }
 
+
         for(Book b: filteredBooks){
             for(Operation op : myOperations)
                 if(b.getBook_id() == op.getBook_id()){
@@ -230,7 +248,5 @@ public class AddBooksAdmin extends AppCompatActivity {
                 }
         }
 
-
-       return selectedBooks;
     }
 }

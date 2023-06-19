@@ -2,6 +2,7 @@ package com.example.rebook.Adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ public class BuyOperationAdapter extends ArrayAdapter<Operation> {
 
         if (book != null) {
             bookNameTextView.setText(book.getBook_name());
-            bookPriceTextView.setText(String.valueOf(book.getBook_price()));
+            bookPriceTextView.setText(String.valueOf(book.getBook_price()+ "$"));
         }
         else{
             bookNameTextView.setText("");
@@ -67,6 +68,7 @@ public class BuyOperationAdapter extends ArrayAdapter<Operation> {
                         CancelOperationAPI cancelOperation = new CancelOperationAPI(context,book.getBook_id());
                         try {
                             result = cancelOperation.execute().get();
+                            Log.e("#cancel",result);
                         } catch (ExecutionException | InterruptedException e) {
                             e.printStackTrace();
                         }

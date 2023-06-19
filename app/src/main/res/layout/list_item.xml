@@ -7,6 +7,7 @@
         android:id="@+id/TitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/bookImage"
         android:text="Title: "
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -15,15 +16,15 @@
         android:id="@+id/GradeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Grade: "
-        android:textSize="12sp"
         android:layout_below="@id/TitleTextView"
-        android:layout_alignStart="@id/TitleTextView" />
+        android:layout_alignStart="@id/TitleTextView"
+        android:text="Grade: "
+        android:textSize="12sp" />
     <TextView
-        android:id="@+id/TimeTextView"
+        android:id="@+id/CategoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Time: "
+        android:text="Category: "
         android:textSize="12sp"
         android:layout_below="@id/GradeTextView"
         android:layout_alignStart="@id/GradeTextView" />

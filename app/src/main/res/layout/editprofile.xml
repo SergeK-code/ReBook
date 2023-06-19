@@ -23,30 +23,32 @@
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginStart="10dp">
 
             <EditText
                 android:id="@+id/fname"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="300dp"
+                android:layout_marginEnd="50dp"
                 android:hint="First name"
                 android:inputType="text"
                 />
         </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginStart="10dp">
             <EditText
                 android:id="@+id/lname"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="300dp"
+                android:layout_marginEnd="50dp"
                 android:hint="Last name"
                 android:inputType="text"
                 />
@@ -59,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="155dp"
+            android:layout_gravity="center"
             android:text="date of birth"
             android:textSize="18dp" />
 
@@ -157,7 +159,8 @@
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
                 android:background="@drawable/rounded_btn"
-                android:text="Update" />
+                android:text="Update"
+                android:textColor="@color/white"/>
 
         </LinearLayout>
         <Button

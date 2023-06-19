@@ -3,8 +3,10 @@ package com.example.rebook.Activities;
 import android.app.Activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +23,7 @@ import com.example.rebook.AsyncTasks.BuyBookAPI;
 import com.example.rebook.AsyncTasks.GetOperationsAPI;
 import com.example.rebook.AsyncTasks.GetPaymentMethodsAPI;
 import com.example.rebook.AsyncTasks.GetUsersAPI;
+import com.example.rebook.IP;
 import com.example.rebook.Models.Book;
 import com.example.rebook.Models.Operation;
 import com.example.rebook.Models.User;
@@ -54,16 +57,12 @@ public class BookDetails extends Activity {
     private int selected_payment_method_id;
     private Payment_method selected_payment_method;
     private BuyBookAPI buyBookAPI;
-
+    private static final String Repo = "http://"+ IP.ip+"/API_Rebook/";
 
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.book_details);
-
-        initViews();
-        setViews();
-        getMyAddToCartOperations();
 
         bundle = getIntent().getExtras();
         school_name = bundle.getString("selectedSchool");
@@ -71,6 +70,8 @@ public class BookDetails extends Activity {
         grade_name = bundle.getString("selectedGrade");
         selectedBook = (Book) getIntent().getSerializableExtra("selectedBook");
         user = (User) getIntent().getSerializableExtra("user");
+
+        getMyAddToCartOperations();
         initViews();
         setViews();
 
@@ -91,17 +92,29 @@ public class BookDetails extends Activity {
         phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phoneNumber = phone.getText().toString();
+                String phoneNumber =phone.getText().toString();
+
+                Uri uri = Uri.parse("https://wa.me/" + phoneNumber);
                 Uri dialUri = Uri.parse("tel:" + phoneNumber);
                 Intent dialIntent = new Intent(Intent.ACTION_DIAL, dialUri);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
-                if (dialIntent.resolveActivity(getPackageManager()) != null) {
+                // Check if WhatsApp is installed on the device
+                PackageManager packageManager = getPackageManager();
+                if (intent.resolveActivity(packageManager) != null) {
+                    // Open WhatsApp
+                    startActivity(intent);
+                }
+                else if(dialIntent.resolveActivity(getPackageManager()) != null){
+                    Toast.makeText(BookDetails.this, "WhatsApp is not installed", Toast.LENGTH_SHORT).show();
                     startActivity(dialIntent);
-                } else {
+                }
+                else  {
                     Toast.makeText(BookDetails.this, "No app found to handle the action", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
 
         AddToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,9 +177,8 @@ public class BookDetails extends Activity {
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                     }
+                    Log.e("#buy",result);
                     Toast.makeText(BookDetails.this,result,Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(BookDetails.this,MyCart.class);
-                    startActivityForResult(i,1);
                 }
             }
         });
@@ -192,9 +204,10 @@ public class BookDetails extends Activity {
       school.setText(school_name);
       title.setText(selectedBook.getBook_name());
       grade.setText(grade_name);
-      price.setText(selectedBook.getBook_price());
+      String priceText = String.valueOf(selectedBook.getBook_price() ) ;
+      price.setText(priceText+" $");
 
-        String imagePath = selectedBook.getBook_image_path();
+        String imagePath = Repo+selectedBook.getBook_image_path();
         Glide.with(BookDetails.this)
                 .load(imagePath)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -233,6 +246,7 @@ public class BookDetails extends Activity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+        payment_methods.remove(0);
         payment_methods_Adapter = new ArrayAdapter<Payment_method>(this, android.R.layout.simple_spinner_item,payment_methods);
         payment_methods_Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         paymentMethod.setAdapter(payment_methods_Adapter);

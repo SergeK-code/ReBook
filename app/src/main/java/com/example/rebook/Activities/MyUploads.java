@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 
-public class RemoveBookAdmin extends Activity {
+public class MyUploads extends Activity {
     private RemoveBookAdapter removeBookAdapter;
     private ListView booksList;
     private User user;
@@ -54,7 +54,7 @@ public class RemoveBookAdmin extends Activity {
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
-        setContentView(R.layout.remove_book_admin);
+        setContentView(R.layout.my_uploads);
 
         booksList= findViewById(R.id.listView);
         noBooks= findViewById(R.id.noBooks);
@@ -81,7 +81,7 @@ public class RemoveBookAdmin extends Activity {
         });
     }
     private void myBooks() {
-        getOperations = new GetOperationsAPI(RemoveBookAdmin.this);
+        getOperations = new GetOperationsAPI(MyUploads.this);
         try {
             allOperations = getOperations.execute().get();
         } catch (ExecutionException | InterruptedException e) {
@@ -89,14 +89,14 @@ public class RemoveBookAdmin extends Activity {
         }
         myOperations.clear();
         for(Operation op: allOperations){
-            if(op.getUser_id()==user.getUser_id() && op.getOperation_type_id()==5 && op.getOperation_status_id()==1){
+            if(op.getUser_id()==user.getUser_id() && op.getOperation_type_id()==1 && op.getOperation_status_id()==1){
                 myOperations.add(op);
                 myBooksIds.add(op.getBook_id());
             }
         }
 
-         myBooks.clear();
-        getBooks = new GetBooksAPI(RemoveBookAdmin.this);
+        myBooks.clear();
+        getBooks = new GetBooksAPI(MyUploads.this);
         try {
             books = getBooks.execute().get();
         } catch (ExecutionException | InterruptedException e) {
@@ -115,8 +115,8 @@ public class RemoveBookAdmin extends Activity {
     }
 
     public void listOfBooks(){
-        getCategories = new GetCategoriesAPI(RemoveBookAdmin.this);
-        getGrades = new GetGradesAPI(RemoveBookAdmin.this);
+        getCategories = new GetCategoriesAPI(MyUploads.this);
+        getGrades = new GetGradesAPI(MyUploads.this);
         try {
             allCategories = getCategories.execute().get();
             allGrades = getGrades.execute().get();
@@ -124,7 +124,7 @@ public class RemoveBookAdmin extends Activity {
             e.printStackTrace();
         }
 
-        removeBookAdapter = new RemoveBookAdapter(RemoveBookAdmin.this,myBooks,allGrades,allCategories);
+        removeBookAdapter = new RemoveBookAdapter(MyUploads.this,myBooks,allGrades,allCategories);
         booksList.setAdapter(removeBookAdapter);
     }
 }

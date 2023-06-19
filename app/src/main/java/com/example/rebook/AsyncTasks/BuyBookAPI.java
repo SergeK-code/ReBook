@@ -99,15 +99,12 @@ public class BuyBookAPI extends AsyncTask<Void,Void, String> {
     @Override
     protected void onPostExecute(String response) {
         super.onPostExecute(response);
-        progressDialog.dismiss();
+
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mcontext);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
     }
 }

@@ -23,10 +23,11 @@ public class SetBook extends AsyncTask<Void,Void, String>{
     private String name, condition,imgPath,Book_isbn;
     private int Book_price,user_id;
     private String response;
-    private String API_SET_BOOK="http://"+ IP.ip+"/API_Rebook/setBook.php";
+    private String API_SET_BOOK="http://"+IP.ip+"/API_Rebook/setBook.php";
     private Context mcontext;
 
-    public SetBook(int school,int grade, int category, String name, String condition,String imgPath,int book_price,String book_isbn,int user_id) {
+    public SetBook(Context context,int school,int grade, int category, String name, String condition,String imgPath,int book_price,String book_isbn,int user_id) {
+       this.mcontext=context;
         this.school = school;
         this.grade = grade;
         this.category = category;
@@ -98,16 +99,13 @@ public class SetBook extends AsyncTask<Void,Void, String>{
     @Override
     protected void onPostExecute(String response) {
         super.onPostExecute(response);
-        progressDialog.dismiss();
+
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mcontext);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
     }
 }
 

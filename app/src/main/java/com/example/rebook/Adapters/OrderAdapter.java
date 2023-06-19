@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.rebook.IP;
 import com.example.rebook.Models.Book;
 import com.example.rebook.Models.Operation;
 import com.example.rebook.Models.Operation_type;
@@ -21,7 +22,7 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
     private ArrayList<Operation> Operations;
     private ArrayList<Book> Books;
     private ArrayList<Operation_type> OperationTypes;
-
+    private static final String Repo = "http://"+ IP.ip+"/API_Rebook/";
 
     public OrderAdapter( Context context, ArrayList<Operation> operations, ArrayList<Book> books, ArrayList<Operation_type> operationTypes) {
         super(context,0,operations);
@@ -48,7 +49,8 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
         TextView operationTypeTextView = view.findViewById(R.id.operation_typeTextView);
         TextView dateTextView = view.findViewById(R.id.date_textView);
 
-        operationIdTextView.setText(currentOperation.getOperation_id());
+        operationIdTextView.setText(String.valueOf(currentOperation.getOperation_id()));
+
         dateTextView.setText(currentOperation.getOperation_date());
         String book_name = "";
         String image_path = "";
@@ -56,19 +58,20 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
         for(Book b : Books){
             if(b.getBook_id()==curr_op_book_id){
                 book_name = b.getBook_name();
-                image_path = b.getBook_image_path();
+                image_path = Repo+b.getBook_image_path();
                 break;
             }
         }
-        String operation_name = "";
+
         int curr_op_type_id = currentOperation.getOperation_type_id();
         for(Operation_type opType : OperationTypes){
             if(opType.getOperation_type_id() == curr_op_type_id){
-                operation_name = opType.getOperation_type_name();
+                operationTypeTextView.setText(opType.getOperation_type_name());
+                break;
             }
         }
         bookNameTextView.setText(book_name);
-        operationTypeTextView.setText(operation_name);
+
 
         Glide.with(context)
                 .load(image_path)

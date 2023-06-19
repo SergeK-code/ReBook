@@ -16,4 +16,9 @@ public class Payment_method {
     public String getPayment_method_name() {
         return Payment_method_name;
     }
+
+    @Override
+    public String toString(){
+        return getPayment_method_name();
+    }
 }

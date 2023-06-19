@@ -56,21 +56,21 @@
 
         <TextView
             android:id="@+id/greeting"
-            android:layout_width="176dp"
+            android:layout_width="wrap_content"
             android:layout_height="68dp"
             android:layout_marginStart="230dp"
             android:layout_marginTop="200dp"
-            android:text="Hi admin!"
-            android:textColor="#ffffff"
-            android:textSize="40sp"
             android:fontFamily="sans-serif"
-            android:textStyle="bold"
             android:gravity="left"
             android:lineHeight="36sp"
+            android:shadowColor="#88000000"
             android:shadowDx="0"
             android:shadowDy="3"
             android:shadowRadius="6"
-            android:shadowColor="#88000000"/>
+            android:text="Hi admin!"
+            android:textColor="#ffffff"
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/subtitle"
@@ -138,14 +138,7 @@
         android:paddingRight="-50dp"
         android:orientation="horizontal">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="-1dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/group123"
-        />
+
     </RelativeLayout>
 
 

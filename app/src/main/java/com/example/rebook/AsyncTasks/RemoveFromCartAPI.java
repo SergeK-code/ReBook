@@ -98,15 +98,12 @@ public class RemoveFromCartAPI extends AsyncTask<Void,Void, String> {
     @Override
     protected void onPostExecute(String response) {
         super.onPostExecute(response);
-        progressDialog.dismiss();
+
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.context);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
     }
 }

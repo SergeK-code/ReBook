@@ -28,12 +28,14 @@ public class SplashScreen extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         int color = ContextCompat.getColor(this, R.color.app_pink);
-        assert actionBar != null;
-        actionBar.setBackgroundDrawable(new ColorDrawable(color));
-        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        actionBar.setCustomView(R.layout.action_bar_title);
-        TextView titleTextView = actionBar.getCustomView().findViewById(R.id.action_bar_title);
-        titleTextView.setText("ReBook");
+        if(actionBar != null){
+            actionBar.setBackgroundDrawable(new ColorDrawable(color));
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            actionBar.setCustomView(R.layout.action_bar_title);
+            TextView titleTextView = actionBar.getCustomView().findViewById(R.id.action_bar_title);
+            titleTextView.setText("ReBook");
+
+        }
 
 
         Intent i = new Intent(SplashScreen.this, Welcome.class);

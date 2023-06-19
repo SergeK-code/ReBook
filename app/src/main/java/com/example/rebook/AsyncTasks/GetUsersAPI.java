@@ -70,17 +70,14 @@ public class GetUsersAPI extends AsyncTask<Void, Void, ArrayList<User>> {
     @Override
     protected void onPostExecute(ArrayList<User> result) {
         super.onPostExecute(result);
-        progressDialog.dismiss();
+
 
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mContext);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
 
     }
 

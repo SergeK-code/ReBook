@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class GetGradesAPI extends AsyncTask<Void, Void, ArrayList<Grade>> {
     private ProgressDialog progressDialog;
 
-    private static final String API_GET_GRADES = "http://"+ IP.ip+"/API_Rebook/GetGrades.php";
+    private static final String API_GET_GRADES = "http://"+IP.ip+"/API_Rebook/GetGrades.php";
 
     private Context mContext;
 
@@ -49,8 +49,8 @@ public class GetGradesAPI extends AsyncTask<Void, Void, ArrayList<Grade>> {
             JSONArray jsonArray = new JSONArray(response);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                int Grade_id = jsonObject.getInt("School_id");
-                String Grade_name = jsonObject.getString("School_name");
+                int Grade_id = jsonObject.getInt("Grade_id");
+                String Grade_name = jsonObject.getString("Grade_name");
                 Grade grade = new Grade(Grade_id,Grade_name);
                 grades.add(grade);
             }
@@ -63,17 +63,14 @@ public class GetGradesAPI extends AsyncTask<Void, Void, ArrayList<Grade>> {
     @Override
     protected void onPostExecute(ArrayList<Grade> result) {
         super.onPostExecute(result);
-        progressDialog.dismiss();
+
 
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mContext);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
 
     }
 }

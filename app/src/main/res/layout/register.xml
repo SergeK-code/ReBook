@@ -8,8 +8,8 @@
         android:layout_height="fill_parent"
         android:gravity="center|top"
         android:orientation="vertical"
-        android:background="@color/white">
-        >
+        android:background="@drawable/app_bg">
+
 
         <ImageView
             android:id="@+id/app_icon"
@@ -17,35 +17,37 @@
             android:layout_height="200dp"
             android:padding="20dp"
             android:src="@drawable/wlc_to_reb"
-            android:background="@drawable/reverse_app_bg"
+
             android:contentDescription="TODO" />
 
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginStart="10dp">
 
             <EditText
                 android:id="@+id/first_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginEnd="300dp"
+                android:layout_marginEnd="50dp"
                 android:hint="First name"
                 android:inputType="text"
                 />
             </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginStart="10dp">
             <EditText
                 android:id="@+id/last_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginEnd="300dp"
+                android:layout_marginEnd="50dp"
                 android:hint="Last name"
                 android:inputType="text"
                 />
@@ -58,9 +60,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="155dp"
+            android:layout_gravity="center"
             android:text="date of birth"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:layout_marginStart="10dp"/>
 
         <DatePicker
             android:id="@+id/dob"
@@ -69,63 +72,78 @@
             android:datePickerMode="spinner" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-        <TextView
-            android:id="@+id/genText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="155dp"
-            android:layout_marginTop="5dp"
-            android:text="gender"
-            android:textSize="18dp" />
-        <Spinner
-            android:id="@+id/gender"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="5dp"
-            />
-        </LinearLayout>
-        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+            <TextView
+                android:id="@+id/genText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-                <TextView
-                    android:id="@+id/RoleText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="155dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Role"
-                    android:textSize="18dp" />
-                <Spinner
-                    android:id="@+id/Role"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="5dp"
-                    />
-        </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
-                    <TextView
-                        android:id="@+id/SchoolText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="155dp"
-                        android:layout_marginTop="5dp"
-                        android:text="School Name"
-                        android:textSize="18dp" />
-                    <Spinner
-                        android:id="@+id/School"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="5dp"
-                        />
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:text="gender"
+                android:textSize="18dp" />
 
-    </LinearLayout>
+            <Spinner
+                android:id="@+id/gender"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+
+            <TextView
+                android:id="@+id/RoleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:text="Role"
+                android:textSize="18dp" />
+
+            <Spinner
+                android:id="@+id/Role"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            >
+
+            <TextView
+                android:id="@+id/SchoolText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:text="School Name"
+                android:textSize="18dp" />
+
+            <Spinner
+                android:id="@+id/School"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginTop="5dp"
+               />
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/address"
@@ -188,9 +206,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"
+                android:textColor="@color/white"
                 android:background="@drawable/rounded_btn"
                 android:text="Register" />
-
+     ]
         </LinearLayout>
         <Button
             android:id="@+id/back_btn"

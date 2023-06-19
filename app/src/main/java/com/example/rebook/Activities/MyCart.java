@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -86,6 +87,8 @@ public class MyCart extends Activity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                setResult(1);
                 finish();
             }
         });
@@ -93,6 +96,8 @@ public class MyCart extends Activity {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                setResult(2);
                 finish();
             }
         });
@@ -114,9 +119,13 @@ public class MyCart extends Activity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        bookCartAdapter = new BookCartAdapter(MyCart.this,user.getUser_id(),books);
-        booksGrid.setAdapter(bookCartAdapter);
+        item_count.setText(String.valueOf(books.size()));
+        if (user != null) {
+            bookCartAdapter = new BookCartAdapter(MyCart.this, user.getUser_id(), books);
+            booksGrid.setAdapter(bookCartAdapter);
+        }
     }
+
 
     public void displayBookDetails(){
         getSchool= new GetSchoolsAPI(MyCart.this);
@@ -161,6 +170,7 @@ public class MyCart extends Activity {
         checkoutItems = new CheckoutItemsAPI(MyCart.this,books,user.getUser_id());
         try {
             result = checkoutItems.execute().get();
+            Log.e("#r",result);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -173,13 +183,14 @@ public class MyCart extends Activity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+        item_count.setText(String.valueOf(books.size()));
         bookCartAdapter.notifyDataSetChanged();
     }
 
     public void clearCartItems(){
        removeFromCart = new RemoveFromCartAPI(MyCart.this,user.getUser_id(),books);
         try {
-            result = checkoutItems.execute().get();
+            result = removeFromCart.execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -187,6 +198,7 @@ public class MyCart extends Activity {
 
         if(result.toLowerCase().contains("successfully")){
             books.clear();
+            item_count.setText(String.valueOf(books.size()));
             bookCartAdapter.notifyDataSetChanged();
         }
     }

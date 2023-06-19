@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class GetSchoolsAPI extends AsyncTask<Void, Void, ArrayList<School>> {
     private ProgressDialog progressDialog;
 
-    private static final String API_GET_SCHOOLS = "http://"+ IP.ip+"/API_Rebook/GetSchools.php";
+    private static final String API_GET_SCHOOLS = "http://"+IP.ip+"/API_Rebook/GetSchools.php";
 
     private Context mContext;
 
@@ -63,17 +63,14 @@ public class GetSchoolsAPI extends AsyncTask<Void, Void, ArrayList<School>> {
     @Override
     protected void onPostExecute(ArrayList<School> result) {
         super.onPostExecute(result);
-        progressDialog.dismiss();
+
 
 
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mContext);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
 
     }
 

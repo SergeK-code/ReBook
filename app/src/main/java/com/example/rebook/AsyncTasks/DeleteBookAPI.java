@@ -80,14 +80,11 @@ public class DeleteBookAPI extends AsyncTask <Void,Void, String> {
     }
     protected void onPostExecute(String response) {
         super.onPostExecute(response);
-        progressDialog.dismiss();
+
 
     }
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = new ProgressDialog(this.mcontext);
-        progressDialog.setMessage("Loading data...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+
     }
 }

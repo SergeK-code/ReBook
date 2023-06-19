@@ -1,5 +1,6 @@
 package com.example.rebook.Activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,7 +27,7 @@ import java.util.concurrent.ExecutionException;
 
 
 
-public class Login extends AppCompatActivity {
+public class Login extends Activity {
     private EditText email, password;
     private TextView error;
     private Button login;
@@ -133,10 +134,20 @@ public class Login extends AppCompatActivity {
     }
 
     private void displayHome(User u) {
-        Intent i = new Intent(Login.this, Home.class);
-        i.putExtra("user", u);
-        i.putExtra("password", password.getText().toString().trim());
-        startActivity(i);
+
+        if(u.getRole_id()==1){
+          Intent i  = new Intent(Login.this, Home.class);
+            i.putExtra("user", u);
+            i.putExtra("password", password.getText().toString().trim());
+            startActivity(i);
+        }
+       else if (u.getRole_id()==2){
+           Intent i = new Intent(Login.this,HomeAdmin.class);
+            i.putExtra("user", u);
+            i.putExtra("password", password.getText().toString().trim());
+            startActivity(i);
+        }
+
     }
 }
 
