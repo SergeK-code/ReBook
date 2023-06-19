@@ -54,7 +54,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
+
             android:background="@color/white"
             android:gravity="center"
             android:orientation="vertical">
@@ -62,20 +62,20 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/uploadImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Upload Image"
                 android:background="@android:color/transparent"
-                android:textColor="@color/dark_gray"
-                android:textSize="16sp"
                 android:paddingStart="20dp"
-                android:paddingEnd="20dp"
                 android:paddingTop="12dp"
-                android:paddingBottom="12dp" />
+                android:paddingEnd="20dp"
+                android:paddingBottom="12dp"
+                android:text="Upload Image"
+                android:textColor="@color/dark_gray"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -136,11 +136,11 @@
                 android:id="@+id/condition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
                 android:hint="Condition"
                 android:paddingLeft="15dp"
-                android:textSize="20sp"
                 android:textColor="#849091"
-                android:fontFamily="sans-serif" />
+                android:textSize="20sp" />
         </LinearLayout>
 
         <Button
@@ -149,8 +149,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/form"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="70dp"
             android:background="@drawable/round_btn"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"

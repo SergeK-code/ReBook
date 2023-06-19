@@ -73,6 +73,7 @@ public class MyCart extends Activity {
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 checkoutItems();
             }
         });
@@ -167,15 +168,6 @@ public class MyCart extends Activity {
     }
 
     public void checkoutItems(){
-        checkoutItems = new CheckoutItemsAPI(MyCart.this,books,user.getUser_id());
-        try {
-            result = checkoutItems.execute().get();
-            Log.e("#r",result);
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        Toast.makeText(MyCart.this,result, Toast.LENGTH_SHORT).show();
-
         books.clear();
         getCartBooks = new GetCartBooksAPI(MyCart.this);
         try {
@@ -183,23 +175,59 @@ public class MyCart extends Activity {
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        item_count.setText(String.valueOf(books.size()));
-        bookCartAdapter.notifyDataSetChanged();
+        if(books.isEmpty()){
+            Toast.makeText(MyCart.this,"Cart is empty",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else{
+            checkoutItems = new CheckoutItemsAPI(MyCart.this,books,user.getUser_id());
+            try {
+                result = checkoutItems.execute().get();
+                Log.e("#r",result);
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(MyCart.this,result, Toast.LENGTH_SHORT).show();
+
+            books.clear();
+            getCartBooks = new GetCartBooksAPI(MyCart.this);
+            try {
+                books = getCartBooks.execute().get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            item_count.setText(String.valueOf(books.size()));
+            bookCartAdapter.notifyDataSetChanged();
+        }
+
     }
 
     public void clearCartItems(){
-       removeFromCart = new RemoveFromCartAPI(MyCart.this,user.getUser_id(),books);
+        books.clear();
+        getCartBooks = new GetCartBooksAPI(MyCart.this);
         try {
-            result = removeFromCart.execute().get();
+            books = getCartBooks.execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        Toast.makeText(MyCart.this,result, Toast.LENGTH_SHORT).show();
+        if(books.isEmpty()){
+            Toast.makeText(MyCart.this,"Cart is empty",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else {
+            removeFromCart = new RemoveFromCartAPI(MyCart.this, user.getUser_id(), books);
+            try {
+                result = removeFromCart.execute().get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(MyCart.this, result, Toast.LENGTH_SHORT).show();
 
-        if(result.toLowerCase().contains("successfully")){
-            books.clear();
-            item_count.setText(String.valueOf(books.size()));
-            bookCartAdapter.notifyDataSetChanged();
+            if (result.toLowerCase().contains("successfully")) {
+                books.clear();
+                item_count.setText(String.valueOf(books.size()));
+                bookCartAdapter.notifyDataSetChanged();
+            }
         }
     }
 }
