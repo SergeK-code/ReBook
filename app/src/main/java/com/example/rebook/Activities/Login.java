@@ -30,7 +30,7 @@ import java.util.concurrent.ExecutionException;
 public class Login extends Activity {
     private EditText email, password;
     private TextView error;
-    private Button login;
+    private Button login,back;
     private GetUsersAPI u;
     private boolean found = false;
     private Bundle bundle;
@@ -45,6 +45,7 @@ public class Login extends Activity {
         password = findViewById(R.id.password);
         error = findViewById(R.id.error);
         login = findViewById(R.id.login);
+        back = findViewById(R.id.back_btn);
 
         ViewCompat.setBackgroundTintList(login, null);
 
@@ -128,6 +129,13 @@ public class Login extends Activity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(Login.this,"Cannot perform action: feature not added",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

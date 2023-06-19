@@ -51,7 +51,7 @@ public class Register extends Activity {
 
     private Spinner genderSpinner, roleSpinner, schoolSpinner;
 
-    private Button registerButton;
+    private Button registerButton,back;
     private String selectedGender,selectedDate;
     private Role selectedRole;
     private School selectedSchool;
@@ -154,6 +154,12 @@ public class Register extends Activity {
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
 
@@ -173,6 +179,7 @@ public class Register extends Activity {
         confirmPass = findViewById(R.id.confirm_pass);
         error = findViewById(R.id.error);
         registerButton = findViewById(R.id.register);
+        back = findViewById(R.id.back_btn);
 
     }
 
