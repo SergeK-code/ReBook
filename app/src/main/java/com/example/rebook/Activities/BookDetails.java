@@ -92,6 +92,7 @@ public class BookDetails extends Activity {
         phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String phoneNumber = phone.getText().toString();
                 String message = "Hello, I'm interested in your book.";
 
@@ -117,6 +118,7 @@ public class BookDetails extends Activity {
                     startActivity(dialIntent);
                 } else {
                     // No app found to handle the action
+
                     Toast.makeText(BookDetails.this, "No app found to handle the action", Toast.LENGTH_SHORT).show();
                 }
             }

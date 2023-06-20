@@ -21,9 +21,11 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class BuyOperationAdapter extends ArrayAdapter<Operation> {
+
     private ArrayList<Operation> operations,AllOperations;
     private ArrayList<Book> Books;
     ArrayList<User> Users;
+
     private Context context;
 
     public BuyOperationAdapter(Context context, ArrayList<Operation> operations, ArrayList<Book> books,ArrayList<Operation> allOperations,ArrayList<User> users) {

@@ -81,12 +81,15 @@ public class SellBook extends Activity {
     private ArrayList<Grade> grades;
     private ArrayList<Category> categories;
     private ArrayList<Book> books,selectedBooks,loadBooks,sameIdBooks;
+
     private User user;
     private ArrayAdapter<Book> book_adapter;
     private ArrayAdapter<School> school_adapter;
     private ArrayAdapter<Grade> grade_adapter;
     private ArrayAdapter<Category> category_adapter;
+
     private ArrayList<Operation> operations = new ArrayList<>(),loadOperations;
+
     private String SetBookResponse;
     private Bitmap bitmap;
     @Override
@@ -230,6 +233,7 @@ public class SellBook extends Activity {
                 // Permission denied
                 Toast.makeText(this, "Storage permission denied", Toast.LENGTH_SHORT).show();
             }
+
         }
     }
 
@@ -332,8 +336,11 @@ public class SellBook extends Activity {
             loadBooks = getBooks.execute().get();
             loadOperations = getOperationsAPI.execute().get();
         } catch (ExecutionException | InterruptedException e) {
+
             e.printStackTrace();
+            return null;
         }
+
         for(Operation op : loadOperations){
             if(op.getOperation_type_id()==1 && (op.getOperation_status_id()==1 || op.getOperation_status_id()==2) && op.getUser_id()==user.getUser_id()){
                 ids.add(op.getBook_id());
@@ -412,6 +419,7 @@ public class SellBook extends Activity {
             Toast.makeText(SellBook.this,"Book already added",Toast.LENGTH_SHORT).show();
             return;
         }
+
 
     }
 

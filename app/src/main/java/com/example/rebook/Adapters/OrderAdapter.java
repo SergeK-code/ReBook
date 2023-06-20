@@ -24,10 +24,12 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
     private ArrayList<Operation> Operations,AllOperations;
     private ArrayList<Book> Books;
     private ArrayList<Operation_type> OperationTypes;
+
     private ArrayList<User> Users;
     private static final String Repo = "http://"+IP.ip+"/API_Rebook/";
 
     public OrderAdapter( Context context, ArrayList<Operation> operations,ArrayList<Operation> allOperations, ArrayList<Book> books, ArrayList<Operation_type> operationTypes,ArrayList<User> users) {
+
         super(context,0,operations);
         this.context = context;
         this.Operations = operations;
@@ -57,12 +59,14 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
 
         operationIdTextView.setText(String.valueOf(currentOperation.getOperation_id()));
 
+
         dateTextView.setText(currentOperation.getOperation_date());
         String image_path = "";
         Book book = null;
         int curr_op_book_id = currentOperation.getBook_id();
         for(Book b : Books){
             if(b.getBook_id()==curr_op_book_id){
+
                 book = b;
                 break;
             }
@@ -71,6 +75,7 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
         bookNameTextView.setText(book.getBook_name());
         image_path = Repo+book.getBook_image_path();
 
+
         int curr_op_type_id = currentOperation.getOperation_type_id();
         for(Operation_type opType : OperationTypes){
             if(opType.getOperation_type_id() == curr_op_type_id){
@@ -78,7 +83,6 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
                 break;
             }
         }
-
 
 
         Glide.with(context)
