@@ -14,21 +14,27 @@ import android.widget.Toast;
 import com.example.rebook.AsyncTasks.CancelOperationAPI;
 import com.example.rebook.Models.Book;
 import com.example.rebook.Models.Operation;
+import com.example.rebook.Models.User;
 import com.example.rebook.R;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class BuyOperationAdapter extends ArrayAdapter<Operation> {
-    private ArrayList<Operation> operations;
-    private ArrayList<Book> books;
+
+    private ArrayList<Operation> operations,AllOperations;
+    private ArrayList<Book> Books;
+    ArrayList<User> Users;
+
     private Context context;
 
-    public BuyOperationAdapter(Context context, ArrayList<Operation> operations, ArrayList<Book> books) {
+    public BuyOperationAdapter(Context context, ArrayList<Operation> operations, ArrayList<Book> books,ArrayList<Operation> allOperations,ArrayList<User> users) {
         super(context, 0, operations);
         this.context=context;
         this.operations = operations;
-        this.books = books;
+        this.Books = books;
+        this.AllOperations = allOperations;
+        this.Users = users;
     }
 
     @Override
@@ -39,8 +45,9 @@ public class BuyOperationAdapter extends ArrayAdapter<Operation> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.request_list_item_buyer, parent, false);
         }
 
-        TextView bookNameTextView = convertView.findViewById(R.id.cat_classTextView);
+        TextView bookNameTextView = convertView.findViewById(R.id.book_nameTextView);
         TextView bookPriceTextView = convertView.findViewById(R.id.book_priceTextView);
+        TextView sellerPhone = convertView.findViewById(R.id.user_phoneTextView);
         Button cancelButton = convertView.findViewById(R.id.cancel);
 
 
@@ -93,11 +100,29 @@ public class BuyOperationAdapter extends ArrayAdapter<Operation> {
             }
         });
 
+        int userId = 0;
+        for(Operation op: AllOperations){
+            if(op.getOperation_status_id() == 2 && op.getOperation_type_id() == 1) {
+                assert book != null;
+                if (op.getBook_id()==book.getBook_id()) {
+                    userId = op.getUser_id();
+                    break;
+                }
+            }
+        }
+
+        for(User user : Users){
+        if(user.getUser_id()==userId){
+            sellerPhone.setText(user.getUser_phone());
+            break;
+        }
+    }
+
         return convertView;
     }
 
     private Book findBookById(int bookId) {
-        for (Book book : books) {
+        for (Book book : Books) {
             if (book.getBook_id() == bookId) {
                 return book;
             }

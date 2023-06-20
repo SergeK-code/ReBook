@@ -178,6 +178,7 @@ public class Home extends Activity {
         Intent i = new Intent(Home.this, Login.class);
         Toast.makeText(Home.this,"Logged out",Toast.LENGTH_SHORT).show();
         startActivity(i);
+        finish();
     }
 
 }

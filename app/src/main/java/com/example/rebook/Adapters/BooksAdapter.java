@@ -38,7 +38,7 @@ public class BooksAdapter extends ArrayAdapter<Book> {
 
         ImageView bookImage = (ImageView) listItem.findViewById(R.id.CoverImageView);
         String imagePath = Repo+currentBook.getBook_image_path();
-        Log.e("#p",imagePath);
+
         Glide.with(context)
                 .load(imagePath)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

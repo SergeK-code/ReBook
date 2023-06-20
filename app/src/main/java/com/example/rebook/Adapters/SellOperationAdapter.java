@@ -24,15 +24,21 @@ import java.util.concurrent.ExecutionException;
 public class SellOperationAdapter extends ArrayAdapter<Operation> {
     private ArrayList<Operation> Operations,BuyOperations;
     private ArrayList<Book> books;
-    private ArrayList<User> users;
+
+    private ArrayList<User> Users;
+    private ArrayList<Operation> AllOperations;
     private Context context;
 
-    public SellOperationAdapter(Context context, ArrayList<Operation> operations,ArrayList<Operation> buyOperations, ArrayList<Book> books, ArrayList<User> users) {
+    public SellOperationAdapter(Context context, ArrayList<Operation> operations,ArrayList<Operation> allOperations,ArrayList<Operation> buyOperations, ArrayList<Book> books, ArrayList<User> users) {
+
         super(context, 0,operations);
         this.Operations=operations;
         this.BuyOperations = buyOperations;
         this.books = books;
-        this.users = users;
+
+        this.Users = users;
+        this.AllOperations = allOperations;
+
         this.context=context;
     }
 
@@ -159,7 +165,10 @@ public class SellOperationAdapter extends ArrayAdapter<Operation> {
                 buyerId = op.getUser_id();
             }
         }
-        for (User user : users) {
+
+      
+        for (User user : Users) {
+
             if (user.getUser_id() == buyerId) {
                 return user;
             }

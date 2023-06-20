@@ -70,6 +70,7 @@ public class MyCart extends Activity {
             }
         });
 
+
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +107,7 @@ public class MyCart extends Activity {
     }
     public void initViews(){
         item_count = findViewById(R.id.cart_items_count);
-        booksGrid = findViewById(R.id.book_grid);
+        booksGrid = findViewById(R.id.book_cart_grid);
         checkout = findViewById(R.id.check_out_all);
         clearCart = findViewById(R.id.clear_cart);
         back = findViewById(R.id.back_btn);

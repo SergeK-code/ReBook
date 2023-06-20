@@ -62,7 +62,6 @@
             android:layout_height="400px"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:background="@drawable/border"
             android:padding="3dp"
              />
 

@@ -1,5 +1,7 @@
 package com.example.rebook;
 
 public class IP {
-    public static String ip = "192.168.1.148:8090";
+
+    public static String ip = "192.168.116.36:8090";
+
 }
