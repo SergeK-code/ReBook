@@ -2,6 +2,7 @@ package com.example.rebook.Activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.service.quickaccesswallet.GetWalletCardsCallback;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,9 +32,9 @@ public class PendingOrders extends Activity {
     private ArrayList<Operation> Operations = new ArrayList<>();
 
     private ArrayList<Operation> ResultOperations = new ArrayList<>();
-    private ArrayList<User> users = new ArrayList<>();
-    private ArrayList<Book> Books = new ArrayList<>();
 
+    private ArrayList<Book> Books = new ArrayList<>();
+    private ArrayList<User> Users = new ArrayList<>();
     private BuyOperationAdapter buyOperationAdapter;
     private SellOperationAdapter sellOperationAdapter;
     private GetOperationsAPI getOperations;
@@ -93,11 +94,14 @@ public class PendingOrders extends Activity {
 
     public void getBuyOperations(){
         ResultOperations.clear();
+        Users.clear();
         getOperations = new GetOperationsAPI(PendingOrders.this);
         getBooks = new GetBooksAPI(PendingOrders.this);
+        getUsers = new GetUsersAPI(PendingOrders.this);
         try {
             Operations = getOperations.execute().get();
             Books = getBooks.execute().get();
+            Users = getUsers.execute().get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -106,7 +110,7 @@ public class PendingOrders extends Activity {
                 ResultOperations.add(op);
             }
         }
-        buyOperationAdapter = new BuyOperationAdapter(PendingOrders.this,ResultOperations,Books);
+        buyOperationAdapter = new BuyOperationAdapter(PendingOrders.this,ResultOperations,Books,Operations,Users);
         myOperations.setAdapter(buyOperationAdapter);
     }
 
@@ -114,13 +118,14 @@ public class PendingOrders extends Activity {
         ArrayList<Operation> SellOperations = new ArrayList<>();
         ArrayList<Operation> BuyOperations=new ArrayList<>();
         ResultOperations.clear();
+        Users.clear();
         getOperations = new GetOperationsAPI(PendingOrders.this);
         getBooks = new GetBooksAPI(PendingOrders.this);
         getUsers = new GetUsersAPI(PendingOrders.this);
        try {
             Operations = getOperations.execute().get();
             Books= getBooks.execute().get();
-            users = getUsers.execute().get();
+            Users = getUsers.execute().get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -134,7 +139,7 @@ public class PendingOrders extends Activity {
                 BuyOperations.add(op);
             }
         }
-        sellOperationAdapter = new SellOperationAdapter(PendingOrders.this,ResultOperations,BuyOperations,Books,users);
+        sellOperationAdapter = new SellOperationAdapter(PendingOrders.this,ResultOperations,Operations,BuyOperations,Books,Users);
         myOperations.setAdapter(sellOperationAdapter);
     }
 

@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.example.rebook.AsyncTasks.GetBooksAPI;
 import com.example.rebook.AsyncTasks.GetOperationTypesAPI;
 import com.example.rebook.AsyncTasks.GetOperationsAPI;
+import com.example.rebook.AsyncTasks.GetUsersAPI;
 import com.example.rebook.Models.Book;
 import com.example.rebook.Models.Operation;
 import com.example.rebook.Models.Operation_type;
@@ -29,11 +30,13 @@ public class ViewHistory extends Activity {
     private ArrayList<Operation> filteredOperations = new ArrayList<>();
     private ArrayList<Book> books = new ArrayList<>();
     private ArrayList<Operation_type> operationTypes = new ArrayList<>();
+    private ArrayList<User> Users = new ArrayList<>();
     private GetOperationsAPI getOperations;
     private GetBooksAPI getBooks;
     private GetOperationTypesAPI getOperationTypes;
     private User user;
     private Button back,cancel;
+    private GetUsersAPI getUsers;
 
 
     @Override
@@ -71,20 +74,22 @@ public class ViewHistory extends Activity {
         getOperations = new GetOperationsAPI(ViewHistory.this);
         getBooks =new GetBooksAPI(ViewHistory.this);
         getOperationTypes = new GetOperationTypesAPI(ViewHistory.this);
+        getUsers = new GetUsersAPI(ViewHistory.this);
         try {
             books = getBooks.execute().get();
             operationTypes = getOperationTypes.execute().get();
             operations = getOperations.execute().get();
+            Users = getUsers.execute().get();
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
-        Log.e("#opt",operationTypes.toString());
+
         for(Operation op : operations){
             if(op.getUser_id()==user.getUser_id() && (op.getOperation_type_id()==1 ||op.getOperation_type_id()==4 ) && op.getOperation_status_id()==3){
                 filteredOperations.add(op);
             }
         }
-        Operation_adapter = new OrderAdapter(ViewHistory.this,filteredOperations,books,operationTypes);
+        Operation_adapter = new OrderAdapter(ViewHistory.this,filteredOperations,operations,books,operationTypes,Users);
         Operations_list.setAdapter(Operation_adapter);
     }
 }

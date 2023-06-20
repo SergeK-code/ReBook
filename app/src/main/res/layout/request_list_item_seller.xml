@@ -2,9 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp"
-    >
-
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/BookNameTextView"
@@ -18,10 +16,12 @@
         android:id="@+id/book_nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="120dp"
+        android:layout_toRightOf="@id/BookNameTextView"
+        android:layout_marginStart="8dp"
         android:text=" "
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/BuyerNameTextView"
@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/BookNameTextView"
         android:layout_marginTop="20dp"
+        android:layout_weight="1"
         android:text="Buyer Name: "
         android:textSize="14sp" />
 
@@ -36,11 +37,13 @@
         android:id="@+id/buyer_nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="120dp"
-        android:layout_alignBaseline="@+id/BuyerNameTextView"
         android:layout_below="@+id/book_nameTextView"
+        android:layout_toRightOf="@id/BuyerNameTextView"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
         android:text=""
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/BuyerPhoneTextView"
@@ -48,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/buyer_nameTextView"
         android:layout_marginTop="10dp"
+        android:layout_weight="1"
         android:text="Buyer Phone: "
         android:textSize="14sp" />
 
@@ -56,9 +60,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buyer_nameTextView"
-        android:layout_alignBaseline="@+id/BuyerPhoneTextView"
-        android:layout_marginLeft="120dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/BuyerPhoneTextView"
+        android:layout_weight="1"
         android:text=""
         android:textSize="14sp" />
 
@@ -66,25 +71,26 @@
         android:id="@+id/accept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/book_nameTextView"
         android:layout_alignParentRight="true"
         android:layout_marginTop="10dp"
-        android:background="@android:color/transparent"
+        android:layout_weight="1"
+        android:background="@drawable/round_btn"
         android:text="Accept"
         android:textColor="@color/achrogray"
-        android:textSize="12dp">
-
-    </Button>
+        android:textSize="12dp" />
 
     <Button
         android:id="@+id/reject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/accept"
+        android:layout_alignParentRight="true"
         android:layout_marginTop="5dp"
-        android:background="@android:color/transparent"
+        android:background="@drawable/remove_btn"
         android:text="Reject"
         android:textColor="@color/achrogray"
-        android:textSize="12dp" />
+        android:textSize="12dp"
+        android:layout_weight="1" />
 
 </RelativeLayout>

@@ -4,9 +4,8 @@
     android:orientation="horizontal"
     android:padding="16dp">
 
-
     <TextView
-        android:id="@+id/CatClassTextView"
+        android:id="@+id/BookNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Book Name:"
@@ -14,43 +13,69 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/cat_classTextView"
+        android:id="@+id/book_nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="120dp"
+        android:layout_toRightOf="@id/BookNameTextView"
+        android:layout_marginStart="8dp"
         android:text=" "
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/BookPriceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-
+        android:layout_below="@id/BookNameTextView"
         android:text="Book Price: "
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:layout_weight="1" />
+
     <TextView
         android:id="@+id/book_priceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="120dp"
+        android:layout_toRightOf="@id/BookPriceTextView"
+        android:layout_below="@id/book_nameTextView"
+        android:layout_marginStart="8dp"
         android:text=" "
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/UserPhoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/BookPriceTextView"
+        android:layout_weight="1"
+        android:text="Seller phone: "
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/user_phoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/BookPriceTextView"
+        android:layout_below="@id/book_priceTextView"
+        android:layout_marginStart="8dp"
+        android:text=" "
+        android:textSize="14sp"
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/book_nameTextView"
+        android:layout_alignParentRight="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_alignParentRight="true"
         android:layout_marginBottom="10dp"
-        android:background="@android:color/transparent"
+        android:layout_weight="1"
+        android:background="@drawable/remove_btn"
         android:text="Cancel"
         android:textColor="@color/achrogray"
-        android:textSize="12dp">
+        android:textSize="12dp" />
 
-    </Button>
 </RelativeLayout>

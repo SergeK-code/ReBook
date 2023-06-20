@@ -117,6 +117,7 @@ public class HomeAdmin extends Activity {
         Intent i = new Intent(HomeAdmin.this, Login.class);
         Toast.makeText(HomeAdmin.this,"Logged out",Toast.LENGTH_SHORT).show();
         startActivity(i);
+        finish();
     }
 
 }

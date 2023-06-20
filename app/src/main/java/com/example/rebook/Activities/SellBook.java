@@ -45,6 +45,7 @@ import androidx.exifinterface.media.ExifInterface;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import okhttp3.MediaType;
@@ -79,13 +80,13 @@ public class SellBook extends Activity {
     private ArrayList<School> schools;
     private ArrayList<Grade> grades;
     private ArrayList<Category> categories;
-    private ArrayList<Book> books,selectedBooks;
+    private ArrayList<Book> books,selectedBooks,loadBooks,sameIdBooks;
     private User user;
     private ArrayAdapter<Book> book_adapter;
     private ArrayAdapter<School> school_adapter;
     private ArrayAdapter<Grade> grade_adapter;
     private ArrayAdapter<Category> category_adapter;
-    private ArrayList<Operation> operations = new ArrayList<>();
+    private ArrayList<Operation> operations = new ArrayList<>(),loadOperations;
     private String SetBookResponse;
     private Bitmap bitmap;
     @Override
@@ -320,64 +321,98 @@ public class SellBook extends Activity {
             return;
         }
 
-        // Convert the selected image to bytes
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-
-        // Create an OkHttp client
-        OkHttpClient client = new OkHttpClient();
-
-        // Create the request body with the image bytes
-        RequestBody requestBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("image", "book_image.jpg", RequestBody.create(MediaType.parse("image/jpeg"), imageBytes))
-                .addFormDataPart("condition", condition)
-                .build();
-
-        String apiUrl = "http://" + IP.ip + "/API_Rebook/uploadImage.php";
-        Request request = new Request.Builder()
-                .url(apiUrl)
-                .post(requestBody)
-                .build();
-
-        // Execute the request asynchronously
-        client.newCall(request).enqueue(new okhttp3.Callback() {
-            @Override
-            public void onFailure(okhttp3.Call call, IOException e) {
-                e.printStackTrace();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(SellBook.this, "Upload failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        GetBooksAPI getBooks = new GetBooksAPI(SellBook.this);
+        GetOperationsAPI getOperationsAPI = new GetOperationsAPI(SellBook.this);
+        loadBooks = new ArrayList<>();
+        sameIdBooks = new ArrayList<>();
+        loadBooks = new ArrayList<>();
+        ArrayList<Operation> filteredOperations = new ArrayList<>();
+        ArrayList<Integer> ids = new ArrayList<>();
+        try {
+            loadBooks = getBooks.execute().get();
+            loadOperations = getOperationsAPI.execute().get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        for(Operation op : loadOperations){
+            if(op.getOperation_type_id()==1 && (op.getOperation_status_id()==1 || op.getOperation_status_id()==2) && op.getUser_id()==user.getUser_id()){
+                ids.add(op.getBook_id());
             }
+        }
+        for(Book b : loadBooks){
+            for(int id : ids){
+                if(b.getBook_id()==id && Objects.equals(b.getBook_isbn(), selectedBook.getBook_isbn())){
+                    sameIdBooks.add(b);
+                    break;
+                }
+            }
+        }
 
-            @Override
-            public void onResponse(okhttp3.Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    final String responseData = response.body().string();
+        if(sameIdBooks.isEmpty()){
+            // Convert the selected image to bytes
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] imageBytes = baos.toByteArray();
+
+            // Create an OkHttp client
+            OkHttpClient client = new OkHttpClient();
+
+            // Create the request body with the image bytes
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("image", "book_image.jpg", RequestBody.create(MediaType.parse("image/jpeg"), imageBytes))
+                    .addFormDataPart("condition", condition)
+                    .build();
+
+            String apiUrl = "http://" + IP.ip + "/API_Rebook/uploadImage.php";
+            Request request = new Request.Builder()
+                    .url(apiUrl)
+                    .post(requestBody)
+                    .build();
+
+            // Execute the request asynchronously
+            client.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(okhttp3.Call call, IOException e) {
+                    e.printStackTrace();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            // Handle the response from the server
-                            //Toast.makeText(SellBook.this, responseData, Toast.LENGTH_SHORT).show();
-                            imgPath = responseData;
-
-                            SetBook setBook = new SetBook(SellBook.this,selectedSchoolId,selectedGradeId, selectedCategoryId, selectedBook.getBook_name(),condition, imgPath, selectedBook.getBook_price(),selectedBook.getBook_isbn(), user.getUser_id());
-                            try {
-                                SetBookResponse = setBook.execute().get();
-
-                            } catch (ExecutionException | InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            Toast.makeText(SellBook.this,SetBookResponse,Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SellBook.this, "Upload failed", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
-            }
-        });
+
+                @Override
+                public void onResponse(okhttp3.Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        final String responseData = response.body().string();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Handle the response from the server
+                                //Toast.makeText(SellBook.this, responseData, Toast.LENGTH_SHORT).show();
+                                imgPath = responseData;
+
+                                SetBook setBook = new SetBook(SellBook.this,selectedSchoolId,selectedGradeId, selectedCategoryId, selectedBook.getBook_name(),condition, imgPath, selectedBook.getBook_price(),selectedBook.getBook_isbn(), user.getUser_id());
+                                try {
+                                    SetBookResponse = setBook.execute().get();
+
+                                } catch (ExecutionException | InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                Toast.makeText(SellBook.this,SetBookResponse,Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        else{
+            Toast.makeText(SellBook.this,"Book already added",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
     }
 
     ArrayList<School> getSchools(){
