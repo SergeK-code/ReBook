@@ -63,10 +63,7 @@ public class Login extends Activity {
                 String emailInput = email.getText().toString().trim();
                 String passInput = password.getText().toString().trim();
 
-                if (users.size() <= 0) {
-                    error.setVisibility(View.VISIBLE);
-                    error.setText("Cannot connect to the database");
-                } else {
+
                     found = false;
                     for (User u : users) {
                         String hashedPassword = u.getUser_password();
@@ -86,7 +83,7 @@ public class Login extends Activity {
                         error.setText("Wrong credentials");
                     }
                 }
-            }
+
         });
 
 
