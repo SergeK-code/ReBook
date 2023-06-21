@@ -45,7 +45,6 @@ public class RemoveBookAdapter extends ArrayAdapter<Book>{
     private ArrayList<Book> myBooks = new ArrayList<>();
     private Context context;
     private String response;
-
     private ArrayList<Grade> Grades = new ArrayList<>();
     private ArrayList<Category> Categories = new ArrayList<>();
 
@@ -71,23 +70,21 @@ public class RemoveBookAdapter extends ArrayAdapter<Book>{
         TextView bookCategory = listItem.findViewById(R.id.CategoryTextView);
         Button deleteButton = listItem.findViewById(R.id.delete_btn);
 
-        String buffer1 = TitleTextView.getText().toString();
-        TitleTextView.setText(buffer1+book.getBook_name());
+
+        TitleTextView.setText("Title: "+book.getBook_name());
 
        int grade_id = book.getGrade_id();
        int category_id = book.getCategory_id();
 
        for(Category c : Categories){
            if(c.getCategory_id()==category_id){
-               String buffer2 = bookCategory.getText().toString();
-               bookCategory.setText(buffer2+c.getCategory_name());
+               bookCategory.setText("Category: "+c.getCategory_name());
                break;
            }
        }
         for(Grade g : Grades){
             if(g.getGrade_id()==grade_id){
-                String buffer3 = bookGrade.getText().toString();
-                bookGrade.setText(buffer3+g.getGrade_name());
+                bookGrade.setText("Grade: "+g.getGrade_name());
                 break;
             }
         }
