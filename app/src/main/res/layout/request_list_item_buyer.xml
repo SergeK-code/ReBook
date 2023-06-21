@@ -39,6 +39,7 @@
         android:layout_toRightOf="@id/BookPriceTextView"
         android:layout_below="@id/book_nameTextView"
         android:layout_marginStart="8dp"
+
         android:text=" "
         android:textSize="14sp"
         android:layout_weight="1" />
@@ -63,6 +64,7 @@
         android:textSize="14sp"
         android:layout_weight="1" />
 
+
     <Button
         android:id="@+id/cancel"
         android:layout_width="wrap_content"
@@ -77,5 +79,6 @@
         android:text="Cancel"
         android:textColor="@color/achrogray"
         android:textSize="12dp" />
+
 
 </RelativeLayout>
