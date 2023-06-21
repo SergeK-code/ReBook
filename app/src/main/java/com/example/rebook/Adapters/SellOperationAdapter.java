@@ -166,7 +166,7 @@ public class SellOperationAdapter extends ArrayAdapter<Operation> {
             }
         }
 
-      
+        Log.e("bi",String.valueOf(buyerId));
         for (User user : Users) {
 
             if (user.getUser_id() == buyerId) {

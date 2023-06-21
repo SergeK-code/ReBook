@@ -24,9 +24,9 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
     private ArrayList<Operation> Operations,AllOperations;
     private ArrayList<Book> Books;
     private ArrayList<Operation_type> OperationTypes;
-
     private ArrayList<User> Users;
     private static final String Repo = "http://"+IP.ip+"/API_Rebook/";
+
 
     public OrderAdapter( Context context, ArrayList<Operation> operations,ArrayList<Operation> allOperations, ArrayList<Book> books, ArrayList<Operation_type> operationTypes,ArrayList<User> users) {
 
@@ -74,7 +74,6 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
         assert book != null;
         bookNameTextView.setText(book.getBook_name());
         image_path = Repo+book.getBook_image_path();
-
 
         int curr_op_type_id = currentOperation.getOperation_type_id();
         for(Operation_type opType : OperationTypes){

@@ -166,6 +166,9 @@ public class SellBook extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedBook = (Book) parent.getAdapter().getItem(position);
+
+                Log.e("#bn",selectedBook.getBook_name());
+
                 selectedBookId = selectedBook.getBook_id();
             }
 
@@ -346,14 +349,20 @@ public class SellBook extends Activity {
                 ids.add(op.getBook_id());
             }
         }
+        ArrayList<Book> myUploadedBooks = new ArrayList<>();
         for(Book b : loadBooks){
             for(int id : ids){
-                if(b.getBook_id()==id && Objects.equals(b.getBook_isbn(), selectedBook.getBook_isbn())){
-                    sameIdBooks.add(b);
-                    break;
+                if(b.getBook_id()==id) {
+                    myUploadedBooks.add(b);
                 }
             }
         }
+        for(Book b : myUploadedBooks){
+            if(b.getBook_isbn()==selectedBook.getBook_isbn()){
+                sameIdBooks.add(b);
+            }
+        }
+
 
         if(sameIdBooks.isEmpty()){
             // Convert the selected image to bytes
@@ -520,6 +529,11 @@ public class SellBook extends Activity {
                 selectedBooks.add(b);
             }
         }
+
+        if(!(selectedBooks.isEmpty())){
+            selectedBook= selectedBooks.get(0);
+        }
+
         book_adapter.notifyDataSetChanged();
     }
 }

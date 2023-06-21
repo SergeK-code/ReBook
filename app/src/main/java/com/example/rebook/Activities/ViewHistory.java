@@ -87,7 +87,6 @@ public class ViewHistory extends Activity {
         }
 
 
-
         for(Operation op : operations){
             if(op.getUser_id()==user.getUser_id() && (op.getOperation_type_id()==1 ||op.getOperation_type_id()==4 ) && op.getOperation_status_id()==3){
                 filteredOperations.add(op);
