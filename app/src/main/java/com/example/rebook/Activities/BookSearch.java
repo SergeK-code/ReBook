@@ -287,12 +287,29 @@ public class BookSearch extends Activity {
             i.putExtra("selectedCategory",selectedCategory.getCategory_name());
             i.putExtra("user",user);
 
+
             startActivityForResult(i,1);
         }
         else{
             Toast.makeText(BookSearch.this,"No book selected",Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode){
+            case 1:
+                switch(resultCode){
+                    case 1:
+                        break;
+                    case 2 :
+                        finish();
+                        break;
+                }
+        }
     }
 
     @Override

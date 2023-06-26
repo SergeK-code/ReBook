@@ -84,6 +84,7 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
         }
 
 
+
         Glide.with(context)
                 .load(image_path)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

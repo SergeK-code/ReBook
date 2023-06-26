@@ -36,7 +36,6 @@ public class ViewHistory extends Activity {
     private GetOperationTypesAPI getOperationTypes;
     private User user;
     private Button back,cancel;
-
     private GetUsersAPI getUsers;
 
 

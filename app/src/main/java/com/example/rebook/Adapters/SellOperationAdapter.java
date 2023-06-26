@@ -35,7 +35,6 @@ public class SellOperationAdapter extends ArrayAdapter<Operation> {
         this.Operations=operations;
         this.BuyOperations = buyOperations;
         this.books = books;
-
         this.Users = users;
         this.AllOperations = allOperations;
 
@@ -165,7 +164,6 @@ public class SellOperationAdapter extends ArrayAdapter<Operation> {
                 buyerId = op.getUser_id();
             }
         }
-
         Log.e("bi",String.valueOf(buyerId));
         for (User user : Users) {
 

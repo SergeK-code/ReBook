@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class BookDetails extends Activity {
-    private TextView category,title,school,grade,price,phone;
+    private TextView category,title,school,grade,price,phone,condition;
     private Spinner paymentMethod;
     private ImageView book_image;
     private Button AddToCartBtn,BuyBtn,back,cancel;
@@ -94,31 +94,16 @@ public class BookDetails extends Activity {
             public void onClick(View v) {
 
                 String phoneNumber = phone.getText().toString();
-                String message = "Hello, I'm interested in your book.";
 
-                // Use the WhatsApp package name
-                String whatsappPackageName = "com.whatsapp";
 
-                // Check if WhatsApp is installed on the device
                 PackageManager packageManager = getPackageManager();
-                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-                whatsappIntent.setType("text/plain");
-                whatsappIntent.putExtra(Intent.EXTRA_TEXT, message);
-                whatsappIntent.setPackage(whatsappPackageName);
-
                 Intent dialIntent = new Intent(Intent.ACTION_DIAL);
                 dialIntent.setData(Uri.parse("tel:" + phoneNumber));
 
-                if (whatsappIntent.resolveActivity(packageManager) != null) {
-                    // Open WhatsApp with the message
-                    startActivity(whatsappIntent);
-                } else if (dialIntent.resolveActivity(packageManager) != null) {
-                    // WhatsApp is not installed, open dialer
-                    Toast.makeText(BookDetails.this, "WhatsApp is not installed", Toast.LENGTH_SHORT).show();
+                 if (dialIntent.resolveActivity(packageManager) != null) {
                     startActivity(dialIntent);
                 } else {
                     // No app found to handle the action
-
                     Toast.makeText(BookDetails.this, "No app found to handle the action", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -206,6 +191,9 @@ public class BookDetails extends Activity {
         paymentMethod = findViewById(R.id.paymentMethod);
         back = findViewById(R.id.back_btn);
         cancel = findViewById(R.id.cancel_btn);
+
+        condition = findViewById(R.id.book_condition);
+
     }
 
     public void setViews(){
@@ -215,6 +203,9 @@ public class BookDetails extends Activity {
       grade.setText(grade_name);
       String priceText = String.valueOf(selectedBook.getBook_price() ) ;
       price.setText(priceText+" $");
+
+      condition.setText(selectedBook.getBook_condition());
+
 
         String imagePath = Repo+selectedBook.getBook_image_path();
         Glide.with(BookDetails.this)

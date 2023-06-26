@@ -72,7 +72,6 @@ public class RemoveBookAdapter extends ArrayAdapter<Book>{
         Button deleteButton = listItem.findViewById(R.id.delete_btn);
 
 
-
         TitleTextView.setText("Title: "+book.getBook_name());
 
 
@@ -81,7 +80,6 @@ public class RemoveBookAdapter extends ArrayAdapter<Book>{
 
        for(Category c : Categories){
            if(c.getCategory_id()==category_id){
-
                bookCategory.setText("Category: "+c.getCategory_name());
 
                break;
@@ -89,7 +87,6 @@ public class RemoveBookAdapter extends ArrayAdapter<Book>{
        }
         for(Grade g : Grades){
             if(g.getGrade_id()==grade_id){
-
                 bookGrade.setText("Grade: "+g.getGrade_name());
 
                 break;

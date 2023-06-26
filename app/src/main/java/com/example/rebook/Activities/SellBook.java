@@ -81,7 +81,6 @@ public class SellBook extends Activity {
     private ArrayList<Grade> grades;
     private ArrayList<Category> categories;
     private ArrayList<Book> books,selectedBooks,loadBooks,sameIdBooks;
-
     private User user;
     private ArrayAdapter<Book> book_adapter;
     private ArrayAdapter<School> school_adapter;
@@ -208,6 +207,7 @@ public class SellBook extends Activity {
                 finish();
             }
         });
+
     }
 
     public void initViews(){
@@ -236,7 +236,6 @@ public class SellBook extends Activity {
                 // Permission denied
                 Toast.makeText(this, "Storage permission denied", Toast.LENGTH_SHORT).show();
             }
-
         }
     }
 
@@ -245,6 +244,7 @@ public class SellBook extends Activity {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
+
 
     // Handle the result of the image selection from the gallery
     @Override
@@ -305,6 +305,7 @@ public class SellBook extends Activity {
                 return bitmap;
         }
 
+
         try {
             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
             if (rotatedBitmap != bitmap) {
@@ -312,10 +313,12 @@ public class SellBook extends Activity {
             }
             return rotatedBitmap;
         } catch (OutOfMemoryError e) {
+
             e.printStackTrace();
             return null;
         }
     }
+
 
 
     private void uploadBook() {
@@ -339,11 +342,8 @@ public class SellBook extends Activity {
             loadBooks = getBooks.execute().get();
             loadOperations = getOperationsAPI.execute().get();
         } catch (ExecutionException | InterruptedException e) {
-
             e.printStackTrace();
-            return null;
         }
-
         for(Operation op : loadOperations){
             if(op.getOperation_type_id()==1 && (op.getOperation_status_id()==1 || op.getOperation_status_id()==2) && op.getUser_id()==user.getUser_id()){
                 ids.add(op.getBook_id());
@@ -358,7 +358,7 @@ public class SellBook extends Activity {
             }
         }
         for(Book b : myUploadedBooks){
-            if(b.getBook_isbn()==selectedBook.getBook_isbn()){
+            if(b.getBook_isbn().equals(selectedBook.getBook_isbn())){
                 sameIdBooks.add(b);
             }
         }
@@ -429,7 +429,6 @@ public class SellBook extends Activity {
             return;
         }
 
-
     }
 
     ArrayList<School> getSchools(){
@@ -437,11 +436,14 @@ public class SellBook extends Activity {
         this.getSchoolsApi = new GetSchoolsAPI(this);
         try {
             results = getSchoolsApi.execute().get();
+
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         return results;
+
     }
+
 
     private void listOfSchools(){
         school_adapter = new ArrayAdapter<School>(this, android.R.layout.simple_spinner_item,schools);
@@ -454,10 +456,12 @@ public class SellBook extends Activity {
         this.getGradesAPi = new GetGradesAPI(this);
         try {
             results = getGradesAPi.execute().get();
+
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         return results;
+
 
     }
 
@@ -492,8 +496,10 @@ public class SellBook extends Activity {
             results = getBooksApi.execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
+
         }
         return results;
+
 
     }
 
@@ -529,7 +535,6 @@ public class SellBook extends Activity {
                 selectedBooks.add(b);
             }
         }
-
         if(!(selectedBooks.isEmpty())){
             selectedBook= selectedBooks.get(0);
         }
