@@ -118,7 +118,6 @@ public class HomeAdmin extends Activity {
         Toast.makeText(HomeAdmin.this,"Logged out",Toast.LENGTH_SHORT).show();
         startActivity(i);
         finish();
-
     }
 
 }

@@ -59,14 +59,12 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
 
         operationIdTextView.setText(String.valueOf(currentOperation.getOperation_id()));
 
-
         dateTextView.setText(currentOperation.getOperation_date());
         String image_path = "";
         Book book = null;
         int curr_op_book_id = currentOperation.getBook_id();
         for(Book b : Books){
             if(b.getBook_id()==curr_op_book_id){
-
                 book = b;
                 break;
             }

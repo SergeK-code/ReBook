@@ -38,8 +38,6 @@ public class ViewHistory extends Activity {
     private Button back,cancel;
     private GetUsersAPI getUsers;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,15 +83,12 @@ public class ViewHistory extends Activity {
             throw new RuntimeException(e);
         }
 
-
         for(Operation op : operations){
             if(op.getUser_id()==user.getUser_id() && (op.getOperation_type_id()==1 ||op.getOperation_type_id()==4 ) && op.getOperation_status_id()==3){
                 filteredOperations.add(op);
             }
         }
-
         Operation_adapter = new OrderAdapter(ViewHistory.this,filteredOperations,operations,books,operationTypes,Users);
-
         Operations_list.setAdapter(Operation_adapter);
     }
 }

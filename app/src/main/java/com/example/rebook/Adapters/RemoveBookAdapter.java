@@ -74,7 +74,6 @@ public class RemoveBookAdapter extends ArrayAdapter<Book>{
 
         TitleTextView.setText("Title: "+book.getBook_name());
 
-
        int grade_id = book.getGrade_id();
        int category_id = book.getCategory_id();
 

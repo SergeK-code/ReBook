@@ -153,6 +153,23 @@ public class Login extends Activity {
             startActivity(i);
         }
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences preferences = getSharedPreferences("account", Context.MODE_PRIVATE);
+        String emailPref = preferences.getString("email", null);
+        String passwordPref = preferences.getString("password", null);
+
+        if (emailPref == null && passwordPref == null) {
+            email.setText("");
+            password.setText("");
+            error.setVisibility(View.GONE);
+        }
+
     }
 }
 

@@ -58,6 +58,10 @@ public class BookDetails extends Activity {
     private Payment_method selected_payment_method;
     private BuyBookAPI buyBookAPI;
     private static final String Repo = "http://"+ IP.ip+"/API_Rebook/";
+    private static final int REQUEST_CODE_WHATSAPP = 1;
+    private String phoneNumber;
+    private PackageManager packageManager;
+
 
     @Override
     public void onCreate(Bundle saveInstanceState){
@@ -92,20 +96,17 @@ public class BookDetails extends Activity {
         phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                 phoneNumber = phone.getText().toString();
 
-                String phoneNumber = phone.getText().toString();
+                 packageManager = getPackageManager();
+                String text = "Hi, I am interested in your book!";
+                String encodedText = Uri.encode(text);
+                String url = "https://api.whatsapp.com/send?phone="+phoneNumber+ "&text=" + encodedText;
+                Intent whatsappIntent = new Intent(Intent.ACTION_VIEW);
+                whatsappIntent.setData(Uri.parse(url));
 
+                    startActivityForResult(whatsappIntent,REQUEST_CODE_WHATSAPP);
 
-                PackageManager packageManager = getPackageManager();
-                Intent dialIntent = new Intent(Intent.ACTION_DIAL);
-                dialIntent.setData(Uri.parse("tel:" + phoneNumber));
-
-                 if (dialIntent.resolveActivity(packageManager) != null) {
-                    startActivity(dialIntent);
-                } else {
-                    // No app found to handle the action
-                    Toast.makeText(BookDetails.this, "No app found to handle the action", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
@@ -178,6 +179,25 @@ public class BookDetails extends Activity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_WHATSAPP) {
+            if (resultCode == RESULT_OK) {
+
+            } else {
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+                dialIntent.setData(Uri.parse("tel:" + phoneNumber));
+
+                if (dialIntent.resolveActivity(packageManager) != null) {
+                    startActivity(dialIntent);
+                } else {
+                    Toast.makeText(BookDetails.this, "No app found to handle the action", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
     public void initViews(){
         category = findViewById(R.id.book_category);
         title = findViewById(R.id.book_name);
@@ -191,9 +211,7 @@ public class BookDetails extends Activity {
         paymentMethod = findViewById(R.id.paymentMethod);
         back = findViewById(R.id.back_btn);
         cancel = findViewById(R.id.cancel_btn);
-
         condition = findViewById(R.id.book_condition);
-
     }
 
     public void setViews(){
@@ -203,9 +221,7 @@ public class BookDetails extends Activity {
       grade.setText(grade_name);
       String priceText = String.valueOf(selectedBook.getBook_price() ) ;
       price.setText(priceText+" $");
-
       condition.setText(selectedBook.getBook_condition());
-
 
         String imagePath = Repo+selectedBook.getBook_image_path();
         Glide.with(BookDetails.this)
