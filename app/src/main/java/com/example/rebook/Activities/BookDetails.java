@@ -58,6 +58,9 @@ public class BookDetails extends Activity {
     private Payment_method selected_payment_method;
     private BuyBookAPI buyBookAPI;
     private static final String Repo = "http://"+ IP.ip+"/API_Rebook/";
+    private static final int REQUEST_CODE_WHATSAPP = 1;
+    private String phoneNumber;
+    private PackageManager packageManager;
 
     @Override
     public void onCreate(Bundle saveInstanceState){
@@ -92,18 +95,17 @@ public class BookDetails extends Activity {
         phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phoneNumber = phone.getText().toString();
+                 phoneNumber = phone.getText().toString();
 
-                PackageManager packageManager = getPackageManager();
-                Intent dialIntent = new Intent(Intent.ACTION_DIAL);
-                dialIntent.setData(Uri.parse("tel:" + phoneNumber));
+                 packageManager = getPackageManager();
+                String text = "Hi, I am interested in your book!";
+                String encodedText = Uri.encode(text);
+                String url = "https://api.whatsapp.com/send?phone="+phoneNumber+ "&text=" + encodedText;
+                Intent whatsappIntent = new Intent(Intent.ACTION_VIEW);
+                whatsappIntent.setData(Uri.parse(url));
 
-                 if (dialIntent.resolveActivity(packageManager) != null) {
-                    startActivity(dialIntent);
-                } else {
-                    // No app found to handle the action
-                    Toast.makeText(BookDetails.this, "No app found to handle the action", Toast.LENGTH_SHORT).show();
-                }
+                    startActivityForResult(whatsappIntent,REQUEST_CODE_WHATSAPP);
+
             }
         });
 
@@ -174,6 +176,25 @@ public class BookDetails extends Activity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_WHATSAPP) {
+            if (resultCode == RESULT_OK) {
+
+            } else {
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+                dialIntent.setData(Uri.parse("tel:" + phoneNumber));
+
+                if (dialIntent.resolveActivity(packageManager) != null) {
+                    startActivity(dialIntent);
+                } else {
+                    Toast.makeText(BookDetails.this, "No app found to handle the action", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
     public void initViews(){
