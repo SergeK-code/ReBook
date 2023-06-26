@@ -192,6 +192,7 @@ public class MyCart extends Activity {
 
             books.clear();
             getCartBooks = new GetCartBooksAPI(MyCart.this,user.getUser_id());
+
             try {
                 books = getCartBooks.execute().get();
             } catch (ExecutionException | InterruptedException e) {

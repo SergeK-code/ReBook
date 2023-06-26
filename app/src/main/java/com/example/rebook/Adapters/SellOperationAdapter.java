@@ -29,6 +29,7 @@ public class SellOperationAdapter extends ArrayAdapter<Operation> {
     private Context context;
 
     public SellOperationAdapter(Context context, ArrayList<Operation> operations,ArrayList<Operation> allOperations,ArrayList<Operation> buyOperations, ArrayList<Book> books, ArrayList<User> users) {
+
         super(context, 0,operations);
         this.Operations=operations;
         this.BuyOperations = buyOperations;

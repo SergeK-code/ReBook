@@ -279,12 +279,12 @@ public class BookSearch extends Activity {
     void display_SearchResult(Book selectedBook){
         if(selectedBookId != -1){
             Intent i = new Intent(BookSearch.this,SearchResult.class);
+
             i.putExtra("selectedBook",selectedBooks.get(0));
             i.putExtra("selectedSchool",selectedSchool.getSchool_name());
             i.putExtra("selectedGrade",selectedGrade.getGrade_name());
             i.putExtra("selectedCategory",selectedCategory.getCategory_name());
             i.putExtra("user",user);
-
             startActivityForResult(i,1);
         }
         else{

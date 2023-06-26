@@ -139,7 +139,9 @@ public class PendingOrders extends Activity {
                 BuyOperations.add(op);
             }
         }
+
         sellOperationAdapter = new SellOperationAdapter(PendingOrders.this,ResultOperations,Operations,BuyOperations,Books,Users);
+
         myOperations.setAdapter(sellOperationAdapter);
     }
 

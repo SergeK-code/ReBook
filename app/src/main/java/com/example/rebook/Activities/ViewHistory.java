@@ -38,7 +38,6 @@ public class ViewHistory extends Activity {
     private Button back,cancel;
     private GetUsersAPI getUsers;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

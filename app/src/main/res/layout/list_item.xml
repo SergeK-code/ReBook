@@ -37,7 +37,6 @@
                 android:text="Category: "
                 android:textSize="12sp" />
 
-
         </LinearLayout>
 
         <Button

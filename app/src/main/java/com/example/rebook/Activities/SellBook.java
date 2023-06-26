@@ -87,6 +87,7 @@ public class SellBook extends Activity {
     private ArrayAdapter<Grade> grade_adapter;
     private ArrayAdapter<Category> category_adapter;
     private ArrayList<Operation> operations = new ArrayList<>(),loadOperations;
+
     private String SetBookResponse;
     private Bitmap bitmap;
     @Override
@@ -164,6 +165,7 @@ public class SellBook extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedBook = (Book) parent.getAdapter().getItem(position);
                 Log.e("#bn",selectedBook.getBook_name());
+
                 selectedBookId = selectedBook.getBook_id();
             }
 
@@ -431,6 +433,7 @@ public class SellBook extends Activity {
             e.printStackTrace();
         }
         return results;
+
     }
 
     private void listOfSchools(){
@@ -448,6 +451,7 @@ public class SellBook extends Activity {
             e.printStackTrace();
         }
         return results;
+
 
     }
 

@@ -45,6 +45,7 @@ public class RemoveBookAdapter extends ArrayAdapter<Book>{
     private ArrayList<Book> myBooks = new ArrayList<>();
     private Context context;
     private String response;
+
     private ArrayList<Grade> Grades = new ArrayList<>();
     private ArrayList<Category> Categories = new ArrayList<>();
 
@@ -79,12 +80,14 @@ public class RemoveBookAdapter extends ArrayAdapter<Book>{
        for(Category c : Categories){
            if(c.getCategory_id()==category_id){
                bookCategory.setText("Category: "+c.getCategory_name());
+
                break;
            }
        }
         for(Grade g : Grades){
             if(g.getGrade_id()==grade_id){
                 bookGrade.setText("Grade: "+g.getGrade_name());
+
                 break;
             }
         }

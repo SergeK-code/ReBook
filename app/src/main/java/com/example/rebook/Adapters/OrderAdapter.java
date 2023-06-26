@@ -27,7 +27,9 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
     private ArrayList<User> Users;
     private static final String Repo = "http://"+IP.ip+"/API_Rebook/";
 
+
     public OrderAdapter( Context context, ArrayList<Operation> operations,ArrayList<Operation> allOperations, ArrayList<Book> books, ArrayList<Operation_type> operationTypes,ArrayList<User> users) {
+
         super(context,0,operations);
         this.context = context;
         this.Operations = operations;
