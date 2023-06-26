@@ -86,7 +86,9 @@ public class SellBook extends Activity {
     private ArrayAdapter<School> school_adapter;
     private ArrayAdapter<Grade> grade_adapter;
     private ArrayAdapter<Category> category_adapter;
+
     private ArrayList<Operation> operations = new ArrayList<>(),loadOperations;
+
     private String SetBookResponse;
     private Bitmap bitmap;
     @Override
@@ -163,7 +165,9 @@ public class SellBook extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selectedBook = (Book) parent.getAdapter().getItem(position);
+
                 Log.e("#bn",selectedBook.getBook_name());
+
                 selectedBookId = selectedBook.getBook_id();
             }
 
@@ -203,6 +207,7 @@ public class SellBook extends Activity {
                 finish();
             }
         });
+
     }
 
     public void initViews(){
@@ -239,6 +244,7 @@ public class SellBook extends Activity {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
+
 
     // Handle the result of the image selection from the gallery
     @Override
@@ -299,6 +305,7 @@ public class SellBook extends Activity {
                 return bitmap;
         }
 
+
         try {
             Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
             if (rotatedBitmap != bitmap) {
@@ -306,10 +313,12 @@ public class SellBook extends Activity {
             }
             return rotatedBitmap;
         } catch (OutOfMemoryError e) {
+
             e.printStackTrace();
             return null;
         }
     }
+
 
 
     private void uploadBook() {
@@ -427,11 +436,14 @@ public class SellBook extends Activity {
         this.getSchoolsApi = new GetSchoolsAPI(this);
         try {
             results = getSchoolsApi.execute().get();
+
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         return results;
+
     }
+
 
     private void listOfSchools(){
         school_adapter = new ArrayAdapter<School>(this, android.R.layout.simple_spinner_item,schools);
@@ -444,10 +456,12 @@ public class SellBook extends Activity {
         this.getGradesAPi = new GetGradesAPI(this);
         try {
             results = getGradesAPi.execute().get();
+
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         return results;
+
 
     }
 
@@ -482,8 +496,10 @@ public class SellBook extends Activity {
             results = getBooksApi.execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
+
         }
         return results;
+
 
     }
 
@@ -522,6 +538,7 @@ public class SellBook extends Activity {
         if(!(selectedBooks.isEmpty())){
             selectedBook= selectedBooks.get(0);
         }
+
         book_adapter.notifyDataSetChanged();
     }
 }

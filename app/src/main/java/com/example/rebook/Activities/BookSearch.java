@@ -279,11 +279,14 @@ public class BookSearch extends Activity {
     void display_SearchResult(Book selectedBook){
         if(selectedBookId != -1){
             Intent i = new Intent(BookSearch.this,SearchResult.class);
+
             i.putExtra("selectedBook",selectedBooks.get(0));
+
             i.putExtra("selectedSchool",selectedSchool.getSchool_name());
             i.putExtra("selectedGrade",selectedGrade.getGrade_name());
             i.putExtra("selectedCategory",selectedCategory.getCategory_name());
             i.putExtra("user",user);
+
 
             startActivityForResult(i,1);
         }
@@ -291,6 +294,22 @@ public class BookSearch extends Activity {
             Toast.makeText(BookSearch.this,"No book selected",Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode){
+            case 1:
+                switch(resultCode){
+                    case 1:
+                        break;
+                    case 2 :
+                        finish();
+                        break;
+                }
+        }
     }
 
     @Override

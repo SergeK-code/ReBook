@@ -191,7 +191,9 @@ public class MyCart extends Activity {
             Toast.makeText(MyCart.this,result, Toast.LENGTH_SHORT).show();
 
             books.clear();
+
             getCartBooks = new GetCartBooksAPI(MyCart.this,user.getUser_id());
+
             try {
                 books = getCartBooks.execute().get();
             } catch (ExecutionException | InterruptedException e) {
@@ -205,12 +207,15 @@ public class MyCart extends Activity {
 
     public void clearCartItems(){
         books.clear();
+
         getCartBooks = new GetCartBooksAPI(MyCart.this,user.getUser_id());
+
         try {
             books = getCartBooks.execute().get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
+
 
         if(books.isEmpty()){
             Toast.makeText(MyCart.this,"Cart is empty",Toast.LENGTH_SHORT).show();
@@ -224,6 +229,7 @@ public class MyCart extends Activity {
                 e.printStackTrace();
             }
             Toast.makeText(MyCart.this, result, Toast.LENGTH_SHORT).show();
+
 
             if (result.toLowerCase().contains("successfully")) {
                 books.clear();

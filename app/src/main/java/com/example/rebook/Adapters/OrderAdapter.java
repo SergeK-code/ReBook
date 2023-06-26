@@ -27,7 +27,9 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
     private ArrayList<User> Users;
     private static final String Repo = "http://"+IP.ip+"/API_Rebook/";
 
+
     public OrderAdapter( Context context, ArrayList<Operation> operations,ArrayList<Operation> allOperations, ArrayList<Book> books, ArrayList<Operation_type> operationTypes,ArrayList<User> users) {
+
         super(context,0,operations);
         this.context = context;
         this.Operations = operations;
@@ -57,12 +59,14 @@ public class OrderAdapter extends ArrayAdapter<Operation> {
 
         operationIdTextView.setText(String.valueOf(currentOperation.getOperation_id()));
 
+
         dateTextView.setText(currentOperation.getOperation_date());
         String image_path = "";
         Book book = null;
         int curr_op_book_id = currentOperation.getBook_id();
         for(Book b : Books){
             if(b.getBook_id()==curr_op_book_id){
+
                 book = b;
                 break;
             }
