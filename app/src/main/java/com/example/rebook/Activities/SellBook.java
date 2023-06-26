@@ -349,7 +349,7 @@ public class SellBook extends Activity {
             }
         }
         for(Book b : myUploadedBooks){
-            if(b.getBook_isbn()==selectedBook.getBook_isbn()){
+            if(b.getBook_isbn().equals(selectedBook.getBook_isbn())){
                 sameIdBooks.add(b);
             }
         }

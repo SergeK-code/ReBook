@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class BookDetails extends Activity {
-    private TextView category,title,school,grade,price,phone;
+    private TextView category,title,school,grade,price,phone,condition;
     private Spinner paymentMethod;
     private ImageView book_image;
     private Button AddToCartBtn,BuyBtn,back,cancel;
@@ -204,6 +204,7 @@ public class BookDetails extends Activity {
         paymentMethod = findViewById(R.id.paymentMethod);
         back = findViewById(R.id.back_btn);
         cancel = findViewById(R.id.cancel_btn);
+        condition = findViewById(R.id.book_condition);
     }
 
     public void setViews(){
@@ -213,6 +214,7 @@ public class BookDetails extends Activity {
       grade.setText(grade_name);
       String priceText = String.valueOf(selectedBook.getBook_price() ) ;
       price.setText(priceText+" $");
+      condition.setText(selectedBook.getBook_condition());
 
         String imagePath = Repo+selectedBook.getBook_image_path();
         Glide.with(BookDetails.this)
