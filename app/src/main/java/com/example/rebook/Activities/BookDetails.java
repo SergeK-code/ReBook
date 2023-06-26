@@ -93,27 +93,12 @@ public class BookDetails extends Activity {
             @Override
             public void onClick(View v) {
                 String phoneNumber = phone.getText().toString();
-                String message = "Hello, I'm interested in your book.";
 
-                // Use the WhatsApp package name
-                String whatsappPackageName = "com.whatsapp";
-
-                // Check if WhatsApp is installed on the device
                 PackageManager packageManager = getPackageManager();
-                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-                whatsappIntent.setType("text/plain");
-                whatsappIntent.putExtra(Intent.EXTRA_TEXT, message);
-                whatsappIntent.setPackage(whatsappPackageName);
-
                 Intent dialIntent = new Intent(Intent.ACTION_DIAL);
                 dialIntent.setData(Uri.parse("tel:" + phoneNumber));
 
-                if (whatsappIntent.resolveActivity(packageManager) != null) {
-                    // Open WhatsApp with the message
-                    startActivity(whatsappIntent);
-                } else if (dialIntent.resolveActivity(packageManager) != null) {
-                    // WhatsApp is not installed, open dialer
-                    Toast.makeText(BookDetails.this, "WhatsApp is not installed", Toast.LENGTH_SHORT).show();
+                 if (dialIntent.resolveActivity(packageManager) != null) {
                     startActivity(dialIntent);
                 } else {
                     // No app found to handle the action
